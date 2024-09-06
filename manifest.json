@@ -1,0 +1,12 @@
+{
+  "name": "Furkan KARLIOGLU Personal Web Site",
+  "short_name": "FURK4NGG",
+  "start_url": "/index",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    "src": "/img/icon.ico",
+    "sizes": "64x64",
+    "type": "image/x-icon"]
+}

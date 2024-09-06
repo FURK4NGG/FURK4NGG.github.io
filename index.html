@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Furkan Karlıoğlu</title>
+  <link href="img/icon.ico" rel="shortcut icon" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="INDEX, FOLLOW">
+  <meta name="publisher" content="https://furk4ngg.github.io">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0;url=home">
+  <link rel="stylesheet" href="CSS/1.css">
+</head>
+<body>
+    <div id="body_index"><div id="ref_div" align="center"><h1 id="ref">-You are being redirected to the homepage-</h1></div></div>
+    <script>
+      const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
+      const showAlert = e => {
+        e.preventDefault(); // preventing its default behaviour
+        return alert("Sorry, you can't view or copy source codes this way!");
+      }
+      document.addEventListener("contextmenu", e => {
+        showAlert(e); // calling showAlert() function on mouse right click
+      });
+      document.addEventListener("keydown", e => {
+        // calling showAlert() function, if the pressed key matched to disabled keys
+        if((e.ctrlKey && disabledKeys.includes(e.key)) || e.key === "F12") {
+          showAlert(e);
+        }
+      });
+    </script>
+</body>
+</html>

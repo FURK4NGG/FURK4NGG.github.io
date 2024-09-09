@@ -1,12 +1,7 @@
-const CACHE_NAME = 'my-site-cache-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/home.html?v=4', //?v=3 Güncel versiyon
+const CACHE_NAME = 'my-site-cache-v2';
+let urlsToCache = [
+  '/',  
   '/not_found_page.html',
-  '/CSS/1.css?v=5',
-  '/CSS/2.css',
-  '/JAVASCRIPT/1.js',
   '/service-worker.js',
   '/img/ai.webp',
   '/img/app.webp',
@@ -23,6 +18,28 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
+// Kullanıcının dilini kontrol et
+const userLang = navigator.language || navigator.userLanguage;
+
+// Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
+if (userLang.startsWith('tr')) {
+  urlsToCache = urlsToCache.concat([
+    '/tr/home.html?v=2',
+    '/CSS/tr/1.css',
+    '/CSS/tr/2.css',
+    '/JAVASCRIPT/tr/1.js'
+  ]);
+} else {
+  // İngilizce dosyaları ekle
+  urlsToCache = urlsToCache.concat([
+    '/home.html?v=2',
+    '/CSS/1.css',
+    '/CSS/2.css',
+    '/JAVASCRIPT/1.js'
+  ]);
+}
+
+// Service Worker install event
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -33,6 +50,7 @@ self.addEventListener('install', event => {
   );
 });
 
+// Service Worker activate event
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
@@ -48,6 +66,7 @@ self.addEventListener('activate', event => {
   );
 });
 
+// Service Worker fetch event
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)

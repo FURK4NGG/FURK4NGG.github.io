@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v3';
+const CACHE_NAME = 'my-site-cache-v7';
 let urlsToCache = [
   '/',
   '/index.html',
@@ -26,7 +26,7 @@ const userLang = navigator.language || navigator.userLanguage;
 // Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
 if (userLang.startsWith('tr')) {
   urlsToCache = urlsToCache.concat([
-    '/hometr.html?v=1',
+    '/hometr.html?v=3',
     '/CSS/tr/1.css',
     '/CSS/tr/2.css',
     '/JAVASCRIPT/tr/1.js'
@@ -34,7 +34,7 @@ if (userLang.startsWith('tr')) {
 } else {
   // İngilizce dosyaları ekle
   urlsToCache = urlsToCache.concat([
-    '/home.html?v=2',
+    '/home.html?v=3',
     '/CSS/1.css',
     '/CSS/2.css',
     '/JAVASCRIPT/1.js'

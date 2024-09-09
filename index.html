@@ -15,6 +15,16 @@
 <body>
     <div id="body_index"><div id="ref_div" align="center"><h1 id="ref">-You are being redirected to the homepage-</h1></div></div>
     <script>
+      const userLang = navigator.language || navigator.userLanguage;
+
+        // Eğer tarayıcı dili Türkçe ise /tr/index.html sayfasına yönlendir
+        if (userLang.startsWith('tr')) {
+            window.location.href = '/tr/index.html';
+        } else {
+            // Eğer İngilizceyse /en/index.html sayfasına yönlendir
+            window.location.href = '/en/index.html';
+        }
+      
       const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
       const showAlert = e => {
         e.preventDefault(); // preventing its default behaviour

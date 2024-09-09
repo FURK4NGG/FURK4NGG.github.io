@@ -24,7 +24,7 @@ const userLang = navigator.language || navigator.userLanguage;
 // Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
 if (userLang.startsWith('tr')) {
   urlsToCache = urlsToCache.concat([
-    '/tr/home.html?v=3',
+    '/tr/home.html?v=4',
     '/CSS/tr/1.css',
     '/CSS/tr/2.css',
     '/JAVASCRIPT/tr/1.js'

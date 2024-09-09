@@ -1,6 +1,8 @@
 const CACHE_NAME = 'my-site-cache-v3';
 let urlsToCache = [
-  '/',  
+  '/',
+  '/index.html',
+  '/not_found_page.html',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',

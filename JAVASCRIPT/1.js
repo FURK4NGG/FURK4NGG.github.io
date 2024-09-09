@@ -1,7 +1,7 @@
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');
-  const text = "I am an 18-year-old university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in MEB Robot Competitions and TUBITAK projects. In addition to these experiences, I have learned programming languages such as Python, Java, C++, C#, CSS, JavaScript, PHP, and SQL. Right now, I am working on projects related to AI and IoT.I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.";
+  const text = "18 yaşında Bilgisayar Mühendisliği okuyan bir üniversite öğrencisiyim. 2020 yılından bu yana kendimi en çok Robotik Kodlama, Mobil Uygulama Geliştirme, Web Sitesi Oluşturma, Siber Güvenlik ve Yapay Zeka Komut İstimi Mühendisliği başta olmak üzere back-end departmanlarında geliştirdim. MEB Robot Yarışmalarına ve TÜBİTAK projelerine de katıldım. Bu deneyimlerime ek olarak Python, Java, C++, C#, CSS, JavaScript, PHP ve SQL gibi programlama dillerini öğrendim. Şu anda yapay zeka ve IoT ile ilgili projeler üzerinde çalışıyorum.İnsanların yaşamlarını olumlu yönde etkileyebilecek ve topluma katkıda bulunabilecek yenilikçi çözümler yaratma konusunda tutkuluyum ve insanlığa hizmet eden yeni fikirleri keşfetmeye her zaman açığım.";
   
   // Split text into words and wrap each word in a span
   const words = text.split(' ').map(word => {
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /*ANIMATED TEXT*/
 const dynamicText = document.querySelector(".h1 span");
-const words = ["Developer", "Athlete", "Musician"];
+const words = ["Geliştiriciyim", "Sporcuyum", "Müzisyenim"];
 
 // Variables to track the position and deletion status of the word
 let wordIndex = 0;
@@ -243,30 +243,7 @@ window.addEventListener("mouseover", function (e) {
 
 
 /*CURSOR*/
-const colors = [
-  "#DCFFB7",
-  "#CBFFA9",
-  "#D0F5BE",
-  "#C3EDC0",
-  "#C8E4B2",
-  "#D9EDBF",
-  "#CDF2CA",
-  "#CDF2CA",
-  "#C3E5AE",
-  "#C7E9B0",
-  "#CCD6A6",
-  "#B3C99C",
-  "#A4BC92",
-  "#99B080",
-  "#789461",
-  "#527853",
-  "#4F6F52",
-  "#436850",
-  "#4F6F52",
-  "#294B29",
-  "#1A4D2E",
-  "#114232"
-];
+const colors = ["#DCFFB7","#CBFFA9","#D0F5BE","#C3EDC0","#C8E4B2","#D9EDBF","#CDF2CA","#CDF2CA","#C3E5AE","#C7E9B0","#CCD6A6","#B3C99C","#A4BC92","#99B080","#789461","#527853","#4F6F52","#436850","#4F6F52","#294B29","#1A4D2E","#114232"];
 
 circles.forEach(function (circle, index) {
   circle.x = 0;

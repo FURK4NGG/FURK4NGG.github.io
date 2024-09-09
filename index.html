@@ -15,13 +15,23 @@
     <div id="body_index"><div id="ref_div" align="center"><h1 id="ref">-You are being redirected to the homepage-</h1></div></div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-  const userLang = navigator.language || navigator.userLanguage;
-  if (userLang.startsWith('tr')) {
-    window.location.replace('/hometr.html');
-  } else {
-    window.location.replace('/home.html');
-  }
-});
+      const userLang = navigator.language || navigator.userLanguage;
+
+      // İçeriği dil tercihine göre yükleme
+      if (userLang.startsWith('tr')) {
+        fetch('/hometr.html')
+          .then(response => response.text())
+          .then(html => {
+            document.documentElement.innerHTML = html; // Türkçe içeriği yükle
+          });
+      } else {
+        fetch('/home.html')
+          .then(response => response.text())
+          .then(html => {
+            document.documentElement.innerHTML = html; // İngilizce içeriği yükle
+          });
+      }
+    });
       
       const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
       const showAlert = e => {

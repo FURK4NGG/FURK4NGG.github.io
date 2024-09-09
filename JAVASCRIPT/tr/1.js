@@ -1,14 +1,3 @@
-// Kullanıcının tarayıcı dilini al
-        const userLang = navigator.language || navigator.userLanguage;
-
-        // Eğer tarayıcı dili Türkçe ise /tr/index.html sayfasına yönlendir
-        if (userLang.startsWith('tr')) {
-            window.location.href = '/tr/home.html';
-        } else {
-            // Eğer İngilizceyse /en/index.html sayfasına yönlendir
-            window.location.href = 'home.html';
-        }
-
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');

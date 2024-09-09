@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v2';
+const CACHE_NAME = 'my-site-cache-v3';
 let urlsToCache = [
   '/',  
   '/not_found_page.html',

@@ -9,21 +9,19 @@
   <meta name="robots" content="INDEX, FOLLOW">
   <meta name="publisher" content="https://furk4ngg.github.io">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <link rel="stylesheet" href="CSS/1.css">
 </head>
 <body>
     <div id="body_index"><div id="ref_div" align="center"><h1 id="ref">-You are being redirected to the homepage-</h1></div></div>
     <script>
-      const userLang = navigator.language || navigator.userLanguage;
-
-        // Eğer tarayıcı dili Türkçe ise /tr/index.html sayfasına yönlendir
-        if (userLang.startsWith('tr')) {
-            window.location.href = 'hometr.html';
-        } else {
-            // Eğer İngilizceyse /en/index.html sayfasına yönlendir
-            window.location.href = 'home.html';
-        }
+      document.addEventListener('DOMContentLoaded', () => {
+  const userLang = navigator.language || navigator.userLanguage;
+  if (userLang.startsWith('tr')) {
+    window.location.href = 'hometr.html';
+  } else {
+    window.location.href = 'home.html';
+  }
+});
       
       const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
       const showAlert = e => {

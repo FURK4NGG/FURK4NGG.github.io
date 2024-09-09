@@ -1,8 +1,7 @@
 const CACHE_NAME = 'my-site-cache-v7';
-let urlsToCache = [
+const urlsToCache = [
   '/',
   '/index.html?v=8',
-  '/not_found_page.html',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',
@@ -24,22 +23,17 @@ let urlsToCache = [
 const userLang = navigator.language || navigator.userLanguage;
 
 // Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
-if (userLang.startsWith('tr')) {
-  urlsToCache = urlsToCache.concat([
-    '/hometr.html?v=3',
-    '/CSS/tr/1.css',
-    '/CSS/tr/2.css',
-    '/JAVASCRIPT/tr/1.js'
-  ]);
-} else {
-  // İngilizce dosyaları ekle
-  urlsToCache = urlsToCache.concat([
-    '/home.html?v=3',
-    '/CSS/1.css',
-    '/CSS/2.css',
-    '/JAVASCRIPT/1.js'
-  ]);
-}
+const additionalUrlsToCache = userLang.startsWith('tr') ? [
+  '/home.html?v=8',  // Aynı dosya adı
+  '/CSS/tr/1.css',
+  '/CSS/tr/2.css',
+  '/JAVASCRIPT/tr/1.js'
+] : [
+  '/home.html?v=8',  // Aynı dosya adı
+  '/CSS/1.css',
+  '/CSS/2.css',
+  '/JAVASCRIPT/1.js'
+];
 
 // Service Worker install event
 self.addEventListener('install', event => {
@@ -47,7 +41,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        return cache.addAll([...urlsToCache, ...additionalUrlsToCache]);
       })
   );
 });
@@ -76,7 +70,17 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        return fetch(event.request);
+        return fetch(event.request)
+          .then(response => {
+            // Dinamik olarak önbelleğe al
+            if (event.request.method === 'GET' && response.status === 200) {
+              const responseClone = response.clone();
+              caches.open(CACHE_NAME).then(cache => {
+                cache.put(event.request, responseClone);
+              });
+            }
+            return response;
+          });
       })
   );
 });

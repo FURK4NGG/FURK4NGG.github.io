@@ -1,8 +1,10 @@
 const CACHE_NAME = 'my-site-cache-v11';
+const LIBS_CACHE_NAME = 'libs-cache-v1'; // Kütüphaneler için ayrı bir cache
+
+// Bu dizilerde dil kontrolü yapılır
 let urlsToCache = [
   '/',
   '/index.html',
-  '/not_found_page.html',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',
@@ -20,41 +22,34 @@ let urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Kullanıcının dilini kontrol et
-const userLang = navigator.language || navigator.userLanguage;
-
-// Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
-if (userLang.startsWith('tr')) {
-  urlsToCache = urlsToCache.concat([
-    '/hometr.html?v=3',
-    '/CSS/tr/1.css',
-    '/CSS/tr/2.css',
-    '/JAVASCRIPT/tr/1.js'
-  ]);
-} else {
-  // İngilizce dosyaları ekle
-  urlsToCache = urlsToCache.concat([
-    '/home.html?v=3',
-    '/CSS/1.css',
-    '/CSS/2.css',
-    '/JAVASCRIPT/1.js'
-  ]);
-}
+// Kütüphaneler için URL'leri ekleyin
+const libsToCache = [
+  '/gsap.min.js',
+  '/ionicons.esm.js',
+  '/ionicons.js',
+  '/swiper-bundle.min.js',
+  '/darkmode-js.min.js'
+];
 
 // Service Worker install event
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
+    Promise.all([
+      caches.open(CACHE_NAME).then(cache => {
+        console.log('Opened cache for app');
         return cache.addAll(urlsToCache);
+      }),
+      caches.open(LIBS_CACHE_NAME).then(cache => {
+        console.log('Opened cache for libraries');
+        return cache.addAll(libsToCache);
       })
+    ])
   );
 });
 
 // Service Worker activate event
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
+  const cacheWhitelist = [CACHE_NAME, LIBS_CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -70,13 +65,23 @@ self.addEventListener('activate', event => {
 
 // Service Worker fetch event
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+  // Kütüphaneler için cache kontrolü
+  if (libsToCache.some(lib => event.request.url.includes(lib))) {
+    event.respondWith(
+      caches.open(LIBS_CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(response => {
+          return response || fetch(event.request);
+        });
       })
-  );
+    );
+  } else {
+    // Diğer dosyalar için cache kontrolü
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(response => {
+          return response || fetch(event.request);
+        });
+      })
+    );
+  }
 });

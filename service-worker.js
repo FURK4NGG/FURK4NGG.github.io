@@ -1,6 +1,6 @@
 const FILE_VERSIONS = {
   '/index.html': '13',
-  '/home_en.html': '14',
+  '/home_en.html': '15',
   '/home_tr.html': '14',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',

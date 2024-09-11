@@ -1,9 +1,8 @@
-const CACHE_VERSION = 'v2'; // Update this version number to trigger cache refresh
-const CACHE_NAME = `My-Site-Cache-${CACHE_VERSION}`;
-
+const CACHE_NAME = 'my-site-cache-v8';
 let urlsToCache = [
   '/',
   '/index.html',
+  '/not_found_page.html',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',
@@ -27,7 +26,7 @@ const userLang = navigator.language || navigator.userLanguage;
 // Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
 if (userLang.startsWith('tr')) {
   urlsToCache = urlsToCache.concat([
-    '/home_tr.html',
+    '/hometr.html?v=3',
     '/CSS/tr/1.css',
     '/CSS/tr/2.css',
     '/JAVASCRIPT/tr/1.js'
@@ -35,7 +34,7 @@ if (userLang.startsWith('tr')) {
 } else {
   // İngilizce dosyaları ekle
   urlsToCache = urlsToCache.concat([
-    '/home_en.html',
+    '/home.html?v=3',
     '/CSS/1.css',
     '/CSS/2.css',
     '/JAVASCRIPT/1.js'

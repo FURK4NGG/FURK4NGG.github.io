@@ -1,7 +1,7 @@
 const FILE_VERSIONS = {
-  '/index.html': '12',
-  '/home_en.html': '13',
-  '/home_tr.html': '13',
+  '/index.html': '13',
+  '/home_en.html': '14',
+  '/home_tr.html': '14',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',
   '/CSS/2.css': '1',
@@ -26,26 +26,21 @@ const FILE_VERSIONS = {
 };
 
 const CACHE_NAME = 'my-site-cache-v1';
-const CACHE_VERSION = 'v1'; // Versiyon numarasıyla cache'i yönetir
 
-// Önbelleğe alınacak dosyaları ekler
-const addResourcesToCache = async (resources) => {
+// Dosyaları önbelleğe al
+const cacheFiles = async () => {
   const cache = await caches.open(CACHE_NAME);
-  await cache.addAll(resources);
-};
-
-// Cache'e yanıt ekler
-const putInCache = async (request, response) => {
-  const cache = await caches.open(CACHE_NAME);
-  await cache.put(request, response);
+  await cache.addAll(Object.keys(FILE_VERSIONS));
 };
 
 // Versiyon kontrolü ile fetch
-const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
-  const newVersion = FILE_VERSIONS[request.url] || '0';
-  const cache = await caches.open(CACHE_NAME);
+const cacheFirst = async (request) => {
+  const url = new URL(request.url);
+  const newVersion = FILE_VERSIONS[url.pathname] || '0';
 
-  const cachedResponse = await cache.match(request);
+  const cache = await caches.open(CACHE_NAME);
+  const cachedResponse = await caches.match(request);
+
   if (cachedResponse) {
     const cachedVersion = new URL(cachedResponse.url).searchParams.get('v') || '0';
     if (newVersion === cachedVersion) {
@@ -62,12 +57,6 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
       return fetch(request);
     }
   } else {
-    const preloadResponse = await preloadResponsePromise;
-    if (preloadResponse) {
-      putInCache(request, preloadResponse.clone());
-      return preloadResponse;
-    }
-
     try {
       const response = await fetch(request);
       if (response.ok) {
@@ -76,8 +65,8 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
       }
       return response;
     } catch (error) {
-      const fallbackResponse = await caches.match(fallbackUrl);
-      return fallbackResponse || new Response('Network error happened', {
+      // İstemci tarafında yanıt alınamadığında hata yanıtı döndür
+      return new Response('Network error happened', {
         status: 408,
         headers: { 'Content-Type': 'text/plain' },
       });
@@ -85,7 +74,13 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
   }
 };
 
-// Service Worker etkinleştirme
+// Service Worker olayları
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    cacheFiles()
+  );
+});
+
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -98,20 +93,8 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Service Worker yüklenme
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    addResourcesToCache(Object.keys(FILE_VERSIONS))
-  );
-});
-
-// Fetch olayını ele al
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    cacheFirst({
-      request: event.request,
-      preloadResponsePromise: event.preloadResponse,
-      fallbackUrl: '/img/robotic.webp' // Veya uygun bir geri dönüş resmi
-    })
+    cacheFirst(event.request)
   );
 });

@@ -9,7 +9,7 @@ const FILE_VERSIONS = {
   '/CSS/tr/2.css': '1',
   '/JAVASCRIPT/1.js': '1',
   '/JAVASCRIPT/tr/1.js': '1',
-  '/service-worker.js': '1',
+  '/service-worker.js': '2',
   '/img/ai.webp': '1',
   '/img/app.webp': '1',
   '/img/cyber.webp': '1',

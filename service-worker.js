@@ -1,7 +1,7 @@
 // Dosyalar için ayrı ayrı versiyon numaraları
 const FILE_VERSIONS = {
   '/index.html': '1',
-  '/home_en.html': '1',
+  '/home_en.html': '2',
   '/home_tr.html': '1',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',

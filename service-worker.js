@@ -45,7 +45,7 @@ if (userLang.startsWith('tr')) {
 } else {
   // İngilizce dosyaları ekle
   urlsToCache = urlsToCache.concat([
-    '/home_en.html?v=4',
+    '/home_en.html?v=5',
     '/CSS/1.css',
     '/CSS/2.css',
     '/JAVASCRIPT/1.js'

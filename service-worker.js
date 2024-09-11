@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v1'; // Update this version number to trigger cache refresh
+const CACHE_VERSION = 'v2'; // Update this version number to trigger cache refresh
 const CACHE_NAME = `My-Site-Cache-${CACHE_VERSION}`;
 
 let urlsToCache = [

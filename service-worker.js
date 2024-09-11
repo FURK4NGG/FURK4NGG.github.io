@@ -1,87 +1,110 @@
-// Determine the cache version dynamically
-const CURRENT_VERSION = 13;  // Current cache version number
-const CACHE_NAME = `my-site-cache-v${CURRENT_VERSION}`;  // Dynamically named cache
+// Dosyalar için ayrı ayrı versiyon numaraları
+const FILE_VERSIONS = {
+  '/index.html': '1',
+  '/home_en.html': '1',
+  '/home_tr.html': '1',
+  '/not_found_page.html': '1',
+  '/CSS/1.css': '1',
+  '/CSS/2.css': '1',
+  '/CSS/tr/1.css': '1',
+  '/CSS/tr/2.css': '1',
+  '/JAVASCRIPT/1.js': '1',
+  '/JAVASCRIPT/tr/1.js': '1',
+  '/service-worker.js': '1',
+  '/img/ai.webp': '1',
+  '/img/app.webp': '1',
+  '/img/cyber.webp': '1',
+  '/img/game.webp': '1',
+  '/img/web.webp': '1',
+  '/img/profile_photo1.webp': '1',
+  '/img/robotic.webp': '1',
+  '/img/up.webp': '1',
+  '/img/icon.ico': '1',
+  '/sitemap.xml': '1',
+  '/manifest.json': '1',
+  '/robots.txt': '1',
+  '/.htaccess.txt': '1'
+};
 
-const urlsToCache = [
-  '/',
-  `/index.html?v=${CURRENT_VERSION}`,
-  '/not_found_page.html',
-  '/service-worker.js',
-  '/img/ai.webp',
-  '/img/app.webp',
-  '/img/cyber.webp',
-  '/img/game.webp',
-  '/img/web.webp',
-  '/img/profile_photo1.webp',
-  '/img/robotic.webp',
-  '/img/up.webp',
-  '/img/icon.ico',
-  '/sitemap.xml',
-  '/manifest.json',
-  '/robots.txt',
-  '/.htaccess.txt'
-];
+// Cache adı
+const CACHE_NAME = 'my-site-cache';
 
-// Check the user's language
-const userLang = navigator.language || navigator.userLanguage;
-const additionalUrlsToCache = userLang.startsWith('tr') ? [
-  `/home.html?v=${CURRENT_VERSION}`,  // Same file name with versioning
-  '/CSS/tr/1.css?v=${CURRENT_VERSION}',
-  '/CSS/tr/2.css?v=${CURRENT_VERSION}',
-  '/JAVASCRIPT/tr/1.js?v=${CURRENT_VERSION}'
-] : [
-  `/home.html?v=${CURRENT_VERSION}`,  // Same file name with versioning
-  '/CSS/1.css?v=${CURRENT_VERSION}',
-  '/CSS/2.css?v=${CURRENT_VERSION}',
-  '/JAVASCRIPT/1.js?v=${CURRENT_VERSION}'
-];
-
-// Install event - Add files to the cache
+// Install eventi - Dosyaları önbelleğe al
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Opened cache: ' + CACHE_NAME);
-      return cache.addAll([...urlsToCache, ...additionalUrlsToCache]);
-    })
-  );
-});
-
-// Activate event - Clear old caches
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          // If there's a cache with an older version, delete it
-          const currentCacheNumber = parseInt(CACHE_NAME.match(/\d+/)[0], 10);
-          const cacheVersionNumber = parseInt(cacheName.match(/\d+/)[0], 10);
-          if (cacheVersionNumber < currentCacheNumber) {
-            console.log('Deleting outdated cache:', cacheName);
-            return caches.delete(cacheName);
-          }
+        Object.keys(FILE_VERSIONS).map(url => {
+          return fetch(url).then(response => {
+            if (response.ok) {
+              return response.text().then(text => {
+                const versionedUrl = `${url}?v=${FILE_VERSIONS[url]}`;
+                cache.put(versionedUrl, new Response(text, { headers: response.headers }));
+              });
+            }
+            return Promise.reject('Failed to fetch ' + url);
+          });
         })
       );
     })
   );
 });
 
-// Fetch event - Serve cached content or fetch from network
+// Fetch eventi - Versiyonları kontrol et
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) {
-        return response;
-      }
+  const { request } = event;
+  const url = new URL(request.url);
 
-      return fetch(event.request).then(response => {
-        if (event.request.method === 'GET' && response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseClone);
+  if (url.pathname in FILE_VERSIONS) {
+    const newVersion = FILE_VERSIONS[url.pathname];
+    const requestUrlWithVersion = `${url.pathname}?v=${newVersion}`;
+
+    event.respondWith(
+      caches.match(requestUrlWithVersion).then(cachedResponse => {
+        if (cachedResponse) {
+          const cachedVersion = new URL(cachedResponse.url).searchParams.get('v');
+
+          if (cachedVersion === newVersion) {
+            // Versiyonlar eşitse, eski dosyayı kullan
+            return cachedResponse;
+          } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
+            // Yeni versiyon mevcut, cache'e kaydet ve yeni versiyonu göster
+            return fetch(request).then(response => {
+              if (response.ok) {
+                const responseClone = response.clone();
+                caches.open(CACHE_NAME).then(cache => {
+                  cache.put(requestUrlWithVersion, responseClone);
+                });
+              }
+              return response;
+            });
+          } else {
+            // Yeni versiyon daha eski, yeni versiyonu göster ama cache'e kaydetme
+            return fetch(request);
+          }
+        } else {
+          // Önceki versiyon yok, yeni dosyayı cache'e kaydet ve göster
+          return fetch(request).then(response => {
+            if (response.ok) {
+              const responseClone = response.clone();
+              caches.open(CACHE_NAME).then(cache => {
+                cache.put(requestUrlWithVersion, responseClone);
+              });
+            }
+            return response;
           });
         }
-        return response;
-      });
-    })
-  );
+      })
+    );
+  } else {
+    // Versiyon kontrolü gerektirmeyen dosyalar
+    event.respondWith(
+      caches.match(request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(request);
+      })
+    );
+  }
 });

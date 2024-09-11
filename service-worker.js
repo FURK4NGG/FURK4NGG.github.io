@@ -1,8 +1,7 @@
-// Dosyalar için ayrı ayrı versiyon numaraları
 const FILE_VERSIONS = {
-  '/index.html': '1',
-  '/home_en.html': '4',
-  '/home_tr.html': '1',
+  '/index.html': '9',
+  '/home_en.html': '8',
+  '/home_tr.html': '8',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',
   '/CSS/2.css': '1',
@@ -26,85 +25,93 @@ const FILE_VERSIONS = {
   '/.htaccess.txt': '1'
 };
 
-// Cache adı
-const CACHE_NAME = 'my-site-cache';
+const CACHE_NAME = 'my-site-cache-v1';
 
-// Install eventi - Dosyaları önbelleğe al
-self.addEventListener('install', event => {
+// Dosyaları önbelleğe al
+const addResourcesToCache = async (resources) => {
+  const cache = await caches.open(CACHE_NAME);
+  await cache.addAll(resources);
+};
+
+// Cache'de dosyaları güncelle
+const putInCache = async (request, response) => {
+  const cache = await caches.open(CACHE_NAME);
+  await cache.put(request, response);
+};
+
+// Versiyon kontrolü ile fetch
+const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
+  const newVersion = FILE_VERSIONS[request.url] || '0';
+  const cache = await caches.open(CACHE_NAME);
+
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    const cachedVersion = new URL(cachedResponse.url).searchParams.get('v') || '0';
+    if (newVersion === cachedVersion) {
+      return cachedResponse;
+    } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
+      // Yeni versiyon mevcut, cache'e kaydet ve döndür
+      return fetch(request).then(response => {
+        if (response.ok) {
+          const responseClone = response.clone();
+          cache.put(request, responseClone);
+        }
+        return response;
+      });
+    } else {
+      // Yeni versiyon daha eski, yeni versiyonu döndür ama cache'e kaydetme
+      return fetch(request);
+    }
+  } else {
+    // Önceki versiyon yoksa preload yanıtını kullan
+    const preloadResponse = await preloadResponsePromise;
+    if (preloadResponse) {
+      putInCache(request, preloadResponse.clone());
+      return preloadResponse;
+    }
+
+    try {
+      const response = await fetch(request);
+      if (response.ok) {
+        const responseClone = response.clone();
+        cache.put(request, responseClone);
+      }
+      return response;
+    } catch (error) {
+      const fallbackResponse = await caches.match(fallbackUrl);
+      return fallbackResponse || new Response('Network error happened', {
+        status: 408,
+        headers: { 'Content-Type': 'text/plain' },
+      });
+    }
+  }
+};
+
+// Service Worker olayları
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return Promise.all(
-        Object.keys(FILE_VERSIONS).map(url => {
-          return fetch(url).then(response => {
-            if (response.ok) {
-              return response.text().then(text => {
-                const versionedUrl = `${url}?v=${FILE_VERSIONS[url]}`;
-                return cache.put(versionedUrl, new Response(text, { headers: response.headers }));
-              });
-            }
-            return Promise.reject('Failed to fetch ' + url);
-          });
-        })
-      );
+    caches.keys().then(keys => {
+      return Promise.all(keys.map(key => {
+        if (key !== CACHE_NAME) {
+          return caches.delete(key);
+        }
+      }));
     })
   );
 });
 
-// Fetch eventi - Versiyonları kontrol et
-self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    addResourcesToCache(Object.keys(FILE_VERSIONS))
+  );
+});
 
-  if (url.pathname in FILE_VERSIONS) {
-    const newVersion = FILE_VERSIONS[url.pathname];
-    const requestUrlWithVersion = `${url.pathname}?v=${newVersion}`;
-
-    event.respondWith(
-      caches.match(requestUrlWithVersion).then(cachedResponse => {
-        if (cachedResponse) {
-          const cachedVersion = new URL(cachedResponse.url).searchParams.get('v');
-          
-          if (cachedVersion === newVersion) {
-            // Versiyonlar eşitse, önbellekteki dosyayı kullan
-            return cachedResponse;
-          } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
-            // Yeni versiyon mevcut, yeni dosyayı fetch et ve cache'e kaydet
-            return fetch(request).then(response => {
-              if (response.ok) {
-                const responseClone = response.clone();
-                caches.open(CACHE_NAME).then(cache => {
-                  cache.put(requestUrlWithVersion, responseClone);
-                });
-              }
-              return response;
-            });
-          } else {
-            // Yeni versiyon daha eski, yeni versiyonu göster ama cache'e kaydetme
-            return fetch(request);
-          }
-        } else {
-          // Önceki versiyon yok, yeni dosyayı fetch et ve cache'e kaydet
-          return fetch(request).then(response => {
-            if (response.ok) {
-              const responseClone = response.clone();
-              caches.open(CACHE_NAME).then(cache => {
-                cache.put(requestUrlWithVersion, responseClone);
-              });
-            }
-            return response;
-          });
-        }
-      })
-    );
-  } else {
-    // Versiyon kontrolü gerektirmeyen dosyalar
-    event.respondWith(
-      caches.match(request).then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        return fetch(request);
-      })
-    );
-  }
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    cacheFirst({
+      request: event.request,
+      preloadResponsePromise: event.preloadResponse || Promise.resolve(null),
+      fallbackUrl: '/gallery/myLittleVader.jpg'
+    })
+  );
 });

@@ -82,15 +82,26 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+/*TO-TOP BUTTON REVEALING*/
 const toTop = document.querySelector(".to-top");
+const trandingSlideContent = document.querySelector(".tranding-slide-content");
 
 window.addEventListener("scroll", () => {
-  if (window.pageYOffset > document.body.scrollHeight/2) {
+  const trandingSlideRect = trandingSlideContent.getBoundingClientRect();
+  
+  // Divin ortasını hesapla
+  const trandingSlideMiddle = trandingSlideRect.top + (trandingSlideRect.height / 2);
+  
+  // Sayfanın kaydırma yüksekliği
+  const scrollPosition = window.scrollY + window.innerHeight;
+
+  // Eğer scroll pozisyonu divin ortasını geçerse butonu göster
+  if (scrollPosition > trandingSlideMiddle + window.scrollY) {
     toTop.classList.add("active");
   } else {
     toTop.classList.remove("active");
   }
-})
+});
 
 /*when the window is reloading or loading*/
 window.addEventListener('load', function() {

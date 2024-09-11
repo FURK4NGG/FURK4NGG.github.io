@@ -39,7 +39,7 @@ self.addEventListener('install', event => {
             if (response.ok) {
               return response.text().then(text => {
                 const versionedUrl = `${url}?v=${FILE_VERSIONS[url]}`;
-                cache.put(versionedUrl, new Response(text, { headers: response.headers }));
+                return cache.put(versionedUrl, new Response(text, { headers: response.headers }));
               });
             }
             return Promise.reject('Failed to fetch ' + url);
@@ -63,12 +63,12 @@ self.addEventListener('fetch', event => {
       caches.match(requestUrlWithVersion).then(cachedResponse => {
         if (cachedResponse) {
           const cachedVersion = new URL(cachedResponse.url).searchParams.get('v');
-
+          
           if (cachedVersion === newVersion) {
-            // Versiyonlar eşitse, eski dosyayı kullan
+            // Versiyonlar eşitse, önbellekteki dosyayı kullan
             return cachedResponse;
           } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
-            // Yeni versiyon mevcut, cache'e kaydet ve yeni versiyonu göster
+            // Yeni versiyon mevcut, yeni dosyayı fetch et ve cache'e kaydet
             return fetch(request).then(response => {
               if (response.ok) {
                 const responseClone = response.clone();
@@ -83,7 +83,7 @@ self.addEventListener('fetch', event => {
             return fetch(request);
           }
         } else {
-          // Önceki versiyon yok, yeni dosyayı cache'e kaydet ve göster
+          // Önceki versiyon yok, yeni dosyayı fetch et ve cache'e kaydet
           return fetch(request).then(response => {
             if (response.ok) {
               const responseClone = response.clone();

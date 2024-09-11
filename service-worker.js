@@ -1,7 +1,7 @@
 const FILE_VERSIONS = {
-  '/index.html': '1',
-  '/home_en.html': '3',
-  '/home_tr.html': '1',
+  '/index.html': '9',
+  '/home_en.html': '8',
+  '/home_tr.html': '8',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',
   '/CSS/2.css': '1',
@@ -9,7 +9,7 @@ const FILE_VERSIONS = {
   '/CSS/tr/2.css': '1',
   '/JAVASCRIPT/1.js': '1',
   '/JAVASCRIPT/tr/1.js': '1',
-  '/service-worker.js': '2',
+  '/service-worker.js': '1',
   '/img/ai.webp': '1',
   '/img/app.webp': '1',
   '/img/cyber.webp': '1',
@@ -30,7 +30,10 @@ const CACHE_NAME = 'my-site-cache-v1';
 // Dosyaları önbelleğe al
 const addResourcesToCache = async (resources) => {
   const cache = await caches.open(CACHE_NAME);
-  await cache.addAll(resources);
+  await cache.addAll(resources.map(url => {
+    const version = FILE_VERSIONS[url] || '0';
+    return new Request(`${url}?v=${version}`);
+  }));
 };
 
 // Cache'de dosyaları güncelle
@@ -44,29 +47,30 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
   const newVersion = FILE_VERSIONS[request.url] || '0';
   const cache = await caches.open(CACHE_NAME);
 
-  const cachedResponse = await caches.match(request);
+  const cacheUrl = new URL(request.url);
+  cacheUrl.searchParams.set('v', newVersion);
+  const cacheRequest = new Request(cacheUrl.toString());
+
+  const cachedResponse = await caches.match(cacheRequest);
   if (cachedResponse) {
     const cachedVersion = new URL(cachedResponse.url).searchParams.get('v') || '0';
     if (newVersion === cachedVersion) {
       return cachedResponse;
     } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
-      // Yeni versiyon mevcut, cache'e kaydet ve döndür
       return fetch(request).then(response => {
         if (response.ok) {
           const responseClone = response.clone();
-          cache.put(request, responseClone);
+          cache.put(cacheRequest, responseClone);
         }
         return response;
       });
     } else {
-      // Yeni versiyon daha eski, yeni versiyonu döndür ama cache'e kaydetme
       return fetch(request);
     }
   } else {
-    // Önceki versiyon yoksa preload yanıtını kullan
     const preloadResponse = await preloadResponsePromise;
     if (preloadResponse) {
-      putInCache(request, preloadResponse.clone());
+      putInCache(cacheRequest, preloadResponse.clone());
       return preloadResponse;
     }
 
@@ -74,7 +78,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
       const response = await fetch(request);
       if (response.ok) {
         const responseClone = response.clone();
-        cache.put(request, responseClone);
+        cache.put(cacheRequest, responseClone);
       }
       return response;
     } catch (error) {

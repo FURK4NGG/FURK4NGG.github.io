@@ -1,5 +1,5 @@
 // Determine the cache version dynamically
-const CURRENT_VERSION = 12;  // Current cache version number
+const CURRENT_VERSION = 13;  // Current cache version number
 const CACHE_NAME = `my-site-cache-v${CURRENT_VERSION}`;  // Dynamically named cache
 
 const urlsToCache = [

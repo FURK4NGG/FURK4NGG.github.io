@@ -1,7 +1,7 @@
 const FILE_VERSIONS = {
-  '/index.html': '9',
-  '/home_en.html': '9',
-  '/home_tr.html': '8',
+  '/index.html': '12',
+  '/home_en.html': '12',
+  '/home_tr.html': '12',
   '/not_found_page.html': '1',
   '/CSS/1.css': '1',
   '/CSS/2.css': '1',
@@ -26,17 +26,15 @@ const FILE_VERSIONS = {
 };
 
 const CACHE_NAME = 'my-site-cache-v1';
+const CACHE_VERSION = 'v1'; // Versiyon numarasıyla cache'i yönetir
 
-// Dosyaları önbelleğe al
+// Önbelleğe alınacak dosyaları ekler
 const addResourcesToCache = async (resources) => {
   const cache = await caches.open(CACHE_NAME);
-  await cache.addAll(resources.map(url => {
-    const version = FILE_VERSIONS[url] || '0';
-    return new Request(`${url}?v=${version}`);
-  }));
+  await cache.addAll(resources);
 };
 
-// Cache'de dosyaları güncelle
+// Cache'e yanıt ekler
 const putInCache = async (request, response) => {
   const cache = await caches.open(CACHE_NAME);
   await cache.put(request, response);
@@ -47,11 +45,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
   const newVersion = FILE_VERSIONS[request.url] || '0';
   const cache = await caches.open(CACHE_NAME);
 
-  const cacheUrl = new URL(request.url);
-  cacheUrl.searchParams.set('v', newVersion);
-  const cacheRequest = new Request(cacheUrl.toString());
-
-  const cachedResponse = await caches.match(cacheRequest);
+  const cachedResponse = await cache.match(request);
   if (cachedResponse) {
     const cachedVersion = new URL(cachedResponse.url).searchParams.get('v') || '0';
     if (newVersion === cachedVersion) {
@@ -60,7 +54,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
       return fetch(request).then(response => {
         if (response.ok) {
           const responseClone = response.clone();
-          cache.put(cacheRequest, responseClone);
+          cache.put(request, responseClone);
         }
         return response;
       });
@@ -70,7 +64,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
   } else {
     const preloadResponse = await preloadResponsePromise;
     if (preloadResponse) {
-      putInCache(cacheRequest, preloadResponse.clone());
+      putInCache(request, preloadResponse.clone());
       return preloadResponse;
     }
 
@@ -78,7 +72,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
       const response = await fetch(request);
       if (response.ok) {
         const responseClone = response.clone();
-        cache.put(cacheRequest, responseClone);
+        cache.put(request, responseClone);
       }
       return response;
     } catch (error) {
@@ -91,7 +85,7 @@ const cacheFirst = async ({ request, preloadResponsePromise, fallbackUrl }) => {
   }
 };
 
-// Service Worker olayları
+// Service Worker etkinleştirme
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -104,18 +98,20 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Service Worker yüklenme
 self.addEventListener('install', (event) => {
   event.waitUntil(
     addResourcesToCache(Object.keys(FILE_VERSIONS))
   );
 });
 
+// Fetch olayını ele al
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     cacheFirst({
       request: event.request,
-      preloadResponsePromise: event.preloadResponse || Promise.resolve(null),
-      fallbackUrl: '/gallery/myLittleVader.jpg'
+      preloadResponsePromise: event.preloadResponse,
+      fallbackUrl: '/img/robotic.webp' // Veya uygun bir geri dönüş resmi
     })
   );
 });

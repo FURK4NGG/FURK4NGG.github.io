@@ -1,100 +1,83 @@
-const FILE_VERSIONS = {
-  '/index.html': '13',
-  '/home_en.html': '15',
-  '/home_tr.html': '14',
-  '/not_found_page.html': '1',
-  '/CSS/1.css': '1',
-  '/CSS/2.css': '1',
-  '/CSS/tr/1.css': '1',
-  '/CSS/tr/2.css': '1',
-  '/JAVASCRIPT/1.js': '1',
-  '/JAVASCRIPT/tr/1.js': '1',
-  '/service-worker.js': '1',
-  '/img/ai.webp': '1',
-  '/img/app.webp': '1',
-  '/img/cyber.webp': '1',
-  '/img/game.webp': '1',
-  '/img/web.webp': '1',
-  '/img/profile_photo1.webp': '1',
-  '/img/robotic.webp': '1',
-  '/img/up.webp': '1',
-  '/img/icon.ico': '1',
-  '/sitemap.xml': '1',
-  '/manifest.json': '1',
-  '/robots.txt': '1',
-  '/.htaccess.txt': '1'
-};
+const CACHE_VERSION = 'v1'; // Update this version number to trigger cache refresh
+const CACHE_NAME = `My-Site-Cache-${CACHE_VERSION}`;
 
-const CACHE_NAME = 'my-site-cache-v1';
+let urlsToCache = [
+  '/',
+  '/index.html',
+  '/not_found_page.html',
+  '/service-worker.js',
+  '/img/ai.webp',
+  '/img/app.webp',
+  '/img/cyber.webp',
+  '/img/game.webp',
+  '/img/web.webp',
+  '/img/profile_photo1.webp',
+  '/img/robotic.webp',
+  '/img/up.webp',
+  '/img/icon.ico',
+  '/sitemap.xml',
+  '/manifest.json',
+  '/robots.txt',
+  '/.htaccess.txt'
+];
 
-// Dosyaları önbelleğe al
-const cacheFiles = async () => {
-  const cache = await caches.open(CACHE_NAME);
-  await cache.addAll(Object.keys(FILE_VERSIONS));
-};
+// Kullanıcının dilini kontrol et
+const userLang = navigator.language || navigator.userLanguage;
 
-// Versiyon kontrolü ile fetch
-const cacheFirst = async (request) => {
-  const url = new URL(request.url);
-  const newVersion = FILE_VERSIONS[url.pathname] || '0';
+// Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
+if (userLang.startsWith('tr')) {
+  urlsToCache = urlsToCache.concat([
+    '/home_tr.html',
+    '/CSS/tr/1.css',
+    '/CSS/tr/2.css',
+    '/JAVASCRIPT/tr/1.js'
+  ]);
+} else {
+  // İngilizce dosyaları ekle
+  urlsToCache = urlsToCache.concat([
+    '/home_en.html',
+    '/CSS/1.css',
+    '/CSS/2.css',
+    '/JAVASCRIPT/1.js'
+  ]);
+}
 
-  const cache = await caches.open(CACHE_NAME);
-  const cachedResponse = await caches.match(request);
-
-  if (cachedResponse) {
-    const cachedVersion = new URL(cachedResponse.url).searchParams.get('v') || '0';
-    if (newVersion === cachedVersion) {
-      return cachedResponse;
-    } else if (parseInt(newVersion, 10) > parseInt(cachedVersion, 10)) {
-      return fetch(request).then(response => {
-        if (response.ok) {
-          const responseClone = response.clone();
-          cache.put(request, responseClone);
-        }
-        return response;
-      });
-    } else {
-      return fetch(request);
-    }
-  } else {
-    try {
-      const response = await fetch(request);
-      if (response.ok) {
-        const responseClone = response.clone();
-        cache.put(request, responseClone);
-      }
-      return response;
-    } catch (error) {
-      // İstemci tarafında yanıt alınamadığında hata yanıtı döndür
-      return new Response('Network error happened', {
-        status: 408,
-        headers: { 'Content-Type': 'text/plain' },
-      });
-    }
-  }
-};
-
-// Service Worker olayları
-self.addEventListener('install', (event) => {
+// Service Worker install event
+self.addEventListener('install', event => {
   event.waitUntil(
-    cacheFiles()
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
-self.addEventListener('activate', (event) => {
+// Service Worker activate event
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) {
-          return caches.delete(key);
-        }
-      }));
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
 
-self.addEventListener('fetch', (event) => {
+// Service Worker fetch event
+self.addEventListener('fetch', event => {
   event.respondWith(
-    cacheFirst(event.request)
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
   );
 });

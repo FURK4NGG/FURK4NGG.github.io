@@ -31,6 +31,27 @@ const libsToCache = [
   '/darkmode-js.min.js'
 ];
 
+// Kullanıcının dilini kontrol et
+const userLang = navigator.language || navigator.userLanguage;
+
+// Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
+if (userLang.startsWith('tr')) {
+  urlsToCache = urlsToCache.concat([
+    '/home_tr.html?v=4',
+    '/CSS/tr/1.css',
+    '/CSS/tr/2.css',
+    '/JAVASCRIPT/tr/1.js'
+  ]);
+} else {
+  // İngilizce dosyaları ekle
+  urlsToCache = urlsToCache.concat([
+    '/home_en.html?v=4',
+    '/CSS/1.css',
+    '/CSS/2.css',
+    '/JAVASCRIPT/1.js'
+  ]);
+}
+
 // Service Worker install event
 self.addEventListener('install', event => {
   event.waitUntil(
@@ -65,23 +86,13 @@ self.addEventListener('activate', event => {
 
 // Service Worker fetch event
 self.addEventListener('fetch', event => {
-  // Kütüphaneler için cache kontrolü
-  if (libsToCache.some(lib => event.request.url.includes(lib))) {
-    event.respondWith(
-      caches.open(LIBS_CACHE_NAME).then(cache => {
-        return cache.match(event.request).then(response => {
-          return response || fetch(event.request);
-        });
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
       })
-    );
-  } else {
-    // Diğer dosyalar için cache kontrolü
-    event.respondWith(
-      caches.open(CACHE_NAME).then(cache => {
-        return cache.match(event.request).then(response => {
-          return response || fetch(event.request);
-        });
-      })
-    );
-  }
+  );
 });

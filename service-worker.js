@@ -1,7 +1,7 @@
 const CACHE_NAME = 'my-site-cache-v7';
 const urlsToCache = [
   '/',
-  '/index.html?v=8',
+  '/index.html?v=9',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',

@@ -38,16 +38,16 @@ const userLang = navigator.language || navigator.userLanguage;
 if (userLang.startsWith('tr')) {
   urlsToCache = urlsToCache.concat([
     '/home_tr.html?v=4',
-    '/CSS/tr/1.css',
-    '/CSS/tr/2.css',
+    '/CSS/tr/1.css?v=2',
+    '/CSS/tr/2.css?v=2',
     '/JAVASCRIPT/tr/1.js'
   ]);
 } else {
   // İngilizce dosyaları ekle
   urlsToCache = urlsToCache.concat([
     '/home_en.html?v=5',
-    '/CSS/1.css',
-    '/CSS/2.css',
+    '/CSS/1.css?v=2',
+    '/CSS/2.css?v=2',
     '/JAVASCRIPT/1.js'
   ]);
 }

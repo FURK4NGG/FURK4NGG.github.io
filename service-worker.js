@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v14';
+const CACHE_NAME = 'my-site-cache-v15';
 const LIBS_CACHE_NAME = 'libs-cache-v1'; // Kütüphaneler için ayrı bir cache
 
 // Bu dizilerde dil kontrolü yapılır

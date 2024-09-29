@@ -1,7 +1,7 @@
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');
-  const text = "18 yaşında Bilgisayar Mühendisliği okuyan bir üniversite öğrencisiyim. 2020 yılından bu yana kendimi en çok Robotik Kodlama, Mobil Uygulama Geliştirme, Web Sitesi Oluşturma, Siber Güvenlik ve Yapay Zeka Komut İstimi Mühendisliği başta olmak üzere back-end departmanlarında geliştirdim. MEB Robot Yarışmalarına ve TÜBİTAK projelerine de katıldım. Bu deneyimlerime ek olarak Python, Java, C++, C#, CSS, JavaScript, PHP ve SQL gibi programlama dillerini öğrendim. Şu anda yapay zeka ve IoT ile ilgili projeler üzerinde çalışıyorum.İnsanların yaşamlarını olumlu yönde etkileyebilecek ve topluma katkıda bulunabilecek yenilikçi çözümler yaratma konusunda tutkuluyum ve insanlığa hizmet eden yeni fikirleri keşfetmeye her zaman açığım.";
+  const text = "18 yaşında Bilgisayar Mühendisliği okuyan bir üniversite öğrencisiyim. 2020 yılından bu yana kendimi en çok Robotik Kodlama, Mobil Uygulama Geliştirme, 2D/3D Oyun Yapımı, Web Sitesi Oluşturma, Siber Güvenlik ve Yapay Zeka Komut İstemi Mühendisliği başta olmak üzere back-end departmanlarında geliştirdim. MEB Robot Yarışmalarına ve TÜBİTAK projelerine de katıldım. Bu deneyimlerime ek olarak Python, Java, C++, C#, CSS, JavaScript, PHP ve SQL gibi programlama dillerini öğrendim. Şu anda yapay zeka ve IoT ile ilgili projeler üzerinde çalışıyorum.İnsanların yaşamlarını olumlu yönde etkileyebilecek ve topluma katkıda bulunabilecek yenilikçi çözümler yaratma konusunda tutkuluyum ve insanlığa hizmet eden yeni fikirleri keşfetmeye her zaman açığım.";
   
   // Split text into words and wrap each word in a span
   const words = text.split(' ').map(word => {

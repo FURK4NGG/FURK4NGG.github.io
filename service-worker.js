@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v15';
+const CACHE_NAME = 'my-site-cache-v16';
 const LIBS_CACHE_NAME = 'libs-cache-v1'; // Kütüphaneler için ayrı bir cache
 
 // Bu dizilerde dil kontrolü yapılır
@@ -37,18 +37,18 @@ const userLang = navigator.language || navigator.userLanguage;
 // Eğer tarayıcı dili Türkçe ise /tr klasöründeki dosyaları ekle
 if (userLang.startsWith('tr')) {
   urlsToCache = urlsToCache.concat([
-    '/home_tr.html?v=4',
-    '/CSS/tr/1.css?v=2',
-    '/CSS/tr/2.css?v=2',
-    '/JAVASCRIPT/tr/1.js'
+    '/home_tr.html?v=6',
+    '/CSS/tr/1.css?v=3',
+    '/CSS/tr/2.css?v=3',
+    '/JAVASCRIPT/tr/1.js?v=3'
   ]);
 } else {
   // İngilizce dosyaları ekle
   urlsToCache = urlsToCache.concat([
-    '/home_en.html?v=5',
-    '/CSS/1.css?v=2',
-    '/CSS/2.css?v=2',
-    '/JAVASCRIPT/1.js'
+    '/home_en.html?v=6',
+    '/CSS/1.css?v=3',
+    '/CSS/2.css?v=3',
+    '/JAVASCRIPT/1.js?v=3'
   ]);
 }
 

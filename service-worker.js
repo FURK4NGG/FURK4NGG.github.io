@@ -33,8 +33,9 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-const CURRENT_VERSION = 'v1';
+const CURRENT_VERSION = 'v2';
 
+// Install event - cache files
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -45,6 +46,7 @@ self.addEventListener('install', event => {
   );
 });
 
+// Fetch event - serve files from cache if available
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -53,26 +55,21 @@ self.addEventListener('fetch', event => {
   );
 });
 
+// Activate event - update cache if version is different
 self.addEventListener('activate', event => {
-  const storedVersion = localStorage.getItem('cache-version');
-  if (storedVersion !== CURRENT_VERSION) {
-    console.log(`New version detected: ${CURRENT_VERSION}. Updating cache...`);
-    event.waitUntil(
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName !== CACHE_NAME) {
-              console.log(`Deleting old cache: ${cacheName}`);
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      }).then(() => {
-        localStorage.setItem('cache-version', CURRENT_VERSION);
-        console.log(`Cache updated to version: ${CURRENT_VERSION}`);
-      })
-    );
-  } else {
-    console.log(`Cache version is up-to-date: ${CURRENT_VERSION}`);
-  }
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => {
+      console.log(`Cache updated to version: ${CURRENT_VERSION}`);
+      return self.clients.claim();  // Activates the new service worker immediately
+    })
+  );
 });

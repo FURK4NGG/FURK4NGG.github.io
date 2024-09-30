@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v3';  // Versiyon numarası burada
+const CACHE_NAME = 'my-site-cache-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -33,50 +33,46 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
+const CURRENT_VERSION = 'v1';
+
 self.addEventListener('install', event => {
-  // Cache dosyalarını ekleyelim
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Caching files: ', urlsToCache);
+        console.log('Caching files...');
         return cache.addAll(urlsToCache);
-      })
-      .catch(err => {
-        console.error('Cache error during install:', err);
       })
   );
 });
 
 self.addEventListener('fetch', event => {
-  // Cache'deki dosyayı bul ve dön
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          console.log('Serving from cache: ', event.request.url);
-          return response;  // Cache'den getir
-        }
-        console.log('Fetching from network: ', event.request.url);
-        return fetch(event.request);  // Ağdan al
-      })
-      .catch(err => {
-        console.error('Fetch error:', err);
-      })
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
 
 self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Deleting old cache: ', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+  const storedVersion = localStorage.getItem('cache-version');
+  if (storedVersion !== CURRENT_VERSION) {
+    console.log(`New version detected: ${CURRENT_VERSION}. Updating cache...`);
+    event.waitUntil(
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheName !== CACHE_NAME) {
+              console.log(`Deleting old cache: ${cacheName}`);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }).then(() => {
+        localStorage.setItem('cache-version', CURRENT_VERSION);
+        console.log(`Cache updated to version: ${CURRENT_VERSION}`);
+      })
+    );
+  } else {
+    console.log(`Cache version is up-to-date: ${CURRENT_VERSION}`);
+  }
 });

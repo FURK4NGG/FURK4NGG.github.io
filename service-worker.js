@@ -2,6 +2,8 @@ const CACHE_NAME = 'my-site-cache-v3';  // Versiyon numarası
 const urlsToCache = [
   '/',
   '/index.html',
+  '/home_en.html',
+  '/home_tr.html',
   '/not_found_page.html',
   '/service-worker.js',
   '/img/ai.webp',

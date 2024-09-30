@@ -9,6 +9,7 @@ const urlsToCache = [
   '/CSS/2.css',
   '/CSS/tr/1.css',
   '/CSS/tr/2.css',
+  '/CSS/unpkg.comswiper@8swiper-bundle.min.css',
   '/JAVASCRIPT/1.js',
   '/JAVASCRIPT/tr/1.js',
   '/JAVASCRIPT/darkmode-js.min.js',

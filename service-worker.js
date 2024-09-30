@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v3';  // Versiyon numarası
+const CACHE_NAME = 'my-site-cache-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -33,9 +33,8 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-const CURRENT_VERSION = 'v3';  // Yeni versiyon numarası
+const CURRENT_VERSION = 'v1';
 
-// Install event: Versiyona bağlı olarak cache oluşturma
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -46,7 +45,6 @@ self.addEventListener('install', event => {
   );
 });
 
-// Fetch event: Cache'den veri sunulur, internetten varsa cache güncellenir
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -55,7 +53,6 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event: Eski versiyon cache'leri temizlenir ve versiyona göre cache güncellenir
 self.addEventListener('activate', event => {
   const storedVersion = localStorage.getItem('cache-version');
   if (storedVersion !== CURRENT_VERSION) {

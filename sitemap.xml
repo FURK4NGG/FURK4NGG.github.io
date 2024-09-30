@@ -3,14 +3,14 @@
 
   <url>
     <loc>https://furk4ngg.github.io/home_en.html</loc>
-    <lastmod>2024-09-12</lastmod>
+    <lastmod>2024-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://furk4ngg.github.io/home_tr.html</loc>
-    <lastmod>2024-09-12</lastmod>
+    <lastmod>2024-09-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -67,6 +67,13 @@
   <url>
     <loc>https://furk4ngg.github.io/5.html</loc>
     <lastmod>2024-08-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://furk4ngg.github.io/search.html</loc>
+    <lastmod>2024-09-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

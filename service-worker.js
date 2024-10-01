@@ -5,7 +5,7 @@ const urlsToCache = [
   '/home_en.html',
   '/home_tr.html',
   '/not_found_page.html',
-
+  '/CSS/1.css',
   '/CSS/2.css',
   '/CSS/tr/1.css',
   '/CSS/tr/2.css',

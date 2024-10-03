@@ -21,7 +21,7 @@ document.addEventListener('scroll', () => {
   const windowHeight = window.innerHeight;
   const totalHeight = document.body.scrollHeight;
   
-  const scrollPercent = scrollPosition*4.7 / (totalHeight - windowHeight);
+  const scrollPercent = scrollPosition*4.8 / (totalHeight - windowHeight);
   
   words.forEach((word, index) => {
     const wordOffset = index / words.length;

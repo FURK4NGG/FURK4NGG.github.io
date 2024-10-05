@@ -33,7 +33,7 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-const CURRENT_VERSION = 'v14';
+const CURRENT_VERSION = 'v15';
 
 // Install event - cache files
 self.addEventListener('install', event => {

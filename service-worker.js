@@ -4,7 +4,7 @@ const urlsToCache = [
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
-  '/not_found_page.html',
+  '/404.html',
   '/CSS/1.css',
   '/CSS/2.css',
   '/CSS/tr/1.css',

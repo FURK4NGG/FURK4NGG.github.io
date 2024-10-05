@@ -1,3 +1,21 @@
+/*IMAGE CHANGER*/
+let currentIndex = 0;
+const images = document.querySelectorAll('#photo img');
+
+function switchPhoto() {
+    // Hide the current image by removing 'visible'
+    images[currentIndex].classList.remove('visible');
+
+    // Increment the index and loop back to the first image after the last one
+    currentIndex = (currentIndex + 1) % images.length;
+
+    // Show the next image by adding 'visible'
+    images[currentIndex].classList.add('visible');
+}
+
+// Initially set the first image as visible
+images[currentIndex].classList.add('visible');
+
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');

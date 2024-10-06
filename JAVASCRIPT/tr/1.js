@@ -321,7 +321,6 @@ function runOnVisible() {
   const progressBar_6 = document.querySelector(".progress-value_6");
   const progressBar_7 = document.querySelector(".progress-value_7");
   const progressBar_8 = document.querySelector(".progress-value_8");
-  const progressBar_9 = document.querySelector(".progress-value_9");
   
   progressBar_1.style.animation = "load_1 3s normal forwards";
   progressBar_2.style.animation = "load_2 3s normal forwards";
@@ -330,8 +329,7 @@ function runOnVisible() {
   progressBar_5.style.animation = "load_5 3s normal forwards";
   progressBar_6.style.animation = "load_6 3s normal forwards";
   progressBar_7.style.animation = "load_7 3s normal forwards";
-  progressBar_8.style.animation = "load_8 3s normal forwards";
-  progressBar_9.style.animation = "load_9 3s normal forwards";}
+  progressBar_8.style.animation = "load_8 3s normal forwards";}
 
 const observer = new IntersectionObserver(
   (entries) => {

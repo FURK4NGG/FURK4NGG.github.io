@@ -311,37 +311,6 @@ function animateCircles() {
 
 animateCircles();
 
-/*when see the progress-bar animation*/
-function runOnVisible() {
-  const progressBar_1 = document.querySelector(".progress-value_1");
-  const progressBar_2 = document.querySelector(".progress-value_2");
-  const progressBar_3 = document.querySelector(".progress-value_3");
-  const progressBar_4 = document.querySelector(".progress-value_4");
-  const progressBar_5 = document.querySelector(".progress-value_5");  
-  const progressBar_6 = document.querySelector(".progress-value_6");
-  const progressBar_7 = document.querySelector(".progress-value_7");
-  const progressBar_8 = document.querySelector(".progress-value_8");
-  
-  progressBar_1.style.animation = "load_1 3s normal forwards";
-  progressBar_2.style.animation = "load_2 3s normal forwards";
-  progressBar_3.style.animation = "load_3 3s normal forwards";
-  progressBar_4.style.animation = "load_4 3s normal forwards";
-  progressBar_5.style.animation = "load_5 3s normal forwards";
-  progressBar_6.style.animation = "load_6 3s normal forwards";
-  progressBar_7.style.animation = "load_7 3s normal forwards";
-  progressBar_8.style.animation = "load_8 3s normal forwards";}
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {runOnVisible();}//Run when see dhe div
-    });
-  },
-  { threshold: 0.09 } // Divin %9'si göründüğünde tetikler
-);
-const skillsDiv = document.getElementById("skills");
-observer.observe(skillsDiv);
-
 /*Disable copy-paste*/
 const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
   const showAlert = e => {

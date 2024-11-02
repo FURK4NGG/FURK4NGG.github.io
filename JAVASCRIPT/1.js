@@ -13,7 +13,6 @@ glassyButtons.forEach((button) => {
   });
 });
 
-
 /*IMAGE CHANGER*/
 let currentIndex = 0;
 const images = document.querySelectorAll('#photo img');

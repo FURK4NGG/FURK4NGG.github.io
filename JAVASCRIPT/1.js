@@ -1,16 +1,18 @@
-/*BUTTON FLIP NORMALIZE*/
- const btnFlip = document.querySelector('.btn-flip');
+/*BUTTON MOVEMENT*/
+const glassyButtons = document.querySelectorAll(".glassy-button");
+glassyButtons.forEach((button) => {
+  button.addEventListener("mousemove", (event) => {
+    const centerX = button.offsetWidth / 2;
+    const centerY = button.offsetHeight / 2;
 
-  // Tıklama olayını ekliyoruz
-  btnFlip.addEventListener('click', function() {
-    // "active" sınıfını ekleyerek efekti başlatıyoruz
-    btnFlip.classList.add('active');
+    const offsetX = event.offsetX - centerX;
+    const offsetY = event.offsetY - centerY;
 
-    // 2 saniye sonra "active" sınıfını kaldırıyoruz
-    setTimeout(function() {
-      btnFlip.classList.remove('active');
-    }, 2000); // 2000 milisaniye (2 saniye)
+    button.style.setProperty("--_x-motion", `${offsetX}px`);
+    button.style.setProperty("--_y-motion", `${offsetY}px`);
   });
+});
+
 
 /*IMAGE CHANGER*/
 let currentIndex = 0;

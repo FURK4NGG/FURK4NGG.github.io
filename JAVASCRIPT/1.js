@@ -1,3 +1,17 @@
+/*BUTTON FLIP NORMALIZE*/
+ const btnFlip = document.querySelector('.btn-flip');
+
+  // Tıklama olayını ekliyoruz
+  btnFlip.addEventListener('click', function() {
+    // "active" sınıfını ekleyerek efekti başlatıyoruz
+    btnFlip.classList.add('active');
+
+    // 2 saniye sonra "active" sınıfını kaldırıyoruz
+    setTimeout(function() {
+      btnFlip.classList.remove('active');
+    }, 2000); // 2000 milisaniye (2 saniye)
+  });
+
 /*IMAGE CHANGER*/
 let currentIndex = 0;
 const images = document.querySelectorAll('#photo img');

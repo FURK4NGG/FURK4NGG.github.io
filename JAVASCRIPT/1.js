@@ -171,6 +171,45 @@ const options = {
   autoMatchOsTheme: true // default: true
 }
 
+const darkmode = new Darkmode(options);
+
+// Sayfa yüklendiğinde ilk temayı belirle
+window.addEventListener('DOMContentLoaded', () => {
+    // Kayıtlı bir tema tercihi var mı?
+    const savedTheme = localStorage.getItem('theme');
+
+    // Eğer kayıtlı tema yoksa, sistem temasına göre otomatik ayarla
+    if (!savedTheme) {
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (prefersDarkScheme) {
+            darkmode.toggle(); // Dark mode'u etkinleştir
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    } else if (savedTheme === 'dark') {
+        darkmode.toggle(); // Kayıtlı tema dark ise dark mode etkin
+    }
+});
+
+// Tema değiştirme fonksiyonu
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme');
+    
+    // Dark mode aktifse light mode'a geç
+    if (currentTheme === 'dark') {
+        darkmode.toggle(); // Dark mode'u kapat
+        localStorage.setItem('theme', 'light');
+    } else {
+        darkmode.toggle(); // Dark mode'u etkinleştir
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Toggle butonunu dinleyiciye bağla
+document.querySelector('.darkmode-toggle').addEventListener('click', toggleTheme);
+
+
 /*GALLERY IMAGES*/
 var TrandingSlider = new Swiper('.tranding-slider', {
   effect: 'coverflow',

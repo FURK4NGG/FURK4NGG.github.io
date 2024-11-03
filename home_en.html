@@ -76,8 +76,8 @@
       <!-- NOT IN TUTORIAL: The <a> tags are linked to the subpages -->
       <a id='toskills' class="menu"  href="#skills_" onclick="scrollToElement('skills_')" aria-label="Scroll to Skills" draggable="false">Skills</a>
       <a id='togallery' class="menu" href="#tranding" onclick="scrollToElement('tranding')" aria-label="Scroll to Gallery" draggable="false">Gallery</a>
-      <a id='toservices' class="menu" href="#services" onclick="scrollToElement('projects')" aria-label="Scroll to Projects" draggable="false">Services</a>
-      <a id='tocontact' class="menu" href="#form_" onclick="scrollToElement('form_')" aria-label="Scroll to Form" draggable="false">Contact</a>
+      <a id='toservices' class="menu" href="#services" onclick="scrollToElement('services')" aria-label="Scroll to Services" draggable="false">Services</a>
+      <a id='tocontact' class="menu" href="#form_" onclick="scrollToElement('form_')" aria-label="Scroll to Contact" draggable="false">Contact</a>
     </div>
   </nav>
     </header>
@@ -108,9 +108,9 @@
         <div id="photo" onclick="switchPhoto()">
             <div class="container_filter"></div>
             <img src="img/profile_photo1.webp" alt="profile_photo" class="profile_photo" aria-label="Profile Photo" draggable="false">
-	    <img src="img/character1.webp" alt="character_photo1" class="character_photo1" aria-label="Character Photo1" draggable="false">
-            <img src="img/character2.webp" alt="character_photo2" class="character_photo2" aria-label="Character Photo2" draggable="false">
-	    <img src="img/character3.webp" alt="character_photo3" class="character_photo3" aria-label="Character Photo3" draggable="false">
+	    <img src="img/character1.webp" alt="character_photo1" class="character_photo1" aria-label="AI Photo1" draggable="false">
+            <img src="img/character2.webp" alt="character_photo2" class="character_photo2" aria-label="AI Photo2" draggable="false">
+	    <img src="img/character3.webp" alt="character_photo3" class="character_photo3" aria-label="AI Photo3" draggable="false">
         </div>
         </div>
         <div class="text_container">
@@ -118,11 +118,11 @@
         </div>
     	</div>
         <div id="divides" class="divide_1"><div class="space"></div></div>
-    <div id="skills_">
+    <div id="skills_" draggable="false">
         <p class="text_title">- What I Work With -</p>
     	<div id="skills">
         <div id="skills_bottom"></div>
-        <div class="one marquee-text">
+        <div class="one marquee-text" aria-label="What I Work With Section 1">
         <div class="two marquee-text-track">
         <p>Arduino</p>
     	<p>Firebase</p>
@@ -150,7 +150,7 @@
     	<p aria-hidden="true">Kotlin</p>
     	</div>
     	</div>
-    	<div class="marquee-text">
+    	<div class="marquee-text" aria-label="What I Work With Section 2">
     	<div class="marquee-text-track">
     	<p>Python</p>
     	<p>Java</p>
@@ -223,14 +223,13 @@
                   <h2 class="project-name">
                   Mobile Application Development
                   </h2></div></div></div>
-            <!-- Slide-end -->
-            <!-- Slide-start -->
+            <!-- Slide-end --><!-- Slide-start -->
             <div id="swiper-slider" class="swiper-slide tranding-slide">
                   <div class="tranding-slide-img">
                   <div class="img_filter"></div>
                   <img id="photo_gallery" class="lazy-load" data-src="img/web.webp" alt="Tranding" draggable="false" aria-label="Gallery Photo 4"></div>
                   <div class="tranding-slide-content">
-                  <a class="tranding-slide-content-top" href='https://github.com/FURK4NGG/FURK4NGG.github.io' aria-label="Documents of Robotic Coding" draggable="false">
+                  <a class="tranding-slide-content-top" href='https://github.com/FURK4NGG/FURK4NGG.github.io' aria-label="Go to The Documents of Robotic Coding" draggable="false">
                   <svg class="documents" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 16 16" id="copy"><path d="M4.00029246,4.08524952 L4,10.5 C4,11.8254834 5.03153594,12.9100387 6.33562431,12.9946823 L6.5,13 L10.9143985,13.000703 C10.7082819,13.5829319 10.1528467,14 9.5,14 L6,14 C4.34314575,14 3,12.6568542 3,11 L3,5.5 C3,4.84678131 3.41754351,4.29108512 4.00029246,4.08524952 Z M11.5,2 C12.3284271,2 13,2.67157288 13,3.5 L13,10.5 C13,11.3284271 12.3284271,12 11.5,12 L6.5,12 C5.67157288,12 5,11.3284271 5,10.5 L5,3.5 C5,2.67157288 5.67157288,2 6.5,2 L11.5,2 Z M11.5,3 L6.5,3 C6.22385763,3 6,3.22385763 6,3.5 L6,10.5 C6,10.7761424 6.22385763,11 6.5,11 L11.5,11 C11.7761424,11 12,10.7761424 12,10.5 L12,3.5 C12,3.22385763 11.7761424,3 11.5,3 Z"></path></svg></a>
                   <div class="tranding-slide-content-bottom">
                   <span>2022</span>
@@ -266,7 +265,7 @@
             <div class="tranding-slider-control">
             <div class="swiper-button-prev slider-arrow" aria-label="Swipe to Image, Right"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 17a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 1 1 1.414 1.414L11.414 12l3.293 3.293A1 1 0 0 1 14 17z" style="fill:#1c1b1e"/></svg></div>
             <div class="swiper-button-next slider-arrow" aria-label="Swipe to Image, Left"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#1c1b1e"/></svg></div>
-            <div class="swiper-pagination" aria-label="Image Picker"></div>
+            <div class="swiper-pagination" aria-label="Image Picker Dots"></div>
           </div></div>
     </div>
     </section>
@@ -312,7 +311,7 @@
             </tr>
             <tr></tr><tr></tr> 
             <tr>
-	    <td id="submit" colspan="2" align="center"><button id="submit" colspan="2" align="center" class="button-send" role="button" aria-label="Button Send">Send</button>
+	    <td id="submit" colspan="2" align="center"><button id="submit" colspan="2" align="center" class="button-send" role="button" aria-label="Send Button">Send</button>
             </td>
             </tr></div>
             </table></center>

@@ -118,11 +118,11 @@
         </div>
     </div>
         <div id="divides" class="divide_1"><div class="space"></div></div>
-    <div id="skills_">
+    <div id="skills_" draggable="false">
         <p class="text_title">- Çalışma Alanlarım -</p>
     	<div id="skills">
         <div id="skills_bottom"></div>
-        <div class="one marquee-text">
+        <div class="one marquee-text" aria-label="Çalışma Alanlarım Katman 1">
         <div class="two marquee-text-track">
         <p>Arduino</p>
     	<p>Firebase</p>
@@ -150,7 +150,7 @@
     	<p aria-hidden="true">Kotlin</p>
     	</div>
     	</div>
-    	<div class="marquee-text">
+    	<div class="marquee-text" aria-label="Çalışma Alanlarım Katman 1">
     	<div class="marquee-text-track">
     	<p>Python</p>
     	<p>Java</p>
@@ -194,7 +194,7 @@
             <div id="swiper-slider" class="swiper-slide tranding-slide">
                   <div class="tranding-slide-img">
                   <div class="img_filter"></div>
-                  <img id="photo_gallery" class="lazy-load" data-src="img/robotic.webp" href='https://github.com/FURK4NGG/FURK4NGG.github.io' alt="Tranding" draggable="false" aria-label="Galeri Fotoğrafı 1"></div>
+                  <img id="photo_gallery" class="lazy-load" data-src="img/robotic.webp" alt="Tranding" draggable="false" aria-label="Galeri Fotoğrafı 1"></div>
                   <div class="tranding-slide-content">
                   <div class="tranding-slide-content-bottom">
                   <span>2020</span>
@@ -223,8 +223,7 @@
                   <h2 class="project-name">
                   Mobil Uygulama Oluşturma
                   </h2></div></div></div>
-            <!-- Slide-end -->
-            <!-- Slide-start -->
+            <!-- Slide-end --><!-- Slide-start -->
             <div id="swiper-slider" class="swiper-slide tranding-slide">
                   <div class="tranding-slide-img">
                   <div class="img_filter"></div>
@@ -237,8 +236,7 @@
                   <h2 class="project-name">
                   Website Oluşturma
                   </h2></div></div></div>
-            <!-- Slide-end -->
-            <!-- Slide-start -->
+            <!-- Slide-end --><!-- Slide-start -->
             <div id="swiper-slider" class="swiper-slide tranding-slide">
                   <div class="tranding-slide-img">
                   <div class="img_filter"></div>
@@ -249,8 +247,7 @@
                   <h2 class="project-name">
                   Siber Güvenlik
                   </h2></div></div></div>
-            <!-- Slide-end -->
-            <!-- Slide-start -->
+            <!-- Slide-end --><!-- Slide-start -->
             <div id="swiper-slider" class="swiper-slide tranding-slide">
                   <div class="tranding-slide-img">
                   <div class="img_filter"></div>
@@ -264,9 +261,9 @@
             <!-- Slide-end -->
             </div>
             <div class="tranding-slider-control">
-	    <div class="swiper-button-prev slider-arrow" aria-label="Soldaki Fotoğrafa Kaydır"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 17a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 1 1 1.414 1.414L11.414 12l3.293 3.293A1 1 0 0 1 14 17z" style="fill:#1c1b1e"/></svg></div>
-            <div class="swiper-button-next slider-arrow" aria-label="Sağdaki Fotoğrafa Kaydır"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#1c1b1e"/></svg></div>
-            <div class="swiper-pagination" aria-label="Fotoğraf Seçici"></div>
+	    <div class="swiper-button-prev slider-arrow" aria-label="Fotoğrafı Sağa Kaydır"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 17a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 1 1 1.414 1.414L11.414 12l3.293 3.293A1 1 0 0 1 14 17z" style="fill:#1c1b1e"/></svg></div>
+            <div class="swiper-button-next slider-arrow" aria-label="Fotoğrafı Sola Kaydır"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.707 12.707-4 4a1 1 0 0 1-1.414-1.414L12.586 12 9.293 8.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" style="fill:#1c1b1e"/></svg></div>
+            <div class="swiper-pagination" aria-label="Fotoğraf Seçici Noktalar"></div>
           </div></div>
     </div>
     </section>
@@ -296,23 +293,23 @@
             <p>Projeniz için ücret teklifi almak, soru sormak ya da 'Merhaba!' demek için mail adreslerimden bana ulaşın ya da sosyal medya adreslerim üzerinden bana yazın! En kısa sürede size geri döneceğim.</div>
             <div id='form'>
             <tr>
-            <td><input type="text" name="person" style="width: 300px;height: 40px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="İsim Soyisim" aria-label="İsim Girişi"/></td>
+            <td><input type="text" name="person" style="width: 300px;height: 40px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="İsim Soyisim" aria-label="İsim Girdisi"/></td>
             </tr>
             <tr></tr>
             <tr>
-            <td><input type="email" name="email" style="width: 300px;height: 40px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="Mail Adresi" aria-label="Mail Girişi"/></td>
+            <td><input type="email" name="email" style="width: 300px;height: 40px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="Mail Adresi" aria-label="Mail Girdisi"/></td>
             </tr>
             <tr></tr>
             <tr>
-            <td><input type="text" name="konu" style="width: 300px;height: 50px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="Konu" aria-label="Konu Girişi"/></td>
+            <td><input type="text" name="konu" style="width: 300px;height: 50px;padding-left: 10px;padding-right: 10px;" maxlength="41" placeholder="Konu" aria-label="Konu Girdisi"/></td>
             </tr>
             <td></td>
             <tr>
-            <td><textarea name="message" style="width: 300px;height: 160px;resize: none;padding: 10px 10px 7px;" maxlength="280" placeholder="Mesaj" aria-label="Mesaj Girişi"></textarea></td>
+            <td><textarea name="message" style="width: 300px;height: 160px;resize: none;padding: 10px 10px 7px;" maxlength="280" placeholder="Mesaj" aria-label="Mesaj Girdisi"></textarea></td>
             </tr>
             <tr></tr><tr></tr> 
             <tr>
-            <td id="submit" colspan="2" align="center"><button id="submit" colspan="2" align="center" class="button-send" role="button" aria-label="Gönder Tuşu">Gönder</button>
+            <td id="submit" colspan="2" align="center"><button id="submit" colspan="2" align="center" class="button-send" role="button" aria-label="Gönder Tuşu">Gönder Butonu</button>
             </td>
             </tr></div>
             </table></center>

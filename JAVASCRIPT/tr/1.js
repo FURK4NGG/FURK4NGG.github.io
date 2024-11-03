@@ -317,6 +317,7 @@ function animateCircles() {
 
 animateCircles();
 
+
 /*DISABLE COPY-PASTE*/
 const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
   const showAlert = e => {

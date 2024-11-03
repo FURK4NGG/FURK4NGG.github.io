@@ -16,6 +16,7 @@ function switchPhoto() {
 // Initially set the first image as visible
 images[currentIndex].classList.add('visible');
 
+
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+
 /*SAVE DATA AND RUN OFFLINE*/
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -99,6 +101,7 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+
 
 /*TO-TOP BUTTON REVEALING*/
 const toTop = document.querySelector(".to-top");
@@ -128,6 +131,7 @@ window.addEventListener('load', function() {
   const sidebarCheckbox = document.getElementById('sidebar-active');
   if (sidebarCheckbox.checked) {sidebarCheckbox.checked = false;}
 });
+
 
 /*LOADING SCREEN*/
 gsap.fromTo(
@@ -170,6 +174,7 @@ const options = {
   label: '🌓', // default: ''
   autoMatchOsTheme: true // default: true
 }
+
 
 /*GALLERY IMAGES*/
 var TrandingSlider = new Swiper('.tranding-slider', {
@@ -219,6 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
 
 /*ANIMATED TEXT*/
 const dynamicText = document.querySelector(".h1 span");
@@ -311,7 +317,7 @@ function animateCircles() {
 
 animateCircles();
 
-/*Disable copy-paste*/
+/*DISABLE COPY-PASTE*/
 const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
   const showAlert = e => {
     e.preventDefault(); // preventing its default behaviour

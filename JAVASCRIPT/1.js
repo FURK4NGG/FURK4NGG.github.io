@@ -1,3 +1,30 @@
+// Kutucukları seç
+const boxes = document.querySelectorAll('.animated-box');
+
+// Görünürlük kontrol fonksiyonu
+function checkVisibility() {
+  const triggerBottom = window.innerHeight * 0.8; // Ekranın %80'i tetik noktası
+
+  boxes.forEach((box) => {
+    const boxTop = box.getBoundingClientRect().top;
+    const boxBottom = box.getBoundingClientRect().bottom;
+
+    if (boxTop < triggerBottom && boxBottom > 0) {
+      // Kutucuk ekranın içinde ise görünür yap
+      box.classList.add('visible');
+      box.classList.remove('hidden');
+    } else {
+      // Kutucuk ekran dışında ise gizle
+      box.classList.remove('visible');
+      box.classList.add('hidden');
+    }
+  });
+}
+
+// Scroll ve yükleme olaylarını dinle
+window.addEventListener('scroll', checkVisibility);
+window.addEventListener('load', checkVisibility);
+
 /*IMAGE CHANGER*/
 let currentIndex = 0;
 const images = document.querySelectorAll('#photo img');

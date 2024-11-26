@@ -1,21 +1,29 @@
-// Sorun çözümü için görünürlük kontrolü
+// Kutucukları seç
+const boxes = document.querySelectorAll('.services_id');
+
+// Görünürlük kontrol fonksiyonu
 function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8;
+  const triggerTop = window.innerHeight * 0.8; // Ekranın altına daha yakın bir tetik noktası
 
   boxes.forEach((box) => {
     const boxTop = box.getBoundingClientRect().top;
     const boxBottom = box.getBoundingClientRect().bottom;
 
     if (boxTop < triggerBottom) {
+      // Kutucuk ekranın alt kısmında ise görünür yap
       box.classList.add('visible');
       box.classList.remove('hidden');
     } else {
+      // Kutucuk ekranın dışında ise gizle
       box.classList.remove('visible');
       box.classList.add('hidden');
     }
   });
 }
 
+// Scroll ve yükleme olaylarını dinle
+window.addEventListener('scroll', checkVisibility);
+window.addEventListener('load', checkVisibility);
 
 
 /*IMAGE CHANGER*/

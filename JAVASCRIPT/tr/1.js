@@ -1,3 +1,28 @@
+/*SERVICES VISIBILITY*/
+const boxes = document.querySelectorAll('.services_id');
+
+// Görünürlük kontrol fonksiyonu
+function checkVisibility() {
+  const triggerBottom = window.innerHeight * 0.8;
+
+  boxes.forEach((box) => {
+    const boxTop = box.getBoundingClientRect().top;
+
+    if (boxTop < triggerBottom) {
+      box.classList.add('visible');
+      box.classList.remove('hidden');
+    } else {
+      // Aksi halde kutuyu gizle
+      box.classList.remove('visible');
+      box.classList.add('hidden');
+    }
+  });
+}
+
+window.addEventListener('scroll', checkVisibility);
+window.addEventListener('load', checkVisibility);
+
+
 /*IMAGE CHANGER*/
 let currentIndex = 0;
 const images = document.querySelectorAll('#photo img');

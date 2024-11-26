@@ -1,14 +1,13 @@
-// Kutucukları seç
+/*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 
 // Görünürlük kontrol fonksiyonu
 function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8; // Ekranın %80'i tetik noktası
+  const triggerBottom = window.innerHeight * 0.8;
 
   boxes.forEach((box) => {
     const boxTop = box.getBoundingClientRect().top;
 
-    // Eğer kutunun üst kenarı tetikleme noktasını geçerse görünür yap
     if (boxTop < triggerBottom) {
       box.classList.add('visible');
       box.classList.remove('hidden');
@@ -20,10 +19,8 @@ function checkVisibility() {
   });
 }
 
-// Scroll ve yükleme olaylarını dinle
 window.addEventListener('scroll', checkVisibility);
 window.addEventListener('load', checkVisibility);
-
 
 
 /*IMAGE CHANGER*/

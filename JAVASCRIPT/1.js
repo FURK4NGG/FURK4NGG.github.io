@@ -3,18 +3,18 @@ const boxes = document.querySelectorAll('.services_id');
 
 // Görünürlük kontrol fonksiyonu
 function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8; // Ekranın %80'i tetik noktası
+  const triggerBottom = window.innerHeight * 0.8; // Tetik noktası: ekranın alt %80'i
 
   boxes.forEach((box) => {
     const boxTop = box.getBoundingClientRect().top;
     const boxBottom = box.getBoundingClientRect().bottom;
 
-    if (boxTop < triggerBottom && boxBottom > 0) {
-      // Kutucuk ekranın içinde ise görünür yap
+    if (boxTop < triggerBottom && boxBottom > triggerBottom / 2) {
+      // Kutucuk ekranın alt kısmında ise görünür yap
       box.classList.add('visible');
       box.classList.remove('hidden');
-    } else {
-      // Kutucuk ekran dışında ise gizle
+    } else if (boxBottom <= triggerBottom / 2) {
+      // Kutucuk ekranın üst kısmına çıktığında gizle
       box.classList.remove('visible');
       box.classList.add('hidden');
     }
@@ -24,6 +24,7 @@ function checkVisibility() {
 // Scroll ve yükleme olaylarını dinle
 window.addEventListener('scroll', checkVisibility);
 window.addEventListener('load', checkVisibility);
+
 
 
 /*IMAGE CHANGER*/

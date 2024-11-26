@@ -1,5 +1,5 @@
 // Kutucukları seç
-const boxes = document.querySelectorAll('.animated-box');
+const boxes = document.querySelectorAll('.services_id');
 
 // Görünürlük kontrol fonksiyonu
 function checkVisibility() {

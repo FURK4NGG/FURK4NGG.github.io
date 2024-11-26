@@ -1,20 +1,20 @@
 // Kutucukları seç
-const boxes = document.querySelectorAll('.services_id');
+const boxes = document.querySelectorAll('.animated-box');
 
 // Görünürlük kontrol fonksiyonu
 function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8; // Tetik noktası: ekranın alt %80'i
+  const triggerTop = window.innerHeight * 0.2; // Ekranın altına daha yakın bir tetik noktası
 
   boxes.forEach((box) => {
     const boxTop = box.getBoundingClientRect().top;
     const boxBottom = box.getBoundingClientRect().bottom;
 
-    if (boxTop < triggerBottom && boxBottom > triggerBottom / 2) {
+    if (boxTop < window.innerHeight && boxBottom > triggerTop) {
       // Kutucuk ekranın alt kısmında ise görünür yap
       box.classList.add('visible');
       box.classList.remove('hidden');
-    } else if (boxBottom <= triggerBottom / 2) {
-      // Kutucuk ekranın üst kısmına çıktığında gizle
+    } else {
+      // Kutucuk ekranın dışında ise gizle
       box.classList.remove('visible');
       box.classList.add('hidden');
     }

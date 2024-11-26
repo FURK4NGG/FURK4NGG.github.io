@@ -1,26 +1,24 @@
+// Kutucukları seç
 const boxes = document.querySelectorAll('.services_id');
-let lastScrollY = 0; // Son kaydırma pozisyonunu tutar
 
 // Görünürlük kontrol fonksiyonu
 function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8; // Tetikleme noktası
+  const triggerBottom = window.innerHeight * 0.8; // Ekranın %80'i tetik noktası
 
   boxes.forEach((box) => {
     const boxTop = box.getBoundingClientRect().top;
     const boxBottom = box.getBoundingClientRect().bottom;
 
-    if (boxTop < triggerBottom && boxBottom > 0 && window.scrollY > lastScrollY) {
-      // Sadece aşağıya kayarken kutucuk ekranın içinde ise animasyonu tetikle
+    if (boxTop < triggerBottom && boxBottom > 0) {
+      // Kutucuk ekranın içinde ise görünür yap
       box.classList.add('visible');
       box.classList.remove('hidden');
-    } else if (window.scrollY < lastScrollY && boxBottom < window.innerHeight) {
-      // Yukarıya kayarken kutucuk ekranın dışında ise eski durumuna dön
+    } else {
+      // Kutucuk ekran dışında ise gizle
       box.classList.remove('visible');
       box.classList.add('hidden');
     }
   });
-
-  lastScrollY = window.scrollY; // Son kaydırma pozisyonunu güncelle
 }
 
 // Scroll ve yükleme olaylarını dinle

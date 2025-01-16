@@ -328,14 +328,7 @@
         if (isMobileDevice()) {
         var circles = document.getElementsByClassName('circle');
         for (var i = 0; i < circles.length; i++) {circles[i].style.display = 'none';}}};
-        const darkmode = new Darkmode(options);
-	
-	if (darkmode.isActivated()) {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.add('light-mode');
-    }
-	    
+        const darkmode = new Darkmode(options);    
         darkmode.showWidget();
     </script>
 </body>

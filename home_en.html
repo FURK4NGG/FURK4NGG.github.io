@@ -330,13 +330,6 @@
         for (var i = 0; i < circles.length; i++) {circles[i].style.display = 'none';}}};
         const darkmode = new Darkmode(options);    
         darkmode.showWidget();
-
-	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      // Tarayıcı karanlık moddaysa dark mode'u aktif et
-      if (!darkmode.isActivated()) {
-        darkmode.toggle();
-      }
-    }
     </script>
 </body>
 </html>

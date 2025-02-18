@@ -61,7 +61,6 @@ getCurrentYear().then(age => {
 /*SCROLL REVEALING*/
     document.addEventListener('DOMContentLoaded', () => {
         const textContainer = document.getElementById('animatedTextContainer');
-
         if (!textContainer) return;
 
         // Split text into words and wrap each word in a span

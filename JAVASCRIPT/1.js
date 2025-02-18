@@ -43,30 +43,30 @@ images[currentIndex].classList.add('visible');
 
 
 /*GET TIME*/
-async function getCurrentYear() {
-    try {
-        const response = await fetch("http://worldtimeapi.org/api/timezone/Etc/UTC");
-        if (!response.ok) throw new Error("Veri alınamadı");
-
-        const data = await response.json();
-        return new Date(data.utc_datetime).getFullYear();
-    } catch (error) {
-        console.error("Yıl bilgisi çekilemedi:", error);
-        return null; // Hata durumunda null döndür
-    }
-}
-
-getCurrentYear().then(year => {
-    const text1 = year ? `an ${year - 2005} years old` : "";
-    const text = `I am ${text1} university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.`;
-    console.log(text);
-});
-
+        
 
 
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');
+    async function getCurrentYear() {
+            try {
+                const response = await fetch("http://worldtimeapi.org/api/timezone/Etc/UTC");
+                if (!response.ok) throw new Error("Veri alınamadı");
+        
+                const data = await response.json();
+                return new Date(data.utc_datetime).getFullYear();
+            } catch (error) {
+                console.error("Yıl bilgisi çekilemedi:", error);
+                return null; // Hata durumunda null döndür
+            }
+        }
+        
+getCurrentYear().then(year => {
+    const text1 = year ? `an ${year - 2005} years old` : "";
+    const text = "I am ${text1} university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.";
+    console.log(text);
+});
     //const text = "I am an 18-year-old university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.";
   
   // Split text into words and wrap each word in a span

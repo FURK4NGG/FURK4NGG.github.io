@@ -1,5 +1,6 @@
 const CURRENT_VERSION = 'v28';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
+
 const urlsToCache = [
   '/',
   '/index.html',

@@ -46,7 +46,7 @@ images[currentIndex].classList.add('visible');
 async function getCurrentYear() {
     const now = new Date();
     const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1;console.log(now.getMonth());
+    const currentMonth = now.getMonth() + 1;
 
     let age = currentYear - 2006;
     

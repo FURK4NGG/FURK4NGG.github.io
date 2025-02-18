@@ -57,12 +57,11 @@ getCurrentYear().then(year => {
 /*SCROLL REVEALING*/
 document.addEventListener('DOMContentLoaded', () => {
   const textContainer = document.getElementById('animatedTextContainer');
-  const text = text2;
 
   //const text = "I am an 18-year-old university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.";
   
   // Split text into words and wrap each word in a span
-  const words = text.split(' ').map(word => {
+  const words = text2.split(' ').map(word => {
     const span = document.createElement('span');
     span.textContent = word;
     span.className = 'word';

@@ -46,13 +46,11 @@ images[currentIndex].classList.add('visible');
 async function getCurrentYear() {
     const now = new Date();
     const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth() + 1; // 0-11 olduğu için +1 ekliyoruz
+    const currentMonth = now.getMonth() + 1;
 
     let age = currentYear - 2006;
-    // Eğer şu an Mart'tan önceki bir aydayız, yaşı bir azaltıyoruz
-    if (currentMonth < 3) {
-        age -= 1;
-    }
+    
+    if(currentMonth < 3){age -= 1;}
     return age;
 }
 

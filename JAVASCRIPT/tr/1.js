@@ -48,8 +48,8 @@ async function getCurrentYear() {
 }
 
 getCurrentYear().then(year => {
-    const text1 = `an ${year - 2006} years old`;
-    const text2 = `I am ${text1} university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.`;
+    const text1 = `an ${year - 2006} yaşında`;
+    const text2 = `${text1} Bilgisayar Mühendisliği okuyan bir üniversite öğrencisiyim. 2020 yılından bu yana kendimi en çok Robotik Kodlama, Mobil Uygulama Geliştirme, 2D/3D Oyun Yapımı, Web Sitesi Oluşturma, Siber Güvenlik ve Yapay Zeka Komut İstemi Mühendisliği başta olmak üzere back-end departmanlarında geliştirdim. Teknofest Yarışmalarına ve TÜBİTAK projelerine de katıldım. Şu anda yapay zeka ve IoT ile ilgili projeler üzerinde çalışıyorum. İnsanların yaşamlarını olumlu yönde etkileyebilecek ve topluma katkıda bulunabilecek yenilikçi çözümler yaratma konusunda tutkuluyum ve insanlığa hizmet eden yeni fikirleri keşfetmeye her zaman açığım.`;
 
   
 /*SCROLL REVEALING*/

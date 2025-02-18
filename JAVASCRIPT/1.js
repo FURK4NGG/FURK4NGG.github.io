@@ -48,7 +48,7 @@ async function getCurrentYear() {
 }
 
 getCurrentYear().then(year => {
-    const text1 = `an ${year - 2005} years old`;
+    const text1 = `an ${year - 2006} years old`;
     const text2 = `I am ${text1} university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.`;
     console.log(text);
 });

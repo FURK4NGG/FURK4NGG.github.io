@@ -44,11 +44,20 @@ images[currentIndex].classList.add('visible');
 
 /*GET TIME*/
 async function getCurrentYear() {
-    return new Date().getFullYear();
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1; // 0-11 olduğu için +1 ekliyoruz
+
+    let age = currentYear - 2006;
+    // Eğer şu an Mart'tan önceki bir aydayız, yaşı bir azaltıyoruz
+    if (currentMonth < 3) {
+        age -= 1;
+    }
+    return age;
 }
 
-getCurrentYear().then(year => {
-    const text1 = `${year - 2006} yaşında`;
+getCurrentYear().then(age => {
+    const text1 = `${age} yaşında`;
     const text2 = `${text1} Bilgisayar Mühendisliği okuyan bir üniversite öğrencisiyim. 2020 yılından bu yana kendimi en çok Robotik Kodlama, Mobil Uygulama Geliştirme, 2D/3D Oyun Yapımı, Web Sitesi Oluşturma, Siber Güvenlik ve Yapay Zeka Komut İstemi Mühendisliği başta olmak üzere back-end departmanlarında geliştirdim. Teknofest Yarışmalarına ve TÜBİTAK projelerine de katıldım. Şu anda yapay zeka ve IoT ile ilgili projeler üzerinde çalışıyorum. İnsanların yaşamlarını olumlu yönde etkileyebilecek ve topluma katkıda bulunabilecek yenilikçi çözümler yaratma konusunda tutkuluyum ve insanlığa hizmet eden yeni fikirleri keşfetmeye her zaman açığım.`;
 
   

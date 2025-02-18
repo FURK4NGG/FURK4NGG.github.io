@@ -47,7 +47,6 @@ async function getCurrentYear() {
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1;
-
     let age = currentYear - 2006;
     
     if(currentMonth < 3){age -= 1;}
@@ -62,8 +61,6 @@ getCurrentYear().then(age => {
 /*SCROLL REVEALING*/
     document.addEventListener('DOMContentLoaded', () => {
         const textContainer = document.getElementById('animatedTextContainer');
-
-        // Eğer container yoksa hata almamak için kontrol et
         if (!textContainer) return;
 
         // Split text into words and wrap each word in a span

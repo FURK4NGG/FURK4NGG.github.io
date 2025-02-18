@@ -49,43 +49,46 @@ async function getCurrentYear() {
 
 getCurrentYear().then(year => {
     const text1 = `an ${year - 2006} years old`;
-    const text2 = `I am ${text1} university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.`;
+    const text2 = `I am ${text1} university student.`;
+
     console.log(text2);
+
+    /* SCROLL REVEALING */
+    document.addEventListener('DOMContentLoaded', () => {
+        const textContainer = document.getElementById('animatedTextContainer');
+
+        // Eğer container yoksa hata almamak için kontrol et
+        if (!textContainer) return;
+
+        // Split text into words and wrap each word in a span
+        const words = text2.split(' ').map(word => {
+            const span = document.createElement('span');
+            span.textContent = word;
+            span.className = 'word';
+            return span;
+        });
+
+        // Append words to the text container
+        words.forEach(word => textContainer.appendChild(word));
+    });
 });
 
-
-/*SCROLL REVEALING*/
-document.addEventListener('DOMContentLoaded', () => {
-  const textContainer = document.getElementById('animatedTextContainer');
-
-  //const text = "I am an 18-year-old university student studying Computer Engineering. Since 2020, I have mostly improved myself in back-end departments, particularly in Robotic Coding, Mobile Application Development, 2D/3D Game Development, Website Creation, Cyber Security, and AI Prompt Engineering. I have also participated in Teknofest Competitions and TUBITAK projects. Right now, I am working on projects related to AI and IoT. I am passionate about creating innovative solutions that can positively impact people’s lives and contribute to society, and I am always open to exploring new ideas that serve humanity.";
-  
-  // Split text into words and wrap each word in a span
-  const words = text2.split(' ').map(word => {
-    const span = document.createElement('span');
-    span.textContent = word;
-    span.className = 'word';
-    return span;
-  });
-
-  // Append words to the text container
-  words.forEach(word => textContainer.appendChild(word));
-});
-
+/* SCROLL EFFECT */
 document.addEventListener('scroll', () => {
-  const words = document.querySelectorAll('.word');
-  const scrollPosition = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const totalHeight = document.body.scrollHeight;
-  
-  const scrollPercent = scrollPosition*4.7 / (totalHeight - windowHeight);
-  
-  words.forEach((word, index) => {
-    const wordOffset = index / words.length;
-    const opacity = Math.min(Math.max((scrollPercent - wordOffset) * 2, 0), 1);
-    word.style.color = `rgba(0, 0, 0, ${opacity})`;
-  });
+    const words = document.querySelectorAll('.word');
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const totalHeight = document.body.scrollHeight;
+
+    const scrollPercent = (scrollPosition * 4.7) / (totalHeight - windowHeight);
+
+    words.forEach((word, index) => {
+        const wordOffset = index / words.length;
+        const opacity = Math.min(Math.max((scrollPercent - wordOffset) * 2, 0), 1);
+        word.style.color = `rgba(0, 0, 0, ${opacity})`;
+    });
 });
+
 
 
 /*LAZY LOADING*/

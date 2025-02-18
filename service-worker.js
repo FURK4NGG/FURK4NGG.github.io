@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-site-cache-v4';
+const CACHE_NAME = 'my-site-cache-v3';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -33,7 +33,7 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-const CURRENT_VERSION = 'v27';
+const CURRENT_VERSION = 'v28';
 
 // Install event - cache files
 self.addEventListener('install', event => {

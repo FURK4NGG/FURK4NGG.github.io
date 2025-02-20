@@ -1,28 +1,3 @@
-function updateThemeColor() {
-    let themeColorMeta = document.querySelector('meta[name="theme-color"]');
-    if (!themeColorMeta) {
-        themeColorMeta = document.createElement('meta');
-        themeColorMeta.setAttribute('name', 'theme-color');
-        document.head.appendChild(themeColorMeta);
-    }
-    
-    if (document.body.classList.contains("darkmode--activated")) {
-        themeColorMeta.setAttribute("content", "#100f2c"); // Karanlık mod rengi
-    } else {
-        themeColorMeta.setAttribute("content", "#F8F6E3"); // Açık mod rengi
-    }
-}
-
-// Sayfa yüklendiğinde kontrol et
-updateThemeColor();
-
-// Karanlık mod açıldığında veya kapandığında güncelle
-document.addEventListener("click", function(event) {
-    if (event.target.classList.contains("darkmode-toggle")) {
-        setTimeout(updateThemeColor, 300); // Animasyon süresi kadar gecikmeli çalıştır
-    }
-});
-
 /*IMAGE CHANGER*/
 let currentIndex = 0;
 const images = document.querySelectorAll('#photo img');

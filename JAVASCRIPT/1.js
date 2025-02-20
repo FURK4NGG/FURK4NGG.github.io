@@ -8,9 +8,6 @@ function updateThemeColor() {
     }
 }
 
-// Dark mode butonu oluştur ve çalıştır
-const darkmode = new Darkmode(options);
-darkmode.showWidget();
 
 // Dark mode değiştiğinde theme color'ı güncelle
 document.addEventListener("DOMContentLoaded", updateThemeColor);

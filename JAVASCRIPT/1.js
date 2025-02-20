@@ -1,3 +1,12 @@
+function setThemeColor() {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    metaThemeColor.setAttribute('content', isDarkMode ? '#000000' : '#ffffff');
+  }
+
+  setThemeColor();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setThemeColor);
+
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 

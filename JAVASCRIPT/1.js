@@ -219,6 +219,33 @@ const options = {
   autoMatchOsTheme: true // default: true
 }
 
+function updateThemeColor() {
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    
+    if (!themeColorMeta) {
+        themeColorMeta = document.createElement('meta');
+        themeColorMeta.setAttribute('name', 'theme-color');
+        document.head.appendChild(themeColorMeta);
+    }
+
+    if (darkmode.isActivated()) {
+        document.body.style.backgroundColor = "#100f2c"; // Arka plan siyah
+        themeColorMeta.setAttribute("content", "#100f2c"); // Tarayıcı rengi siyah
+    } else {
+        document.body.style.backgroundColor = "#fff"; // Açık moda dön
+        themeColorMeta.setAttribute("content", "#fff"); // Tarayıcı rengi beyaz
+    }
+}
+
+// Sayfa açıldığında ve toggle butonuna basıldığında güncelle
+updateThemeColor();
+
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("darkmode-toggle")) {
+        setTimeout(updateThemeColor, 500); // Butona basılınca 0.5s gecikmeli güncelle
+    }
+});
+
 
 /*GALLERY IMAGES*/
 var TrandingSlider = new Swiper('.tranding-slider', {

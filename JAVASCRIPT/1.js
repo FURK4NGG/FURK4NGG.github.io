@@ -1,7 +1,7 @@
 function setThemeColor() {
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    metaThemeColor.setAttribute('content', isDarkMode ? '#000000' : '#ffffff');
+      metaThemeColor.setAttribute('content', isDarkMode ? '#000000' : '#100f2c');
   }
 
   setThemeColor();

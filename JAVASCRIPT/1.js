@@ -4,7 +4,7 @@ function updateThemeColor() {
     if (document.body.classList.contains("darkmode--activated")) {
         themeMetaTag.setAttribute("content", "#fff"); // Karanlık Mod Rengi
     } else {
-        themeMetaTag.setAttribute("content", "#100f2c"); // Açık Mod Rengi
+        themeMetaTag.setAttribute("content", "#fff"); // Açık Mod Rengi
     }
 }
 

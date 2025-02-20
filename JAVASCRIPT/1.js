@@ -1,36 +1,27 @@
-function setThemeColor() {
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      metaThemeColor.setAttribute('content', isDarkMode ? '#100f2c' : '#100f2c');
-  }
-
-  setThemeColor();
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setThemeColor);
-
-/*SERVICES VISIBILITY*/
-const boxes = document.querySelectorAll('.services_id');
-
-// Görünürlük kontrol fonksiyonu
-function checkVisibility() {
-  const triggerBottom = window.innerHeight * 0.8;
-
-  boxes.forEach((box) => {
-    const boxTop = box.getBoundingClientRect().top;
-
-    if (boxTop < triggerBottom) {
-      box.classList.add('visible');
-      box.classList.remove('hidden');
-    } else {
-      // Aksi halde kutuyu gizle
-      box.classList.remove('visible');
-      box.classList.add('hidden');
+function updateThemeColor() {
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (!themeColorMeta) {
+        themeColorMeta = document.createElement('meta');
+        themeColorMeta.setAttribute('name', 'theme-color');
+        document.head.appendChild(themeColorMeta);
     }
-  });
+    
+    if (document.body.classList.contains("darkmode--activated")) {
+        themeColorMeta.setAttribute("content", "#100f2c"); // Karanlık mod rengi
+    } else {
+        themeColorMeta.setAttribute("content", "#F8F6E3"); // Açık mod rengi
+    }
 }
 
-window.addEventListener('scroll', checkVisibility);
-window.addEventListener('load', checkVisibility);
+// Sayfa yüklendiğinde kontrol et
+updateThemeColor();
 
+// Karanlık mod açıldığında veya kapandığında güncelle
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("darkmode-toggle")) {
+        setTimeout(updateThemeColor, 300); // Animasyon süresi kadar gecikmeli çalıştır
+    }
+});
 
 /*IMAGE CHANGER*/
 let currentIndex = 0;

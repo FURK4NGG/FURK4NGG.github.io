@@ -2,9 +2,9 @@ const themeMetaTag = document.querySelector('meta[name="theme-color"]');
 
 function updateThemeColor() {
     if (document.body.classList.contains("darkmode--activated")) {
-        themeMetaTag.setAttribute("content", "#100f2c"); // Karanlık Mod Rengi
+        themeMetaTag.setAttribute("content", "#fff"); // Karanlık Mod Rengi
     } else {
-        themeMetaTag.setAttribute("content", "#000000"); // Açık Mod Rengi
+        themeMetaTag.setAttribute("content", "#100f2c"); // Açık Mod Rengi
     }
 }
 

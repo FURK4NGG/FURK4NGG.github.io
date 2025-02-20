@@ -1,3 +1,21 @@
+const themeMetaTag = document.querySelector('meta[name="theme-color"]');
+
+function updateThemeColor() {
+    if (document.body.classList.contains("darkmode--activated")) {
+        themeMetaTag.setAttribute("content", "#100f2c"); // Karanlık Mod Rengi
+    } else {
+        themeMetaTag.setAttribute("content", "#fff"); // Açık Mod Rengi
+    }
+}
+
+// Dark mode butonu oluştur ve çalıştır
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+
+// Dark mode değiştiğinde theme color'ı güncelle
+document.addEventListener("DOMContentLoaded", updateThemeColor);
+document.addEventListener("click", updateThemeColor);
+
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 

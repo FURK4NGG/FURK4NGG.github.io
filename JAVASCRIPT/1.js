@@ -1,9 +1,9 @@
 /*CHANGE THEME*/
 let metaTheme = document.getElementById("themeMeta");
-        if (metaTheme.content === "#ffffff") {
+        if (metaTheme.content === "#F8F6E3") {
             metaTheme.content = "#100f2c";  // Dark mode theme rengi
         } else {
-            metaTheme.content = "#ffffff";  // Light mode theme rengi
+            metaTheme.content = "#F8F6E3";  // Light mode theme rengi
         }
     });
 

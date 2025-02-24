@@ -1,20 +1,28 @@
 /*CHANGE THEME*/
 // Darkmode instance'ını oluştur
+// Darkmode instance'ını oluştur
 const darkmode = new Darkmode();
-const metaThemeDark = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]');
-const metaThemeLight = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: light)"]');
-const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: dark)"]');
-const metaStatusBarLight = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: light)"]');
+const metaThemeDark = document.querySelector('meta[name="theme-color"]');
+const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 
+// Dark mode değiştiğinde çalışacak fonksiyon
 function updateThemeColor(isDark) {
-    // Darkmode meta tag'lerini güncelle
+    // Tema rengini güncelle
     metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
-    metaThemeLight.setAttribute("content", isDark ? "#ffffff" : "#100f2c");
 
-    // Status bar renklerini değiştir
+    // Status bar rengini değiştir
     metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
-    metaStatusBarLight.setAttribute("content", isDark ? "default" : "black-translucent");
 }
+
+// Toggle butonu dinleyicisi
+document.getElementById("darkmode-toggle").addEventListener("click", function () {
+    darkmode.toggle(); // Dark mode'u aç/kapat
+
+    // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
+    const isDarkMode = darkmode.isActivated();
+    updateThemeColor(isDarkMode);
+});
+
 
 
 /*SERVICES VISIBILITY*/

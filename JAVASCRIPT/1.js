@@ -1,16 +1,14 @@
 /*CHANGE THEME*/
-// Darkmode instance'ını oluştur
-// Darkmode instance'ını oluştur
 const darkmode = new Darkmode();
 const metaThemeDark = document.querySelector('meta[name="theme-color"]');
 const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
 
 // Dark mode değiştiğinde çalışacak fonksiyon
-function updateThemeColor(isDark) {
-    // Tema rengini güncelle
-    metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
+function updateThemeColor() {
+    // Dark mode aktifse tema rengini koyu yap, değilse beyaz yap
+    const isDark = darkmode.isActivated(); // Dark mode durumunu burada kontrol ediyoruz
 
-    // Status bar rengini değiştir
+    metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
     metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
 }
 
@@ -18,9 +16,8 @@ function updateThemeColor(isDark) {
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
     darkmode.toggle(); // Dark mode'u aç/kapat
 
-    // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
-    const isDark = darkmode.isActivated(); // `isDark` burada kullanılacak
-    updateThemeColor(isDark);
+    // Meta etiketlerini güncelle
+    updateThemeColor();
 });
 
 

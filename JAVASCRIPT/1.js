@@ -1,35 +1,5 @@
 /*CHANGE THEME*/
-// Darkmode instance'ını oluştur
-const darkmode = new Darkmode();
-const metaTheme = document.getElementById("themeMeta");
 
-// Dark mode değiştiğinde çalışacak fonksiyon
-function updateThemeColor(isDark) {
-    metaTheme.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
-}
-
-// Toggle butonu dinleyicisi
-document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    darkmode.toggle(); // Dark mode'u aç/kapat
-
-    // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
-    const isDarkMode = darkmode.isActivated();
-    updateThemeColor(isDarkMode);
-    
-    // Tarayıcıya "sistem teması değişti" gibi davranması için event gönder
-    window.matchMedia('(prefers-color-scheme: dark)').dispatchEvent(new Event('change'));
-});
-
-// Tarayıcının sistem teması değişirse güncelle
-if (window.matchMedia) {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', function (e) {
-        updateThemeColor(e.matches);
-    });
-
-    // Sayfa ilk yüklendiğinde de kontrol et
-    updateThemeColor(mediaQuery.matches);
-}
 
 
 

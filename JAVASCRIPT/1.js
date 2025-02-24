@@ -1,9 +1,18 @@
 /*CHANGE THEME*/
 const darkmode = new Darkmode(options);
         darkmode.showWidget();
-const isDark = document.body.classList.contains("darkmode--activated");
+// MutationObserver ile body'nin class listesini izleyelim
+const observer = new MutationObserver(() => {
+  const isDark = document.body.classList.contains("darkmode--activated");
+  console.log(isDark ? "Dark Mode aktif" : "Dark Mode pasif");
+});
 
-console.log(isDark);
+// observer'ı başlatmak için
+observer.observe(document.body, {
+  attributes: true,  // Sadece attribute değişimlerini izleyelim
+  attributeFilter: ["class"], // Sadece 'class' attribute'unda değişiklikleri izleyelim
+});
+
 
 
 

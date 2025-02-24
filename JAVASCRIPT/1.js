@@ -1,26 +1,19 @@
 /*CHANGE THEME*/
+// Darkmode instance'ını oluştur
 const darkmode = new Darkmode();
 
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
     darkmode.toggle(); // Dark mode'u aç/kapat
 
     let metaTheme = document.getElementById("themeMeta");
-
-    // MutationObserver ile class değişimini takip et
-    const observer = new MutationObserver(() => {
-        if (document.body.classList.contains("darkmode--activated")) {
-            metaTheme.setAttribute("content", "#100f2c");  // Dark mode theme rengi
-        } else {
-            metaTheme.setAttribute("content", "#F8F6E3");  // Light mode theme rengi
-        }
-    });
-
-    // Sadece class değişikliklerini izle
-    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-
-    // 1 saniye sonra observer'ı kapat (gereksiz yükü engellemek için)
-    setTimeout(() => observer.disconnect(), 1000);
+    
+    // Karanlık modun aktif olup olmadığını localStorage'dan al
+    const isDarkMode = darkmode.isActivated();
+    
+    // Doğrudan theme color'ı değiştir
+    metaTheme.setAttribute("content", isDarkMode ? "#100f2c" : "#F8F6E3");
 });
+
 
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');

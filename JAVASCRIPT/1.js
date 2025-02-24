@@ -1,7 +1,8 @@
 /*CHANGE THEME*/
+const darkmode = new Darkmode();
+
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    let darkmode = new Darkmode();
-    darkmode.toggle();
+    darkmode.toggle(); // Dark mode'u aç/kapat
 
     let metaTheme = document.getElementById("themeMeta");
 

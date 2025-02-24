@@ -1,24 +1,9 @@
 /*CHANGE THEME*/
-const darkmode = new Darkmode();
-const metaThemeDark = document.querySelector('meta[name="theme-color"]');
-const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+const isDark = document.body.classList.contains("darkmode--activated");
 
-// Dark mode değiştiğinde çalışacak fonksiyon
-function updateThemeColor() {
-    // Dark mode aktifse tema rengini koyu yap, değilse beyaz yap
-    const isDark = document.body.classList.contains("darkmode--activated");
+console.log(isDark);
 
-    metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
-    metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
-}
 
-// Toggle butonu dinleyicisi
-document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    darkmode.toggle(); // Dark mode'u aç/kapat
-
-    // Meta etiketlerini güncelle
-    updateThemeColor();
-});
 
 
 /*SERVICES VISIBILITY*/

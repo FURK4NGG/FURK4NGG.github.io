@@ -387,10 +387,10 @@ animateCircles();
 
     document.getElementById("toggleTheme").addEventListener("click", function () {
         let metaTheme = document.getElementById("themeMeta");
-        if (metaTheme.content === "#ffffff") {
+        if (metaTheme.content === "#F8F6E3") {
             metaTheme.content = "#100f2c"; // Dark mode rengi
         } else {
-            metaTheme.content = "#ffffff"; // Light mode rengi
+            metaTheme.content = "#F8F6E3"; // Light mode rengi
         }
     });
 

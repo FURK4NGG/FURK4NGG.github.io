@@ -1,36 +1,30 @@
 /*CHANGE THEME*/
+// Darkmode instance'ını oluştur
 const darkmode = new Darkmode();
-const metaTheme = document.getElementById("themeMeta");
+const metaThemeDark = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]');
+const metaThemeLight = document.querySelector('meta[name="theme-color"][media="(prefers-color-scheme: light)"]');
+const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: dark)"]');
+const metaStatusBarLight = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: light)"]');
 
 // Dark mode değiştiğinde çalışacak fonksiyon
 function updateThemeColor(isDark) {
-    metaTheme.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
+    // Darkmode meta tag'lerini güncelle
+    metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
+    metaThemeLight.setAttribute("content", isDark ? "#ffffff" : "#100f2c");
+
+    // Status bar renklerini değiştir
+    metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
+    metaStatusBarLight.setAttribute("content", isDark ? "default" : "black-translucent");
 }
 
 // Toggle butonu dinleyicisi
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    // Darkmode kütüphanesi ile temayı değiştir
-    darkmode.toggle();
+    darkmode.toggle(); // Dark mode'u aç/kapat
 
     // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
     const isDarkMode = darkmode.isActivated();
     updateThemeColor(isDarkMode);
 });
-
-// Tarayıcının sistem teması değişirse güncelle
-if (window.matchMedia) {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Sistemdeki tema değiştiğinde güncelleme yap
-    mediaQuery.addEventListener('change', function (e) {
-        updateThemeColor(e.matches);
-    });
-
-    // Sayfa ilk yüklendiğinde de mevcut temayı kontrol et
-    updateThemeColor(mediaQuery.matches);
-}
-
-
 
 
 /*SERVICES VISIBILITY*/

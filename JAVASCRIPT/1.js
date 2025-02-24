@@ -1,8 +1,7 @@
 /*CHANGE THEME*/
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    let darkmode = new Darkmode();
-    darkmode.toggle();
-
+    const darkmode = new Darkmode(options);
+    darkmode.showWidget();
     let metaTheme = document.getElementById("themeMeta");
 
     // Biraz gecikme ekleyerek class değişiminin algılanmasını sağlıyoruz

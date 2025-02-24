@@ -1,17 +1,24 @@
 /*CHANGE THEME*/
 document.getElementById("darkmode-toggle").addEventListener("click", function () {
-    const darkmode = new Darkmode(options);
-    darkmode.showWidget();
+    let darkmode = new Darkmode();
+    darkmode.toggle();
+
     let metaTheme = document.getElementById("themeMeta");
 
-    // Biraz gecikme ekleyerek class değişiminin algılanmasını sağlıyoruz
-    setTimeout(() => {
+    // MutationObserver ile class değişimini takip et
+    const observer = new MutationObserver(() => {
         if (document.body.classList.contains("darkmode--activated")) {
             metaTheme.setAttribute("content", "#100f2c");  // Dark mode theme rengi
         } else {
             metaTheme.setAttribute("content", "#F8F6E3");  // Light mode theme rengi
         }
-    }, 300); // 300ms gecikme, gerekirse artırabilirsin
+    });
+
+    // Sadece class değişikliklerini izle
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    // 1 saniye sonra observer'ı kapat (gereksiz yükü engellemek için)
+    setTimeout(() => observer.disconnect(), 1000);
 });
 
 /*SERVICES VISIBILITY*/

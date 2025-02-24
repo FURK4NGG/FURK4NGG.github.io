@@ -6,7 +6,7 @@ const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-ap
 // Dark mode değiştiğinde çalışacak fonksiyon
 function updateThemeColor() {
     // Dark mode aktifse tema rengini koyu yap, değilse beyaz yap
-    const isDark = darkmode.isActivated(); // Dark mode durumunu burada kontrol ediyoruz
+    const isDark = document.body.classList.contains("darkmode--activated");
 
     metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
     metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
@@ -19,7 +19,6 @@ document.getElementById("darkmode-toggle").addEventListener("click", function ()
     // Meta etiketlerini güncelle
     updateThemeColor();
 });
-
 
 
 /*SERVICES VISIBILITY*/

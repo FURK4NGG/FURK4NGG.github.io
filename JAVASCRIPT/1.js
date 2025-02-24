@@ -6,6 +6,15 @@ const metaThemeLight = document.querySelector('meta[name="theme-color"][media="(
 const metaStatusBarDark = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: dark)"]');
 const metaStatusBarLight = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"][media="(prefers-color-scheme: light)"]');
 
+function updateThemeColor(isDark) {
+    // Darkmode meta tag'lerini güncelle
+    metaThemeDark.setAttribute("content", isDark ? "#100f2c" : "#ffffff");
+    metaThemeLight.setAttribute("content", isDark ? "#ffffff" : "#100f2c");
+
+    // Status bar renklerini değiştir
+    metaStatusBarDark.setAttribute("content", isDark ? "black-translucent" : "default");
+    metaStatusBarLight.setAttribute("content", isDark ? "default" : "black-translucent");
+}
 
 
 /*SERVICES VISIBILITY*/

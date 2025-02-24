@@ -1,6 +1,5 @@
 /*CHANGE THEME*/
-const darkmode = new Darkmode(options);
-        darkmode.showWidget();
+
 // MutationObserver ile body'nin class listesini izleyelim
 const observer = new MutationObserver(() => {
   const isDark = document.body.classList.contains("darkmode--activated");

@@ -1,4 +1,7 @@
 /*CHANGE THEME*/
+const safeAreaTop = window.env('safe-area-inset-top');
+document.body.style.paddingTop = `${safeAreaTop}px`; 
+
 // MutationObserver ile body'nin class listesini izleyelim
 const observer = new MutationObserver(() => {
   const isDark = document.body.classList.contains("darkmode--activated");

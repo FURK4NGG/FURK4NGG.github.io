@@ -1,6 +1,6 @@
 /*CHANGE THEME*/
-const safeAreaTop = window.env('safe-area-inset-top');
-document.body.style.paddingTop = `${safeAreaTop}px`; 
+const safeAreaTop = getComputedStyle(document.body).getPropertyValue('padding-top');
+document.body.style.paddingTop = safeAreaTop;  // Dinamik olarak günceller
 
 // MutationObserver ile body'nin class listesini izleyelim
 const observer = new MutationObserver(() => {

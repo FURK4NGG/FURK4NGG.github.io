@@ -1,5 +1,6 @@
 /*CHANGE THEME*/
 // Darkmode instance'ını oluştur
+// Darkmode instance'ını oluştur
 const darkmode = new Darkmode();
 const metaTheme = document.getElementById("themeMeta");
 
@@ -17,7 +18,8 @@ document.getElementById("darkmode-toggle").addEventListener("click", function ()
     updateThemeColor(isDarkMode);
     
     // Tarayıcıya "sistem teması değişti" gibi davranması için event gönder
-    window.matchMedia('(prefers-color-scheme: dark)').dispatchEvent(new Event('change'));
+    const event = new Event('change');
+    window.matchMedia('(prefers-color-scheme: dark)').dispatchEvent(event);
 });
 
 // Tarayıcının sistem teması değişirse güncelle
@@ -30,6 +32,7 @@ if (window.matchMedia) {
     // Sayfa ilk yüklendiğinde de kontrol et
     updateThemeColor(mediaQuery.matches);
 }
+
 
 
 

@@ -385,25 +385,14 @@ function animateCircles() {
 animateCircles();
 
 
-const themeMetaTag = document.querySelector('meta[name="theme-color"]');
-
-function updateThemeColor() {
-    if (darkmode.isActivated()) {
-        themeMetaTag.setAttribute("content", "#EFF0D3"); // Dark mode aktifken siyah renk
-    } else {
-        themeMetaTag.setAttribute("content", "#EFF0D3"); // Açık modda farklı renk
-    }
-}
-
-// Dark mode butonu oluştur ve çalıştır
-const darkmode = new Darkmode(options);
-darkmode.showWidget();
-
-// Dark mode değiştiğinde theme color'ı güncelle
-document.addEventListener("DOMContentLoaded", updateThemeColor);
-document.addEventListener("click", () => {
-    setTimeout(updateThemeColor, 100); // Dark mode animasyonu için küçük gecikme
-});
+    document.getElementById("toggleTheme").addEventListener("click", function () {
+        let metaTheme = document.getElementById("themeMeta");
+        if (metaTheme.content === "#ffffff") {
+            metaTheme.content = "#100f2c"; // Dark mode rengi
+        } else {
+            metaTheme.content = "#ffffff"; // Light mode rengi
+        }
+    });
 
 
 /*DISABLE COPY-PASTE*/

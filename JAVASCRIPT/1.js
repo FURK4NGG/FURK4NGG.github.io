@@ -1,7 +1,4 @@
 /*CHANGE THEME*/
-const safeAreaTop = getComputedStyle(document.body).getPropertyValue('padding-top');
-document.body.style.paddingTop = safeAreaTop;  // Dinamik olarak günceller
-
 // MutationObserver ile body'nin class listesini izleyelim
 const observer = new MutationObserver(() => {
   const isDark = document.body.classList.contains("darkmode--activated");

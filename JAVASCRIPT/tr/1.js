@@ -1,3 +1,19 @@
+/*CHANGE THEME*/
+const observer = new MutationObserver(() => {
+const isDark = document.body.classList.contains("darkmode--activated");
+// Meta tag'in rengi
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+themeColorMeta.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
+// Apple status bar rengi
+const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+appleStatusBarMeta.setAttribute("content", isDark ? "black" : "default");
+});
+observer.observe(document.body, {
+  attributes: true,
+  attributeFilter: ["class"],
+});
+
+
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 

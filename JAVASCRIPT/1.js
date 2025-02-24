@@ -391,7 +391,7 @@ function updateThemeColor() {
     if (darkmode.isActivated()) {
         themeMetaTag.setAttribute("content", "#000000"); // Dark mode aktifken siyah renk
     } else {
-        themeMetaTag.setAttribute("content", "#100f2c"); // Açık modda farklı renk
+        themeMetaTag.setAttribute("content", "#000000"); // Açık modda farklı renk
     }
 }
 

@@ -1,7 +1,34 @@
 /*CHANGE THEME*/
-// Darkmode instance'ını oluştur
-// Darkmode instance'ını oluştur
+const darkmode = new Darkmode();
+const metaTheme = document.getElementById("themeMeta");
 
+// Dark mode değiştiğinde çalışacak fonksiyon
+function updateThemeColor(isDark) {
+    metaTheme.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
+}
+
+// Toggle butonu dinleyicisi
+document.getElementById("darkmode-toggle").addEventListener("click", function () {
+    // Darkmode kütüphanesi ile temayı değiştir
+    darkmode.toggle();
+
+    // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
+    const isDarkMode = darkmode.isActivated();
+    updateThemeColor(isDarkMode);
+});
+
+// Tarayıcının sistem teması değişirse güncelle
+if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Sistemdeki tema değiştiğinde güncelleme yap
+    mediaQuery.addEventListener('change', function (e) {
+        updateThemeColor(e.matches);
+    });
+
+    // Sayfa ilk yüklendiğinde de mevcut temayı kontrol et
+    updateThemeColor(mediaQuery.matches);
+}
 
 
 

@@ -1,28 +1,17 @@
 /*CHANGE THEME*/
-// MutationObserver ile body'nin class listesini izleyelim
 const observer = new MutationObserver(() => {
-  const isDark = document.body.classList.contains("darkmode--activated");
-  
-  // Meta tag'in rengini değiştirelim
-  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-  themeColorMeta.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
-
-  // Apple status bar rengini değiştirelim
-  const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-  appleStatusBarMeta.setAttribute("content", isDark ? "black" : "default");
-
-  console.log(isDark ? "Dark Mode aktif" : "Dark Mode pasif");
+const isDark = document.body.classList.contains("darkmode--activated");
+// Meta tag'in rengi
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+themeColorMeta.setAttribute("content", isDark ? "#100f2c" : "#F8F6E3");
+// Apple status bar rengi
+const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+appleStatusBarMeta.setAttribute("content", isDark ? "black" : "default");
 });
-
-// observer'ı başlatmak için
 observer.observe(document.body, {
-  attributes: true,  // Sadece attribute değişimlerini izleyelim
-  attributeFilter: ["class"], // Sadece 'class' attribute'unda değişiklikleri izleyelim
+  attributes: true,
+  attributeFilter: ["class"],
 });
-
-
-
-
 
 
 /*SERVICES VISIBILITY*/

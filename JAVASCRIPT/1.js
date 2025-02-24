@@ -19,8 +19,8 @@ document.getElementById("darkmode-toggle").addEventListener("click", function ()
     darkmode.toggle(); // Dark mode'u aç/kapat
 
     // Kendi dark mode'umuzu tarayıcıdaki dark mode gibi algılat
-    const isDarkMode = darkmode.isActivated();
-    updateThemeColor(isDarkMode);
+    const isDark = darkmode.isActivated(); // `isDark` burada kullanılacak
+    updateThemeColor(isDark);
 });
 
 

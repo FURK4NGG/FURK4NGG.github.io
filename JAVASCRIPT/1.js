@@ -9,7 +9,7 @@ const observer = new MutationObserver(() => {
 
   // Apple status bar rengini değiştirelim
   const appleStatusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-  appleStatusBarMeta.setAttribute("content", isDark ? "black-translucent" : "default");
+  appleStatusBarMeta.setAttribute("content", isDark ? "black" : "default");
 
   console.log(isDark ? "Dark Mode aktif" : "Dark Mode pasif");
 });

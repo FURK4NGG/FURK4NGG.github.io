@@ -389,9 +389,9 @@ const themeMetaTag = document.querySelector('meta[name="theme-color"]');
 
 function updateThemeColor() {
     if (darkmode.isActivated()) {
-        themeMetaTag.setAttribute("content", "#000000"); // Dark mode aktifken siyah renk
+        themeMetaTag.setAttribute("content", "#EFF0D3"); // Dark mode aktifken siyah renk
     } else {
-        themeMetaTag.setAttribute("content", "#000000"); // Açık modda farklı renk
+        themeMetaTag.setAttribute("content", "#EFF0D3"); // Açık modda farklı renk
     }
 }
 

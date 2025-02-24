@@ -1,13 +1,3 @@
-/*CHANGE THEME*/
-let metaTheme = document.getElementById("themeMeta");
-        setTimeout(() => {
-            if (document.body.classList.contains("darkmode--activated")) {
-                metaTheme.content = "#100f2c";  // Dark mode theme rengi
-            } else {
-                metaTheme.content = "#F8F6E3";  // Light mode theme rengi
-            }
-        }, 100);
-    });
 
 
 /*SERVICES VISIBILITY*/

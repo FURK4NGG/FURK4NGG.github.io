@@ -1,3 +1,13 @@
+/*CHANGE THEME*/
+let metaTheme = document.getElementById("themeMeta");
+        if (metaTheme.content === "#ffffff") {
+            metaTheme.content = "#100f2c";  // Dark mode theme rengi
+        } else {
+            metaTheme.content = "#ffffff";  // Light mode theme rengi
+        }
+    });
+
+
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 
@@ -383,9 +393,6 @@ function animateCircles() {
 }
 
 animateCircles();
-
-
-    
 
 
 /*DISABLE COPY-PASTE*/

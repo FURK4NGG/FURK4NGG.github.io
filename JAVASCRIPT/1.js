@@ -1,4 +1,6 @@
 /*CHANGE THEME*/
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
 const isDark = document.body.classList.contains("darkmode--activated");
 
 console.log(isDark);

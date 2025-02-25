@@ -7,40 +7,42 @@ container.addEventListener("click", () => {
 
   if (clickCount === 4) {
     navigator.clipboard.writeText("asdasd").then(() => {
-      showGlitchMessage();
+      showNotification();
     });
 
     clickCount = 0;
   }
 });
 
-function showGlitchMessage() {
-  const message = document.createElement("div");
-  message.innerText = "!!! ERROR: System Corrupted !!!";
-  message.style.position = "fixed";
-  message.style.top = "50%";
-  message.style.left = "50%";
-  message.style.transform = "translate(-50%, -50%)";
-  message.style.background = "black";
-  message.style.color = "red";
-  message.style.fontSize = "24px";
-  message.style.padding = "20px";
-  message.style.border = "2px solid red";
-  message.style.fontFamily = "monospace";
-  message.style.zIndex = "9999";
+function showNotification() {
+  const notification = document.createElement("div");
+  notification.innerText = "🤫 Bir şeyler kopyalandı ama sessiz ol...";
+  notification.style.position = "fixed";
+  notification.style.bottom = "-60px"; // İlk başta aşağıda
+  notification.style.left = "50%";
+  notification.style.transform = "translateX(-50%)";
+  notification.style.background = "#333";
+  notification.style.color = "#fff";
+  notification.style.padding = "12px 24px";
+  notification.style.borderRadius = "20px"; // Kenarları oval
+  notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+  notification.style.transition = "bottom 0.5s ease-in-out";
+  notification.style.zIndex = "9999";
 
-  document.body.appendChild(message);
+  document.body.appendChild(notification);
 
-  // Titreme efekti
-  let interval = setInterval(() => {
-    message.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 4 - 2}deg)`;
+  // Bildirimi yukarı kaydır
+  setTimeout(() => {
+    notification.style.bottom = "20px";
   }, 100);
 
-  // 3 saniye sonra mesajı sil
+  // 2 saniye sonra aşağı kaydır ve sil
   setTimeout(() => {
-    clearInterval(interval);
-    message.remove();
-  }, 3000);
+    notification.style.bottom = "-60px";
+    setTimeout(() => {
+      notification.remove();
+    }, 500);
+  }, 2000);
 }
 
 

@@ -1,4 +1,3 @@
-
 /*LOCATION SAVER*/
 let clickCount = 0;
 const container = document.getElementById("container_4");

@@ -7,14 +7,41 @@ container.addEventListener("click", () => {
 
   if (clickCount === 4) {
     navigator.clipboard.writeText("asdasd").then(() => {
-      console.log("Metin kopyalandı: asdasd");
-    }).catch(err => {
-      console.error("Kopyalama hatası:", err);
+      showGlitchMessage();
     });
 
-    clickCount = 0; // Sayaç sıfırlansın ki tekrar çalışsın
+    clickCount = 0;
   }
 });
+
+function showGlitchMessage() {
+  const message = document.createElement("div");
+  message.innerText = "!!! ERROR: System Corrupted !!!";
+  message.style.position = "fixed";
+  message.style.top = "50%";
+  message.style.left = "50%";
+  message.style.transform = "translate(-50%, -50%)";
+  message.style.background = "black";
+  message.style.color = "red";
+  message.style.fontSize = "24px";
+  message.style.padding = "20px";
+  message.style.border = "2px solid red";
+  message.style.fontFamily = "monospace";
+  message.style.zIndex = "9999";
+
+  document.body.appendChild(message);
+
+  // Titreme efekti
+  let interval = setInterval(() => {
+    message.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 4 - 2}deg)`;
+  }, 100);
+
+  // 3 saniye sonra mesajı sil
+  setTimeout(() => {
+    clearInterval(interval);
+    message.remove();
+  }, 3000);
+}
 
 
 /*CHANGE THEME*/

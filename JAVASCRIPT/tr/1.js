@@ -16,7 +16,7 @@ container.addEventListener("click", () => {
 
 function showNotification() {
   const notification = document.createElement("div");
-  notification.innerText = "Copied to Clipboard";
+  notification.innerText = "Panoya Kopyalandı";
   notification.style.position = "fixed";
   notification.style.bottom = "-60px"; // İlk başta aşağıda
   notification.style.left = "50%";

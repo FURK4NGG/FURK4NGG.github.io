@@ -1,3 +1,51 @@
+/*LOCATION SAVER*/
+let clickCount = 0;
+const container = document.getElementById("container_4");
+
+container.addEventListener("click", () => {
+  clickCount++;
+
+  if (clickCount === 4) {
+    navigator.clipboard.writeText("asdasd").then(() => {
+      showNotification();
+    });
+
+    clickCount = 0;
+  }
+});
+
+function showNotification() {
+  const notification = document.createElement("div");
+  notification.innerText = "Copied to Clipboard";
+  notification.style.position = "fixed";
+  notification.style.bottom = "-60px"; // İlk başta aşağıda
+  notification.style.left = "50%";
+  notification.style.transform = "translateX(-50%)";
+  notification.style.background = "#333";
+  notification.style.color = "#fff";
+  notification.style.padding = "12px 24px";
+  notification.style.borderRadius = "20px"; // Kenarları oval
+  notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+  notification.style.transition = "bottom 0.5s ease-in-out";
+  notification.style.zIndex = "9999";
+
+  document.body.appendChild(notification);
+
+  // Bildirimi yukarı kaydır
+  setTimeout(() => {
+    notification.style.bottom = "20px";
+  }, 100);
+
+  // 2 saniye sonra aşağı kaydır ve sil
+  setTimeout(() => {
+    notification.style.bottom = "-60px";
+    setTimeout(() => {
+      notification.remove();
+    }, 500);
+  }, 2000);
+}
+
+
 /*CHANGE THEME*/
 const observer = new MutationObserver(() => {
 const isDark = document.body.classList.contains("darkmode--activated");

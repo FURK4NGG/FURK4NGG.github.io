@@ -29,7 +29,7 @@ function showNotification() {
   notification.style.transition = "bottom 0.4s ease-in-out";
   notification.style.zIndex = "9999";
   notification.style.fontFamily = '"Monomakh", serif';
-  notification.style.fontSize = "0.8rem";
+  notification.style.fontSize = "1rem";
 
   document.body.appendChild(notification);
 

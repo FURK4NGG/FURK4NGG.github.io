@@ -28,7 +28,7 @@ function showNotification() {
   notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
   notification.style.transition = "bottom 0.4s ease-in-out";
   notification.style.zIndex = "9999";
-  notification.style.fontFamily = '"Press Start 2P", cursive';
+  notification.style.fontFamily = '"Monomakh", serif';
   notification.style.fontSize = "0.8rem";
 
   document.body.appendChild(notification);

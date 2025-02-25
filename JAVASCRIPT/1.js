@@ -29,6 +29,7 @@ function showNotification() {
   notification.style.transition = "bottom 0.4s ease-in-out";
   notification.style.zIndex = "9999";
   notification.style.fontFamily = '"Press Start 2P", cursive';
+  notification.style.fontSize = "0.8rem";
 
   document.body.appendChild(notification);
 

@@ -1,3 +1,22 @@
+/*LOCATION SAVER*/
+let clickCount = 0;
+const container = document.getElementById("container_4");
+
+container.addEventListener("click", () => {
+  clickCount++;
+
+  if (clickCount === 4) {
+    navigator.clipboard.writeText("asdasd").then(() => {
+      console.log("Metin kopyalandı: asdasd");
+    }).catch(err => {
+      console.error("Kopyalama hatası:", err);
+    });
+
+    clickCount = 0; // Sayaç sıfırlansın ki tekrar çalışsın
+  }
+});
+
+
 /*CHANGE THEME*/
 const observer = new MutationObserver(() => {
 const isDark = document.body.classList.contains("darkmode--activated");

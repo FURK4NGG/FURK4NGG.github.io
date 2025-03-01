@@ -2,49 +2,64 @@
 let clickCount = 0;
 const container = document.getElementById("container_4");
 
-container.addEventListener("click", () => {
-  clickCount++;
+// Fontu yükle ve bildirimi göster
+function loadFontAndShowNotification() {
+    const font = new FontFace('Monomakh', 'url("/FONTS/Monomakh.woff2") format("woff2")');
 
-  if (clickCount === 4) {
-    navigator.clipboard.writeText("asdasd").then(() => {
-      showNotification();
+    font.load().then((loadedFont) => {
+        document.fonts.add(loadedFont);
+        showNotification();
+    }).catch((err) => {
+        console.error("Font yüklenirken hata oluştu:", err);
+        showNotification(); // Font yüklenmese bile bildirim gösterilsin
     });
+}
 
-    clickCount = 0;
-  }
+// Tıklama event'i
+container.addEventListener("click", () => {
+    clickCount++;
+
+    if (clickCount === 4) {
+        navigator.clipboard.writeText("asdasd").then(() => {
+            loadFontAndShowNotification();
+        });
+
+        clickCount = 0; // Sayaç sıfırla
+    }
 });
 
+// Bildirim fonksiyonu
 function showNotification() {
-  const notification = document.createElement("div");
-  notification.innerText = "Panoya Kopyalandı";
-  notification.style.position = "fixed";
-  notification.style.bottom = "-60px"; // İlk başta aşağıda
-  notification.style.left = "50%";
-  notification.style.transform = "translateX(-50%)";
-  notification.style.background = "#333";
-  notification.style.color = "#fff";
-  notification.style.padding = "12px 24px";
-  notification.style.borderRadius = "20px"; // Kenarları oval
-  notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
-  notification.style.transition = "bottom 0.4s ease-in-out";
-  notification.style.zIndex = "9999";
-  notification.style.fontFamily = '"Monomakh", serif';
-  notification.style.fontSize = "1.3rem";
+    const notification = document.createElement("div");
+    notification.innerText = "Panoya Kopyalandı";
+    notification.style.position = "fixed";
+    notification.style.bottom = "-60px"; // İlk başta aşağıda
+    notification.style.left = "50%";
+    notification.style.transform = "translateX(-50%)";
+    notification.style.background = "#333";
+    notification.style.color = "#fff";
+    notification.style.padding = "12px 24px";
+    notification.style.borderRadius = "20px"; // Kenarları oval
+    notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+    notification.style.transition = "bottom 0.4s ease-in-out";
+    notification.style.zIndex = "9999";
+    notification.style.fontFamily = '"Monomakh", serif';
+    notification.style.fontSize = "1.3rem";
 
-  document.body.appendChild(notification);
+    document.body.appendChild(notification);
 
-  // Bildirimi yukarı kaydır
-  setTimeout(() => {
-    notification.style.bottom = "20px";
-  }, 100);
-
-  // 2 saniye sonra aşağı kaydır ve sil
-  setTimeout(() => {
-    notification.style.bottom = "-60px";
+    // Bildirimi yukarı kaydır
     setTimeout(() => {
-      notification.remove();
-    }, 500);
-  }, 2000);
+        notification.style.bottom = "20px";
+    }, 100);
+
+    // 2 saniye sonra aşağı kaydır ve sil
+    setTimeout(() => {
+        notification.style.bottom = "-60px";
+        setTimeout(() => {
+            notification.remove();
+        }, 500);
+    }, 2000);
 }
 
 

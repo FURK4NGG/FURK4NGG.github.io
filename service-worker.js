@@ -8,6 +8,7 @@ const urlsToCache = [
   '/home_tr.html',
   '/404.html',
   '/CSS/unpkg.comswiper@8swiper-bundle.min.css',
+  '/FONTS/Inconsolata.woff2',
   '/FONTS/Jaro.woff2',
   '/FONTS/Monomakh.woff2',
   '/FONTS/Montserrat.woff2',

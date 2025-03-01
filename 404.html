@@ -19,18 +19,7 @@
   <p class="output">Please try to <a href="javascript:history.back()">go back</a> or <a href="/">return to the homepage</a>.</p>
   <p class="output">Good luck.</p>
 </div>
-<script>
-      document.addEventListener('DOMContentLoaded', () => {
-  const userLang = navigator.language || navigator.userLanguage;
-
-  // İçeriği dil tercihine göre yönlendirme
-  if (userLang.startsWith('tr')) {
-    window.location.href = '/home_tr'; // Türkçe içerik
-  } else {
-    window.location.href = '/home_en'; // İngilizce içerik
-  }
-});
-      
+<script> 
       const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
       const showAlert = e => {
         e.preventDefault(); // preventing its default behaviour

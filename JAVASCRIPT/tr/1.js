@@ -4,7 +4,7 @@ const container = document.getElementById("container_4");
 
 // Fontu yükle ve bildirimi göster
 function loadFontAndShowNotification() {
-    const font = new FontFace('Monomakh', 'url("/FONTS/Jaro.woff2") format("woff2")');
+    const font = new FontFace('Monomakh', 'url("/FONTS/Monomakh.woff2") format("woff2")');
 
     font.load().then((loadedFont) => {
         document.fonts.add(loadedFont);

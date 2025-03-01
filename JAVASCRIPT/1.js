@@ -4,7 +4,7 @@ const container = document.getElementById("container_4");
 
 // Fontu yükle ve bildirimi göster
 function loadFontAndShowNotification() {
-    const font = new FontFace('Jaro', 'url("/FONTS/Jaro.woff2") format("woff2")');
+    const font = new FontFace('Monomakh', 'url("/FONTS/Monomakh.woff2") format("woff2")');
 
     font.load().then((loadedFont) => {
         document.fonts.add(loadedFont);
@@ -43,7 +43,7 @@ function showNotification() {
     notification.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
     notification.style.transition = "bottom 0.4s ease-in-out";
     notification.style.zIndex = "9999";
-    notification.style.fontFamily = '"Jaro", serif';
+    notification.style.fontFamily = '"Monomakh", serif';
     notification.style.fontSize = "1.3rem";
 
     document.body.appendChild(notification);

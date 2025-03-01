@@ -20,7 +20,7 @@ container.addEventListener("click", () => {
     clickCount++;
 
     if (clickCount === 4) {
-        navigator.clipboard.writeText("asdasd").then(() => {
+        navigator.clipboard.writeText("https://maps.app.goo.gl/Q6bYtTBoNX1c5YrTA").then(() => {
             loadFontAndShowNotification();
         });
 

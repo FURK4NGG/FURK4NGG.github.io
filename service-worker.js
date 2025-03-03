@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v37';
+const CURRENT_VERSION = 'v38';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -38,15 +38,15 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - cache files
+// Install event - cache files and force activation
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log(`Caching files for version: ${CURRENT_VERSION}`);
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      console.log(`Caching files for version: ${CURRENT_VERSION}`);
+      return cache.addAll(urlsToCache);
+    })
   );
+  self.skipWaiting(); // Anında yeni versiyonu yükle
 });
 
 // Fetch event - serve from cache if available, else fetch from network
@@ -58,7 +58,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - delete old caches if version is different
+// Activate event - delete old caches and update clients
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -73,6 +73,10 @@ self.addEventListener('activate', event => {
     }).then(() => {
       console.log(`Cache updated to version: ${CURRENT_VERSION}`);
       return self.clients.claim();
+    }).then(() => {
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => client.navigate(client.url)); // Tüm sayfaları yenile
+      });
     })
   );
 });

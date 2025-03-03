@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v47';
+const CURRENT_VERSION = 'v48';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -53,18 +53,20 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+      return response || fetch(event.request));
     })
   );
 });
 
-// Activate event - delete all old caches and update clients
+// Activate event - delete all old caches (except the latest)
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const cacheNames = await caches.keys();
+    
+    // Tüm eski cache'leri temizle, sadece en güncel versiyonu bırak
     await Promise.all(
       cacheNames.map(cacheName => {
-        if (cacheName !== CACHE_NAME) {
+        if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
           console.log(`Deleting old cache: ${cacheName}`);
           return caches.delete(cacheName);
         }

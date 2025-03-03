@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v44';
+const CURRENT_VERSION = 'v46';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -58,16 +58,19 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - delete old caches and update clients
+// Activate event - delete all old caches and update clients
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const cacheNames = await caches.keys();
-    for (const cacheName of cacheNames) {
-      if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-        console.log(`Deleting old cache: ${cacheName}`);
-        await caches.delete(cacheName);
-      }
-    }
+    await Promise.all(
+      cacheNames.map(cacheName => {
+        if (cacheName !== CACHE_NAME) {
+          console.log(`Deleting old cache: ${cacheName}`);
+          return caches.delete(cacheName);
+        }
+      })
+    );
+
     console.log(`Cache updated to version: ${CURRENT_VERSION}`);
     await self.clients.claim();
 

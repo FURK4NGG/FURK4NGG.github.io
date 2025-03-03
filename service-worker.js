@@ -3,15 +3,15 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-')) {
-            const cacheVersion = parseInt(cacheName.replace('cache-v', ''), 10);
-            if (cacheVersion < 80) {  // v50 öncesini sil
-              console.log(`Deleting old cache: ${cacheName}`);
-              return caches.delete(cacheName);
-            }
-          }
+          // Tüm cache'leri siliyoruz
+          console.log(`Deleting cache: ${cacheName}`);
+          return caches.delete(cacheName);
         })
       );
+    }).then(() => {
+      console.log('All caches deleted');
+      // Yeni cache eklemek istersen, burada bunu yapabilirsin
+      return self.clients.claim();
     })
   );
 });

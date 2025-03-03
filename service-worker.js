@@ -58,27 +58,28 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - delete all old caches and then cache the new version
+// Activate event - delete old caches and then cache the new version
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-')) {
-            // Eski tüm cache'leri sil
+          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
             console.log(`Deleting old cache: ${cacheName}`);
-            return caches.delete(cacheName);
+            return caches.delete(cacheName); // Eski cache'leri sil
           }
         })
       );
-    }).then(() => {
-      // Yeni cache'i yükle
+    })
+    .then(() => {
+      // Eski cache'ler silindikten sonra, yeni cache'leri yükleyelim
       return caches.open(CACHE_NAME)
         .then(cache => {
           console.log(`Caching files for version: ${CURRENT_VERSION}`);
           return cache.addAll(urlsToCache);
         });
-    }).then(() => {
+    })
+    .then(() => {
       console.log(`Cache updated to version: ${CURRENT_VERSION}`);
       return self.clients.claim();
     })

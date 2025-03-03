@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v53';
+const CURRENT_VERSION = 'v54';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -38,7 +38,7 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - yeni versiyonu cache'e ekle
+// Install event - cache files
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -47,10 +47,9 @@ self.addEventListener('install', event => {
         return cache.addAll(urlsToCache);
       })
   );
-  self.skipWaiting(); // Yeni SW hemen aktif olsun
 });
 
-// Fetch event - önbellekten yükle, yoksa ağdan al
+// Fetch event - serve from cache if available, else fetch from network
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
@@ -59,15 +58,17 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - eski cache'leri temizle ve yeni versiyonu yükle
+// Activate event - delete old caches if version is different
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
+          // Silinmesi gereken eski cache'leri kontrol et
           if (cacheName.startsWith('cache-')) {
-            const cacheVersion = parseInt(cacheName.replace('cache-v', ''), 10);
-            if (cacheVersion < parseInt(CURRENT_VERSION.replace('v', ''), 10)) {
+            // Eski versiyonları CURRENT_VERSION ile karşılaştır
+            const cacheVersion = cacheName.replace('cache-', '');
+            if (cacheVersion !== CURRENT_VERSION) {  // Eğer eski versiyon ise sil
               console.log(`Deleting old cache: ${cacheName}`);
               return caches.delete(cacheName);
             }

@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v38';
+const CURRENT_VERSION = 'v39';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [

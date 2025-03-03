@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v70';
+const CURRENT_VERSION = 'v72';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -64,9 +64,14 @@ self.addEventListener('activate', event => {
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-            console.log(`Deleting old cache: ${cacheName}`);
-            return caches.delete(cacheName);
+          if (cacheName.startsWith('cache-')) {
+            const cacheVersion = parseInt(cacheName.replace('cache-', ''), 10);
+
+            // Eğer mevcut cache versiyonu, CURRENT_VERSION'dan küçükse, sil
+            if (cacheVersion < parseInt(CURRENT_VERSION.replace('v', ''), 10)) {
+              console.log(`Deleting old cache: ${cacheName}`);
+              return caches.delete(cacheName);
+            }
           }
         })
       );

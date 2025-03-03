@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v49'; // Versiyonu güncelle
+const CURRENT_VERSION = 'v50'; // Versiyonu güncelle
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [

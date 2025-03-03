@@ -1,8 +1,8 @@
-const CURRENT_VERSION = 'v48';
+const CURRENT_VERSION = 'v49'; // Versiyonu güncelle
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
-  '/',
+ '/',
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
@@ -38,46 +38,51 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - cache files and force activation
+// Install event - Yeni versiyonu yükle
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
       console.log(`Caching files for version: ${CURRENT_VERSION}`);
-      return cache.addAll(urlsToCache);
-    })
+      await cache.addAll(urlsToCache);
+    })()
   );
-  self.skipWaiting(); // Anında yeni versiyonu yükle
+  self.skipWaiting(); // Yeni versiyonu anında etkinleştir
 });
 
-// Fetch event - serve from cache if available, else fetch from network
+// Fetch event - Cache varsa kullan, yoksa ağdan al
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || fetch(event.request));
+      return response || fetch(event.request);
     })
   );
 });
 
-// Activate event - delete all old caches (except the latest)
+// Activate event - Eski cache'leri %100 temizle
 self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const cacheNames = await caches.keys();
-    
-    // Tüm eski cache'leri temizle, sadece en güncel versiyonu bırak
-    await Promise.all(
-      cacheNames.map(cacheName => {
-        if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-          console.log(`Deleting old cache: ${cacheName}`);
-          return caches.delete(cacheName);
-        }
-      })
-    );
+  event.waitUntil(
+    (async () => {
+      const cacheNames = await caches.keys();
+      
+      // Tüm eski cache'leri temizle, sadece yeni olanı bırak
+      await Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
+        })
+      );
 
-    console.log(`Cache updated to version: ${CURRENT_VERSION}`);
-    await self.clients.claim();
+      console.log(`Cache updated to version: ${CURRENT_VERSION}`);
+      await self.clients.claim();
 
-    // Tüm açık sekmeleri yeni versiyona yönlendir
-    const clients = await self.clients.matchAll({ type: 'window' });
-    clients.forEach(client => client.navigate(client.url));
-  })());
+      // Açık sekmeleri güncelle
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach(client => {
+        client.navigate(client.url);
+      });
+    })()
+  );
 });

@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v54';
+const CURRENT_VERSION = 'v56';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -58,23 +58,26 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - delete old caches if version is different
+// Activate event - delete all old caches and then cache the new version
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          // Silinmesi gereken eski cache'leri kontrol et
           if (cacheName.startsWith('cache-')) {
-            // Eski versiyonları CURRENT_VERSION ile karşılaştır
-            const cacheVersion = cacheName.replace('cache-', '');
-            if (cacheVersion !== CURRENT_VERSION) {  // Eğer eski versiyon ise sil
-              console.log(`Deleting old cache: ${cacheName}`);
-              return caches.delete(cacheName);
-            }
+            // Eski tüm cache'leri sil
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      // Yeni cache'i yükle
+      return caches.open(CACHE_NAME)
+        .then(cache => {
+          console.log(`Caching files for version: ${CURRENT_VERSION}`);
+          return cache.addAll(urlsToCache);
+        });
     }).then(() => {
       console.log(`Cache updated to version: ${CURRENT_VERSION}`);
       return self.clients.claim();

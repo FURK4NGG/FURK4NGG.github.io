@@ -1,8 +1,8 @@
-const CURRENT_VERSION = 'v50'; // Versiyonu güncelle
+const CURRENT_VERSION = 'v51'; // Güncel versiyonu buraya yaz
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
- '/',
+  '/',
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
@@ -47,7 +47,7 @@ self.addEventListener('install', event => {
       await cache.addAll(urlsToCache);
     })()
   );
-  self.skipWaiting(); // Yeni versiyonu anında etkinleştir
+  self.skipWaiting(); // Yeni versiyonu anında aktif et
 });
 
 // Fetch event - Cache varsa kullan, yoksa ağdan al
@@ -59,27 +59,28 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - Eski cache'leri %100 temizle
+// Activate event - Eski cache'leri KESİN olarak sil
 self.addEventListener('activate', event => {
   event.waitUntil(
     (async () => {
       const cacheNames = await caches.keys();
       
-      // Tüm eski cache'leri temizle, sadece yeni olanı bırak
+      // Eski cache’leri sil
       await Promise.all(
-        cacheNames.map(cacheName => {
+        cacheNames.map(async cacheName => {
           if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
             console.log(`Deleting old cache: ${cacheName}`);
-            return caches.delete(cacheName);
+            await caches.delete(cacheName);
           }
         })
       );
 
-      console.log(`Cache updated to version: ${CURRENT_VERSION}`);
+      console.log(`✅ Cache updated to version: ${CURRENT_VERSION}`);
+
       await self.clients.claim();
 
-      // Açık sekmeleri güncelle
-      const clients = await self.clients.matchAll({ type: 'window' });
+      // Açık sekmeleri yenile
+      const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
       clients.forEach(client => {
         client.navigate(client.url);
       });

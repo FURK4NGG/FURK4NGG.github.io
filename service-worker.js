@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v60'; // Mevcut versiyon
+const CURRENT_VERSION = 'v61'; // Mevcut versiyon
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [

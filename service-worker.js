@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v64';  // Versiyon numarasını güncelle
+const CURRENT_VERSION = 'v65';  // Versiyon numarasını güncelle
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -44,38 +44,48 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME).then(cache => {
       console.log(`Caching files for version: ${CURRENT_VERSION}`);
       return cache.addAll(urlsToCache);
+    }).catch(error => {
+      console.error('Error caching files: ', error);
     })
   );
 });
 
 // Activate event - Delete old caches and load new ones
 self.addEventListener('activate', event => {
+  console.log('Activate event fired');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          console.log(`Deleting cache: ${cacheName}`);
-          return caches.delete(cacheName);
+          if (cacheName !== CACHE_NAME) {
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
         })
       );
     }).then(() => {
-      console.log('All caches deleted');
+      console.log('All old caches deleted.');
       return caches.open(CACHE_NAME).then(cache => {
         console.log(`Caching new files for version: ${CURRENT_VERSION}`);
         return cache.addAll(urlsToCache);
       });
     }).then(() => {
       console.log(`Cache updated to version: ${CURRENT_VERSION}`);
-      return self.clients.claim();  // New cache activated
+      return self.clients.claim();
+    }).catch(error => {
+      console.error('Error during cache activation: ', error);
     })
   );
 });
 
 // Fetch event - Serve from cache if available, else fetch from network
 self.addEventListener('fetch', event => {
+  console.log('Fetch event fired for: ', event.request.url);
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request);
+    }).catch(error => {
+      console.error('Error fetching request: ', error);
     })
   );
 });

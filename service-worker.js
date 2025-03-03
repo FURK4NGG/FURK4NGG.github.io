@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v40';
+const CURRENT_VERSION = 'v42';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -60,23 +60,19 @@ self.addEventListener('fetch', event => {
 
 // Activate event - delete old caches and update clients
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-            console.log(`Deleting old cache: ${cacheName}`);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => {
-      console.log(`Cache updated to version: ${CURRENT_VERSION}`);
-      return self.clients.claim();
-    }).then(() => {
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => client.navigate(client.url)); // Tüm sayfaları yenile
-      });
-    })
-  );
+  event.waitUntil((async () => {
+    const cacheNames = await caches.keys();
+    for (const cacheName of cacheNames) {
+      if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
+        console.log(`Deleting old cache: ${cacheName}`);
+        await caches.delete(cacheName);
+      }
+    }
+    console.log(`Cache updated to version: ${CURRENT_VERSION}`);
+    await self.clients.claim();
+
+    // Tüm açık sekmeleri yeni versiyona yönlendir
+    const clients = await self.clients.matchAll({ type: 'window' });
+    clients.forEach(client => client.navigate(client.url));
+  })());
 });

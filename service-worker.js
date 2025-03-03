@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v58';
+const CURRENT_VERSION = 'v59'; // Mevcut versiyon
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -38,48 +38,25 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - cache files
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log(`Caching files for version: ${CURRENT_VERSION}`);
-        return cache.addAll(urlsToCache);
-      })
-  );
-});
-
-// Fetch event - serve from cache if available, else fetch from network
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
-});
-
-// Activate event - delete old caches and then cache the new version
+// Activate event - Delete all old caches and then cache the new files
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-            console.log(`Deleting old cache: ${cacheName}`);
-            return caches.delete(cacheName); // Eski cache'leri sil
-          }
+          // Eski cache'leri siliyoruz
+          console.log(`Deleting cache: ${cacheName}`);
+          return caches.delete(cacheName);
         })
       );
-    })
-    .then(() => {
-      // Eski cache'ler silindikten sonra, yeni cache'leri yükleyelim
-      return caches.open(CACHE_NAME)
-        .then(cache => {
-          console.log(`Caching files for version: ${CURRENT_VERSION}`);
-          return cache.addAll(urlsToCache);
-        });
-    })
-    .then(() => {
+    }).then(() => {
+      console.log('All caches deleted');
+      // Yeni cache dosyalarını ekliyoruz
+      return caches.open(CACHE_NAME).then(cache => {
+        console.log(`Caching files for version: ${CURRENT_VERSION}`);
+        return cache.addAll(urlsToCache);
+      });
+    }).then(() => {
       console.log(`Cache updated to version: ${CURRENT_VERSION}`);
       return self.clients.claim();
     })

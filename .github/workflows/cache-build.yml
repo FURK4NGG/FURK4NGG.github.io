@@ -1,0 +1,48 @@
+name: GitHub Pages Cache Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Cache Build Output
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: public
+          key: ${{ runner.os }}-build-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
+      - name: Generate Version Map Automatically
+        run: |
+          echo "Generating version map..."
+          # Versiyon dosyası oluşturulacak
+          version_map="{}"
+          
+          # Versiyonları dosya dosya hesaplayalım ve ekleyelim
+          for file in $(find . -type f); do
+            if [[ $file != *"node_modules"* && $file != *".github"* ]]; then
+              # Dosya için hash hesapla
+              hash=$(sha256sum "$file" | awk '{print $1}')
+              # version.json'a yeni hash değeri ekleyelim
+              version_map=$(echo $version_map | jq --arg file "$file" --arg hash "$hash" '. + {($file): $hash}')
+            fi
+          done
+          
+          # Dosyayı yaz
+          echo $version_map > public/version.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

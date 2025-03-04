@@ -1,8 +1,8 @@
-const CACHE_NAME = 'my-cache-v1'; // Cache adı
-let CACHE_VERSION = 5; // Başlangıç versiyonu
+const CACHE_VERSION = 6; // Versiyon numarası
+const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Cache ismi versiyon numarası ile oluşturuluyor
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
-  '/',
+    '/',
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
@@ -53,6 +53,7 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
+                    // Eğer cache ismi mevcut cache ismi değilse, sil
                     if (cacheName !== CACHE_NAME) {
                         return caches.delete(cacheName);
                     }
@@ -73,9 +74,8 @@ self.addEventListener('fetch', (event) => {
 
             // Eğer cache'de yoksa ve internete bağlıysak
             return fetch(event.request).then((networkResponse) => {
-                // Cache boşsa ve internetten veri alıyorsak, cache'e kaydet
+                // Cache'e kaydet
                 return caches.open(CACHE_NAME).then((cache) => {
-                    // Cache'de hiç veri yoksa, yeni veriyi ekle
                     return cache.put(event.request, networkResponse.clone()).then(() => {
                         return networkResponse; // Yanıtı döndür
                     });
@@ -87,8 +87,3 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
-
-// Mevcut cache versiyonunu döndüren yardımcı fonksiyon
-function getCurrentCacheVersion() {
-    return CACHE_VERSION; // Mevcut versiyonu döndür
-}

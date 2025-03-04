@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v76';  // Güncel versiyon numarasını belirleyin
+const CURRENT_VERSION = 'v77';  // Güncel versiyon numarasını belirleyin
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [

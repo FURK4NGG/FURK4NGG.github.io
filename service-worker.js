@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v78';  // Güncel versiyon numarası
+const CURRENT_VERSION = 'v80';
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -38,39 +38,49 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - Yeni cache oluştur ve dosyaları ekle
+// 1️⃣ Service Worker yüklenirken en son cache versiyonunu al
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log(`✅ Caching files for version: ${CURRENT_VERSION}`);
+      console.log(`✅ ${CURRENT_VERSION} için dosyalar cache'e ekleniyor...`);
       return cache.addAll(urlsToCache);
     })
   );
 });
 
-// Fetch event - Cache'deki dosyaları kullan, yoksa ağdan al
+// 2️⃣ Fetch event - İlk olarak internetten dene, sonra cache'e bak
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(response => {
+        // Eğer online isek ve güncel veriye ulaştıysak, cache'i güncelle
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      })
+      .catch(() => {
+        // Offline ise cache'den çek
+        return caches.match(event.request);
+      })
   );
 });
 
-// Activate event - Eski cache'leri temizle
+// 3️⃣ Aktivasyon (Eski cache'leri temizleme)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
-            console.log(`🗑️ Siliniyor: ${cacheName}`);
+          // Eski versiyonları temizle
+          if (cacheName.startsWith('cache-v') && cacheName !== CACHE_NAME) {
+            console.log(`🗑️ Eski cache siliniyor: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
       );
     }).then(() => {
-      console.log(`✅ Yeni versiyon aktif: ${CURRENT_VERSION}`);
+      console.log(`🚀 Yeni cache aktif: ${CURRENT_VERSION}`);
       return self.clients.claim();
     })
   );

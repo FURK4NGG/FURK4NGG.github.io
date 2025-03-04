@@ -16,7 +16,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
-  const cacheWhitelist = ['v1']; // Yeni cache ismi
+  const cacheWhitelist = ['v2']; // Yeni cache ismi
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(

@@ -1,8 +1,8 @@
-const CACHE_NAME = 'my-cache-v1'; // İlk versiyon
-const CACHE_VERSION = 3; // Yeni versiyon numarası
+const CACHE_NAME = 'my-cache-v1'; // Cache adı
+let CACHE_VERSION = 4; // Başlangıç versiyonu
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
-    '/',
+  '/',
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
@@ -53,7 +53,6 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    // Eski cache'leri sil
                     if (cacheName !== CACHE_NAME) {
                         return caches.delete(cacheName);
                     }
@@ -72,20 +71,15 @@ self.addEventListener('fetch', (event) => {
                 return response;
             }
 
-            // Eğer cache'de yoksa, internetten al
+            // Eğer cache'de yoksa ve internete bağlıysak
             return fetch(event.request).then((networkResponse) => {
-                // Yeni versiyon numarasını kontrol et
-                if (CACHE_VERSION > getCurrentCacheVersion()) {
-                    // Eski cache'i sil
-                    caches.delete(CACHE_NAME).then(() => {
-                        // Yeni cache'i ekle
-                        return caches.open(CACHE_NAME).then((cache) => {
-                            return cache.put(event.request, networkResponse.clone());
-                        });
+                // Cache boşsa ve internetten veri alıyorsak, cache'e kaydet
+                return caches.open(CACHE_NAME).then((cache) => {
+                    // Cache'de hiç veri yoksa, yeni veriyi ekle
+                    return cache.put(event.request, networkResponse.clone()).then(() => {
+                        return networkResponse; // Yanıtı döndür
                     });
-                }
-
-                return networkResponse;
+                });
             });
         }).catch(() => {
             // Eğer offline isek, eski cache'i kullan
@@ -96,7 +90,5 @@ self.addEventListener('fetch', (event) => {
 
 // Mevcut cache versiyonunu döndüren yardımcı fonksiyon
 function getCurrentCacheVersion() {
-    // Burada mevcut cache versiyonunu döndürmek için bir yöntem belirleyebilirsin
-    // Örneğin, localStorage veya başka bir yöntemle saklayabilirsin
-    return CACHE_VERSION; // Örnek olarak sabit bir değer döndürüyoruz
+    return CACHE_VERSION; // Mevcut versiyonu döndür
 }

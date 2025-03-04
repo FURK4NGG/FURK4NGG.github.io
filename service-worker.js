@@ -1,4 +1,4 @@
-const CACHE_VERSION = 10; // Versiyon numarası
+const CACHE_VERSION = 11; // Versiyon numarası
 const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Cache ismi versiyon numarası ile oluşturuluyor
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
@@ -61,6 +61,7 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
+                    // Eğer cache ismi mevcut cache ismi değilse, sil
                     if (cacheName !== CACHE_NAME) {
                         console.log(`🗑️ Deleting old cache: ${cacheName}`);
                         return caches.delete(cacheName);

@@ -2,7 +2,7 @@
   run: |
     echo '{
       "index.html": "v1",
-      "home_en.html": "v2",
+      "home_en.html": "v3",
       "home_tr.html": "v1",
       "404.html": "v1",
       "CSS/unpkg.comswiper@8swiper-bundle.min.css": "v1",

@@ -1,8 +1,8 @@
-const CURRENT_VERSION = 'v80';
-const CACHE_NAME = `cache-${CURRENT_VERSION}`;
-
-const urlsToCache = [
-  '/',
+const CACHE_NAME = 'my-cache-v1'; // İlk versiyon
+const CACHE_VERSION = 2; // Yeni versiyon numarası
+const URLS_TO_CACHE = [
+    // Önbelleğe alınacak URL'ler
+    '/',
   '/index.html',
   '/home_en.html',
   '/home_tr.html',
@@ -38,50 +38,65 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// 1️⃣ Service Worker yüklenirken en son cache versiyonunu al
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log(`✅ ${CURRENT_VERSION} için dosyalar cache'e ekleniyor...`);
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
-
-// 2️⃣ Fetch event - İlk olarak internetten dene, sonra cache'e bak
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Eğer online isek ve güncel veriye ulaştıysak, cache'i güncelle
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      })
-      .catch(() => {
-        // Offline ise cache'den çek
-        return caches.match(event.request);
-      })
-  );
-});
-
-// 3️⃣ Aktivasyon (Eski cache'leri temizleme)
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          // Eski versiyonları temizle
-          if (cacheName.startsWith('cache-v') && cacheName !== CACHE_NAME) {
-            console.log(`🗑️ Eski cache siliniyor: ${cacheName}`);
-            return caches.delete(cacheName);
-          }
+// Service Worker'ı kur
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            return cache.addAll(URLS_TO_CACHE);
         })
-      );
-    }).then(() => {
-      console.log(`🚀 Yeni cache aktif: ${CURRENT_VERSION}`);
-      return self.clients.claim();
-    })
-  );
+    );
 });
+
+// Service Worker etkinleştirildiğinde
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((cacheNames) => {
+            return Promise.all(
+                cacheNames.map((cacheName) => {
+                    // Eski cache'leri sil
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Fetch olayını dinle
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => {
+            // Eğer cache'de varsa, onu döndür
+            if (response) {
+                return response;
+            }
+
+            // Eğer cache'de yoksa, internetten al
+            return fetch(event.request).then((networkResponse) => {
+                // Yeni versiyon numarasını kontrol et
+                if (CACHE_VERSION > getCurrentCacheVersion()) {
+                    // Eski cache'i sil
+                    caches.delete(CACHE_NAME).then(() => {
+                        // Yeni cache'i ekle
+                        return caches.open(CACHE_NAME).then((cache) => {
+                            return cache.put(event.request, networkResponse.clone());
+                        });
+                    });
+                }
+
+                return networkResponse;
+            });
+        }).catch(() => {
+            // Eğer offline isek, eski cache'i kullan
+            return caches.match(event.request);
+        })
+    );
+});
+
+// Mevcut cache versiyonunu döndüren yardımcı fonksiyon
+function getCurrentCacheVersion() {
+    // Burada mevcut cache versiyonunu döndürmek için bir yöntem belirleyebilirsin
+    // Örneğin, localStorage veya başka bir yöntemle saklayabilirsin
+    return CACHE_VERSION; // Örnek olarak sabit bir değer döndürüyoruz
+}

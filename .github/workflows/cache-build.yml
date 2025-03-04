@@ -3,7 +3,7 @@
     mkdir -p public  # public klasörünü oluşturuyoruz
     echo '{
       "index.html": "v1",
-      "home_en.html": "v4",
+      "home_en.html": "v6",
       "home_tr.html": "v4",
       "404.html": "v1",
       "CSS/unpkg.comswiper@8swiper-bundle.min.css": "v1",

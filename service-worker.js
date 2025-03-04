@@ -1,4 +1,4 @@
-const CACHE_VERSION = 15; // Güncel cache versiyonu
+const CACHE_VERSION = 16; // Güncel cache versiyonu
 const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Önbellek adı
 const URLS_TO_CACHE = [
     '/',

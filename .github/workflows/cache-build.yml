@@ -1,5 +1,6 @@
 - name: Update version.json
   run: |
+    mkdir -p public  # public klasörünü oluşturuyoruz
     echo '{
       "index.html": "v1",
       "home_en.html": "v3",
@@ -33,4 +34,4 @@
       "manifest.json": "v1",
       "robots.txt": "v1",
       ".htaccess.txt": "v1"
-    }' > /version.json
+    }' > public/version.json  # Versiyon bilgilerini public/ dizinine yazıyoruz

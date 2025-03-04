@@ -1,5 +1,5 @@
 const CACHE_NAME = 'my-cache-v1'; // Cache adı
-let CACHE_VERSION = 4; // Başlangıç versiyonu
+let CACHE_VERSION = 5; // Başlangıç versiyonu
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
   '/',

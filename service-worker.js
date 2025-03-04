@@ -1,5 +1,5 @@
-const CACHE_VERSION = 12; // Versiyon numarası
-const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Cache ismi versiyon numarası ile oluşturuluyor
+const CACHE_VERSION = 13; // Güncel cache versiyonu
+const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Önbellek adı
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
     '/',
@@ -38,45 +38,52 @@ const URLS_TO_CACHE = [
   '/.htaccess.txt'
 ];
 
+// 📌 **localStorage'dan eski versiyonu al**
+const oldCacheVersion = localStorage.getItem('cache_version') || 0;
+
+// 🔄 **Service Worker yüklenirken internetten yeni cache’i al**
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(async (cache) => {
-            console.log(`🔄 Caching files for version: ${CACHE_VERSION}`);
+            console.log(`🔄 Yeni cache yükleniyor: v${CACHE_VERSION}`);
 
-            // Tek tek ekleyerek hataları yakala
             for (let url of URLS_TO_CACHE) {
                 try {
                     await cache.add(url);
-                    console.log(`✅ Cached: ${url}`);
+                    console.log(`✅ Cache eklendi: ${url}`);
                 } catch (error) {
-                    console.error(`❌ Failed to cache: ${url}`, error);
+                    console.error(`❌ Cache eklenemedi: ${url}`, error);
                 }
             }
         })
     );
 });
 
+// 🚀 **Aktif olunca eski cache'leri temizle ve yeni versiyonu kaydet**
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    // Eğer cache ismi mevcut cache ismi değilse, sil
-                    if (cacheName !== CACHE_NAME) {
-                        console.log(`🗑️ Deleting old cache: ${cacheName}`);
+                    if (cacheName.startsWith("my-cache-v") && cacheName !== CACHE_NAME) {
+                        console.log(`🗑️ Eski cache siliniyor: ${cacheName}`);
                         return caches.delete(cacheName);
                     }
                 })
             );
+        }).then(() => {
+            console.log(`💾 Yeni versiyon kaydedildi: v${CACHE_VERSION}`);
+            localStorage.setItem('cache_version', CACHE_VERSION);
         })
     );
 });
 
+// 🔍 **Cache'i kontrol et, yoksa internetten al ve kaydet**
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => {
             if (response) return response;
-            
+
             return fetch(event.request).then((networkResponse) => {
                 return caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, networkResponse.clone());

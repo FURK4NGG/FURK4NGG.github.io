@@ -1,4 +1,4 @@
-const CURRENT_VERSION = 'v77';  // Güncel versiyon numarasını belirleyin
+const CURRENT_VERSION = 'v78';  // Güncel versiyon numarası
 const CACHE_NAME = `cache-${CURRENT_VERSION}`;
 
 const urlsToCache = [
@@ -38,14 +38,13 @@ const urlsToCache = [
   '/.htaccess.txt'
 ];
 
-// Install event - Cache dosyaları yükle
+// Install event - Yeni cache oluştur ve dosyaları ekle
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log(`✅ Caching files for version: ${CURRENT_VERSION}`);
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      console.log(`✅ Caching files for version: ${CURRENT_VERSION}`);
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
@@ -58,25 +57,21 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Activate event - Eski cache'leri sil ve yeni cache'i ekle
+// Activate event - Eski cache'leri temizle
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          const cacheVersion = parseInt(cacheName.replace('cache-v', ''), 10);
-          const incomingVersion = parseInt(CURRENT_VERSION.replace('v', ''), 10);
-
-          // Yeni versiyon daha büyükse eski cache'leri sil ve yeni cache'i ekle
-          if (cacheName.startsWith('cache-') && cacheVersion !== incomingVersion) {
-            console.log(`🗑️ Deleting old cache: ${cacheName}`);
+          if (cacheName.startsWith('cache-') && cacheName !== CACHE_NAME) {
+            console.log(`🗑️ Siliniyor: ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
       );
     }).then(() => {
-      console.log(`✅ Cache updated to version: ${CURRENT_VERSION}`);
-      return self.clients.claim(); // Yeni cache'i aktif et
+      console.log(`✅ Yeni versiyon aktif: ${CURRENT_VERSION}`);
+      return self.clients.claim();
     })
   );
 });

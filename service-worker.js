@@ -1,4 +1,4 @@
-const CACHE_VERSION = 7; // Versiyon numarası
+const CACHE_VERSION = 8; // Versiyon numarası
 const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Cache ismi versiyon numarası ile oluşturuluyor
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler
@@ -38,23 +38,31 @@ const URLS_TO_CACHE = [
   '/.htaccess.txt'
 ];
 
-// Service Worker'ı kur
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(URLS_TO_CACHE);
+        caches.open(CACHE_NAME).then(async (cache) => {
+            console.log(`🔄 Caching files for version: ${CACHE_VERSION}`);
+
+            // Tek tek ekleyerek hataları yakala
+            for (let url of URLS_TO_CACHE) {
+                try {
+                    await cache.add(url);
+                    console.log(`✅ Cached: ${url}`);
+                } catch (error) {
+                    console.error(`❌ Failed to cache: ${url}`, error);
+                }
+            }
         })
     );
 });
 
-// Service Worker etkinleştirildiğinde
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    // Eğer cache ismi mevcut cache ismi değilse, sil
                     if (cacheName !== CACHE_NAME) {
+                        console.log(`🗑️ Deleting old cache: ${cacheName}`);
                         return caches.delete(cacheName);
                     }
                 })
@@ -63,27 +71,17 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Fetch olayını dinle
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((response) => {
-            // Eğer cache'de varsa, onu döndür
-            if (response) {
-                return response;
-            }
-
-            // Eğer cache'de yoksa ve internete bağlıysak
+            if (response) return response;
+            
             return fetch(event.request).then((networkResponse) => {
-                // Cache'e kaydet
                 return caches.open(CACHE_NAME).then((cache) => {
-                    return cache.put(event.request, networkResponse.clone()).then(() => {
-                        return networkResponse; // Yanıtı döndür
-                    });
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
                 });
             });
-        }).catch(() => {
-            // Eğer offline isek, eski cache'i kullan
-            return caches.match(event.request);
-        })
+        }).catch(() => caches.match(event.request))
     );
 });

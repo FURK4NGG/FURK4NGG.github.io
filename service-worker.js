@@ -1,4 +1,4 @@
-const CACHE_VERSION = 9; // Versiyon numarası
+const CACHE_VERSION = 10; // Versiyon numarası
 const CACHE_NAME = `my-cache-v${CACHE_VERSION}`; // Cache ismi versiyon numarası ile oluşturuluyor
 const URLS_TO_CACHE = [
     // Önbelleğe alınacak URL'ler

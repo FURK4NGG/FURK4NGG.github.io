@@ -33,4 +33,4 @@
       "manifest.json": "v1",
       "robots.txt": "v1",
       ".htaccess.txt": "v1"
-    }' > public/version.json
+    }' > /version.json

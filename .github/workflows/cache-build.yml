@@ -46,4 +46,4 @@ jobs:
             "manifest.json": "v1",
             "robots.txt": "v1",
             ".htaccess.txt": "v1"
-          }' > public/version.json  # Versiyon bilgilerini public/ dizinine yazıyoruz
+          }' > /public/version.json  # Versiyon bilgilerini public/ dizinine yazıyoruz

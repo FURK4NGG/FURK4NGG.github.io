@@ -27,8 +27,8 @@
   "img/web.webp": "v1",
   "img/up.webp": "v1",
   "img/icon.ico": "v1",
-  "sitemap.xml": "v1",
-  "manifest.json": "v1",
-  "robots.txt": "v1",
-  ".htaccess.txt": "v1"
+  "sitemap.xml": "v2",
+  "manifest.json": "v2",
+  "robots.txt": "v2",
+  ".htaccess.txt": "v2"
 }

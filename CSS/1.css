@@ -23,8 +23,6 @@
 }
 
 .card__data {
-    justify-content: center;
-    align-items: center;
     width: calc(100% - 8vh);
     background-color: var(--white);
     padding: 1.5rem 2rem;
@@ -43,6 +41,7 @@
     display: block;
     font-size: var(--small-font-size);
     margin-bottom: .25rem;
+    text-align: center;
 }
 
 /* Hover Animations */

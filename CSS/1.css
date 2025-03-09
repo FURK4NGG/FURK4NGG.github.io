@@ -59,7 +59,7 @@
 }
 
 .services_id:not(:hover) .card__data {
-    animation: remove-data 1s forwards;
+    animation: remove-data 1.5s forwards;
 }
 
 /* Keyframe Animations */

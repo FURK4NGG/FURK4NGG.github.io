@@ -23,7 +23,7 @@
 }
 
 .card__data {
-    width: 20%;
+    width: calc(100% - 8vh);
     background-color: var(--white);
     padding: 1.5rem 2rem;
     box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);

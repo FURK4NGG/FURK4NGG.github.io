@@ -19,6 +19,7 @@
     display: flex;
     box-shadow: -13px 13px 27px #808080,13px -13px 27px #EEEBD2;
     border-radius: 3.7rem;
+    justify-content: center;
 }
 
 .card__img {

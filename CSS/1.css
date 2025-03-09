@@ -86,7 +86,7 @@
         transform: translateY(-10rem);
     }
     66% {
-        transform: translateY(1rem); /* Daha fazla aşağı inmesini sağladık */
+        transform: translateY(4rem); /* Daha fazla aşağı inmesini sağladık */
     }
     100% {
         transform: translateY(7rem); /* Nihai konumu biraz daha aşağıda bırak */

@@ -82,10 +82,10 @@
     0% {
         transform: translateY(-7rem);
     }
-    50% {
+    33% {
         transform: translateY(-10rem);
     }
-    80% {
+    66% {
         transform: translateY(1rem); /* Daha fazla aşağı inmesini sağladık */
     }
     100% {

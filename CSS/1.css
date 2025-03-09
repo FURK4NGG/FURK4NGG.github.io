@@ -17,6 +17,8 @@
     transform: translateY(50px);
     transition: opacity 0.6s ease-out,transform 0.6s ease-out,background-color 0.6s ease-in-out;
     display: flex;
+    box-shadow: -13px 13px 27px #808080,13px -13px 27px #EEEBD2;
+    border-radius: 3.7rem;
 }
 
 .card__img {

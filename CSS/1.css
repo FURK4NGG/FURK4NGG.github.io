@@ -9,7 +9,7 @@
 
 .services_id {
     position: relative;
-    height: 42rem;
+    height: 40rem;
     overflow: hidden;
     width: calc(100% - 8vh);
     max-width:300px;
@@ -21,7 +21,7 @@
 
 .card__img {
     width: 100%;
-    border-radius: 1.5rem;
+    border-radius: 3.7rem;
 }
 
 .card__data {

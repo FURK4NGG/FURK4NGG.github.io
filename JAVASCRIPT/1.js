@@ -136,7 +136,7 @@ async function getCurrentYear() {
 
 getCurrentYear().then(age => {
     const text1 = `an ${age} years old`;
-    const text2 = `I am ${text1} university student studying Computer Engineering. Since 2020, I focus on embedded systems, mobile app development, debugging, and IoT. I have participated in Teknofest, TUBITAK projects, and Game Jams. I enjoy brainstorming new ideas in areas where help is needed and exploring innovative solutions.`;
+    const text2 = `I am ${text1} university student studying Computer Engineering. Since 2020, I focus on embedded systems, mobile app development, debugging, and IoT. I have participated in Teknofest, TUBITAK projects, and Game Jams. I enjoy brainstorming new ideas in areas where help is needed and exploring innovative solutions. In my free time, I love doing sports and making music.`;
 
   
 /*SCROLL REVEALING*/

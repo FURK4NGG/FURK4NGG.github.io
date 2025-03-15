@@ -67,7 +67,7 @@
 
         const simulation = d3.forceSimulation(nodes)
             .force("center", d3.forceCenter(width / 2, height / 2))
-            .force("collision", d3.forceCollide().radius(d => d.radius + 5))
+            .force("collision", d3.forceCollide().radius(d => d.radius + 2))
             .force("attraction", d3.forceManyBody().strength(attractionForce)) // Güç buradan çekiliyor
             .force("x", d3.forceX(width / 2).strength(0.1))
             .force("y", d3.forceY(height / 2).strength(0.1))

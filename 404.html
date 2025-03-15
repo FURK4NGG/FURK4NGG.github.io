@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Furkan Karlıoğlu - 404 Page</title>
@@ -52,6 +53,7 @@
     <script>
         let width = window.innerWidth;
         let height = window.innerHeight;
+        let attractionForce = 7000; // Çekim gücü negatif olunca baloncuklar birbirini iter
 
         const nodes = [
             { id: 1, radius: 60, text: "Not" },
@@ -64,11 +66,11 @@
             .attr("height", height);
 
         const simulation = d3.forceSimulation(nodes)
-            .force("center", d3.forceCenter(width / 2, height / 2))  // Merkezde tutan kuvvet
+            .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collision", d3.forceCollide().radius(d => d.radius + 5))
-            .force("attraction", d3.forceManyBody().strength(100)) // Çekim kuvveti
-            .force("x", d3.forceX(width / 2).strength(0.1))  // X ekseninde merkezde tutar
-            .force("y", d3.forceY(height / 2).strength(0.1)) // Y ekseninde merkezde tutar
+            .force("attraction", d3.forceManyBody().strength(attractionForce)) // Güç buradan çekiliyor
+            .force("x", d3.forceX(width / 2).strength(0.1))
+            .force("y", d3.forceY(height / 2).strength(0.1))
             .on("tick", ticked);
 
         const bubbles = svg.selectAll("circle")
@@ -76,7 +78,11 @@
             .enter()
             .append("circle")
             .attr("r", d => d.radius)
-            .attr("fill", "rgba(255, 87, 51, 0.8)");
+            .attr("fill", "rgba(255, 87, 51, 0.8)")
+            .call(d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded));
 
         const texts = svg.selectAll("text")
             .data(nodes)
@@ -88,6 +94,23 @@
         function ticked() {
             bubbles.attr("cx", d => d.x).attr("cy", d => d.y);
             texts.attr("x", d => d.x).attr("y", d => d.y);
+        }
+
+        function dragStarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragEnded(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
         }
 
         function resize() {

@@ -132,6 +132,15 @@
             d.fy = null;
         }
 
+         function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            svg.attr("width", width).attr("height", height);
+            simulation.force("center", d3.forceCenter(width / 2, height / 2)).alpha(1).restart();
+        }
+
+        window.addEventListener("resize", resize);
+
         const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
   const showAlert = e => {
     e.preventDefault(); // preventing its default behaviour

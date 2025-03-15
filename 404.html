@@ -1,39 +1,123 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Furkan Karlıoğlu - 404 Page</title>
-    <link href="img/icon.ico" rel="shortcut icon" type="image/x-icon">
     <meta charset="UTF-8">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="publisher" content="https://furk4ngg.github.io">
-    <style>@font-face{font-family:'Inconsolata';src:url('/FONTS/Inconsolata.woff2') format('woff2');font-weight:normal;font-style:normal;}html{overflow:hidden;min-height:100%}body{user-select:none!important;overflow:hidden;box-sizing:border-box;height:100%;background-color:#000;background-image:radial-gradient(#11581E,#041607),url(https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif);background-repeat:no-repeat;background-size:cover;font-family:'Inconsolata',Helvetica,sans-serif;font-size:1.5rem;color:rgb(128 255 128 / .8);text-shadow:0 0 1ex rgb(51 255 51),0 0 2px rgb(255 255 255 / .8)}.noise{pointer-events:none;position:absolute;width:100%;height:100%;background-image:url(https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif);background-repeat:no-repeat;background-size:cover;z-index:-1;opacity:.02}.overlay{pointer-events:none;position:absolute;width:100%;height:100%;background:repeating-linear-gradient(180deg,#fff0 0,rgb(0 0 0 / .3) 50%,#fff0 100%);background-size:auto 4px;z-index:1}.overlay::before{content:"";pointer-events:none;position:absolute;display:block;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background-image:linear-gradient(0deg,transparent 0%,rgb(32 128 32 / .2) 2%,rgb(32 128 32 / .8) 3%,rgb(32 128 32 / .2) 3%,transparent 100%);background-repeat:no-repeat;animation:scan 7.5s linear 0s infinite}@keyframes scan{0%{background-position:0 -100vh}35%,100%{background-position:0 100vh}}.terminal{box-sizing:inherit;position:absolute;height:100%;width:1000px;max-width:100%;padding:4rem;-webkit-user-select: none !important;text-transform:uppercase}.output{color:rgb(128 255 128 / .8);text-shadow:0 0 1px rgb(51 255 51 / .4),0 0 2px rgb(255 255 255 / .8)}.output::before{content:"> "}a{color:#fff;text-decoration:none}a::before{content:"["}a::after{content:"]"}.errorcode{color:#fff}</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furkan Karlıoğlu - 404 Page</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        body { margin: 0; background: #282c34; overflow: hidden; }
+        text { -webkit-user-select:none!important;fill: white; font-size: 18px; font-weight: bold; pointer-events: none; text-anchor: middle; }
+        .output {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            -webkit-user-select:none!important;/* Metnin seçilmesini engeller */
+        }
+        .output a {
+            color: #ff5733;
+            text-decoration: none;
+        }
+        h1 {
+            color: white;
+            font-size: 36px;
+            text-align: center;
+            user-select: none; /* Başlık metnini seçilemez yapar */
+        }
+    </style>
 </head>
 <body>
-<div class="noise"></div>
-<div class="overlay"></div>
-<div class="terminal">
-  <h1>Error <span class="errorcode">404</span></h1>
-  <p class="output">The page you are looking for might have been removed, had its name changed or is temporarily unavailable.</p>
-  <p class="output">Please try to <a href="javascript:history.back()">go back</a> or <a href="/">return to the homepage</a>.</p>
-  <p class="output">Good luck.</p>
-</div>
-<script type="module"> 
-      const disabledKeys = ["c", "C", "x", "J", "u", "I"]; // keys that will be disabled
-      const showAlert = e => {
-        e.preventDefault(); // preventing its default behaviour
-        return alert("Sorry, you can't view or copy source codes this way!");
-      }
-      document.addEventListener("contextmenu", e => {
-        showAlert(e); // calling showAlert() function on mouse right click
-      });
-      document.addEventListener("keydown", e => {
-        // calling showAlert() function, if the pressed key matched to disabled keys
-        if((e.ctrlKey && disabledKeys.includes(e.key)) || e.key === "F12") {
-          showAlert(e);
+    <script>
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Çekim gücü değişkeni (Pozitif olursa çeker, negatif olursa iter)
+        let cekimGucu = 7000;
+
+        const nodes = [
+            { id: 1, radius: 60, text: "Not", vx: 0, vy: 0 }, // Hız bileşenleri eklendi
+            { id: 2, radius: 60, text: "Found", vx: 0, vy: 0 },
+            { id: 3, radius: 60, text: "404", vx: 0, vy: 0 }
+        ];
+
+        const svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const simulation = d3.forceSimulation(nodes)
+            .force("center", d3.forceCenter(width / 2, height / 2)) // Ekran merkezine yönlendir
+            .force("collision", d3.forceCollide().radius(d => d.radius + 2)) // Çarpışmayı engelle
+            .force("attraction", d3.forceManyBody().strength(cekimGucu)) // Topları çekmek için kuvvet ekledik
+            .on("tick", ticked);
+
+        const bubbles = svg.selectAll("circle")
+            .data(nodes)
+            .enter()
+            .append("circle")
+            .attr("r", d => d.radius)
+            .attr("fill", "rgba(255, 87, 51, 0.8)")
+            .call(d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded));
+
+        const texts = svg.selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(d => d.text)
+            .attr("dy", 5);
+
+        // Bu fonksiyon her tick olayında çağrılacak
+        function ticked() {
+            // Momentum hesaplaması yapıyoruz (zamanla kaybolacak)
+            nodes.forEach(d => {
+                if (d.fx === null && d.fy === null) { // Eğer balon serbestse
+                    // Momentum kaybolması: Hızı her adımda yavaşlatıyoruz
+                    d.vx *= 0.99;
+                    d.vy *= 0.99;
+                    d.x += d.vx;
+                    d.y += d.vy;
+                }
+            });
+
+            // Balonları konumlarına göre yerleştir
+            bubbles.attr("cx", d => d.x).attr("cy", d => d.y);
+            texts.attr("x", d => d.x).attr("y", d => d.y);
         }
-      });
-</script>
+
+        function dragStarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+            d.vx = 0; // Drag başladığında hız sıfırlanır
+            d.vy = 0;
+        }
+
+        function dragged(event, d) {
+            // Sürükleme sırasında hız ekle
+            d.fx = event.x;
+            d.fy = event.y;
+            // Drag hareketine bağlı olarak hız artar
+            d.vx += (event.x - d.x) * 0.1;
+            d.vy += (event.y - d.y) * 0.1;
+        }
+
+        function dragEnded(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // Çekim gücünü değiştirmek için tarayıcı konsolunda şu komutu yazabilirsin:
+        // cekimGucu = 700; simulation.alpha(1).restart();
+    </script>
+
+    <h1>404 Not Found</h1>
+    <p class="output">Please try to <a href="javascript:history.back()">go back</a> or <a href="/">return to the homepage</a>.</p>
 </body>
 </html>

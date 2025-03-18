@@ -15,7 +15,7 @@ jobs:
           mkdir -p public  # public klasörünü oluşturuyoruz
           echo '{
             "index.html": "v2",
-            "home_en.html": "v8",
+            "home_en.html": "v9",
             "home_tr.html": "v7",
             "404.html": "v2",
             "CSS/unpkg.comswiper@8swiper-bundle.min.css": "v1",

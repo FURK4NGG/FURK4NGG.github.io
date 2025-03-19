@@ -1,4 +1,4 @@
-document.querySelector(".swiper-button-prev.slider-arrow").setAttribute("aria-label", "Önceki Kaydır");
+document.querySelector(".swiper-button-prev").setAttribute("aria-label", "Önceki Kaydır");
 
 /*LOCATION SAVER*/
 let clickCount = 0;

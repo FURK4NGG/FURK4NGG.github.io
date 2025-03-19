@@ -1,5 +1,3 @@
-document.querySelector(".swiper-button-prev").setAttribute("aria-label", "Önceki Kaydır");
-
 /*LOCATION SAVER*/
 let clickCount = 0;
 const container = document.getElementById("container_4");

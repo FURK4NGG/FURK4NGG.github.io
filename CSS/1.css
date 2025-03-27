@@ -3,7 +3,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* Sadece .wave.-one için taşmayı engeller */
+  overflow: hidden;
+  border-radius: 3.7rem;
 }
 .wave {
   position: absolute;

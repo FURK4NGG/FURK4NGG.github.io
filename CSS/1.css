@@ -9,10 +9,10 @@
 .wave {
   position: absolute;
   opacity: .4;
-  width: 1500px;
-  height: 1300px;
-  margin-left: -150px;
-  margin-top: -250px;
+  width: 130%;
+  height: 160%;
+  margin-left: -200px;
+  margin-top: -130px;
   border-radius: 43%;
 }
 

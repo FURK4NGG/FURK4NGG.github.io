@@ -15,8 +15,8 @@ jobs:
           mkdir -p public  # public klasörünü oluşturuyoruz
           echo '{
             "index.html": "v2",
-            "home_en.html": "v9",
-            "home_tr.html": "v7",
+            "home_en.html": "v10",
+            "home_tr.html": "v10",
             "404.html": "v2",
             "CSS/unpkg.comswiper@8swiper-bundle.min.css": "v1",
             "FONTS/Inconsolata.woff2": "v1",
@@ -25,8 +25,8 @@ jobs:
             "FONTS/Montserrat.woff2": "v1",
             "FONTS/TacOne.woff2": "v1",
             "FONTS/Teko.woff2": "v1",
-            "JAVASCRIPT/1.js": "v4",
-            "JAVASCRIPT/tr/1.js": "v4",
+            "JAVASCRIPT/1.js": "v5",
+            "JAVASCRIPT/tr/1.js": "v5",
             "JAVASCRIPT/darkmode-js.min.js": "v1",
             "JAVASCRIPT/gsap.min.js": "v1",
             "JAVASCRIPT/swiper-bundle.min.js": "v1",

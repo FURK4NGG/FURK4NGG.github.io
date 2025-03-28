@@ -51,6 +51,8 @@
     <p class="output">Please try to <a href="javascript:history.back()">go back</a> or <a href="/">return to the homepage</a>.</p>
     
     <script>
+        const darkmode = new Darkmode(options);
+        darkmode.showWidget();
         let width = window.innerWidth;
         let height = window.innerHeight;
         let attractionForce = 7000; // Çekim gücü negatif olunca baloncuklar birbirini iter

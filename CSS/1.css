@@ -25,6 +25,7 @@
   animation: rotate 10000ms infinite linear;
   opacity: 95%;
   background: var(--2nd);
+  background: color(display-p3 0.333 0.364 0.313);
 }
 
 .wave.-two {

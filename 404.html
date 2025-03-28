@@ -26,17 +26,6 @@
     <link href='img/icon.ico' rel='apple-touch-icon'/>
     <script src="JAVASCRIPT/404.js"></script>
     <style>
-        .darkmode-toggle {
-  -webkit-user-select: none !important;
-  color: var(--white);
-}
-        .darkmode-toggle:hover {
-  cursor: none;
-}
-        .darkmode-toggle--white {
-  background: #fff;
-  color: black;
-}
         body { margin: 0; background: #282c34; overflow: hidden; }
         text, .output { 
             fill: white; 
@@ -61,10 +50,7 @@
     <svg></svg>
     <p class="output">Please try to <a href="javascript:history.back()">go back</a> or <a href="/">return to the homepage</a>.</p>
     
-    <script src="/JAVASCRIPT/darkmode-js.min.js"></script>
     <script>
-        const darkmode = new Darkmode(options);
-        darkmode.showWidget();
         let width = window.innerWidth;
         let height = window.innerHeight;
         let attractionForce = 7000; // Çekim gücü negatif olunca baloncuklar birbirini iter

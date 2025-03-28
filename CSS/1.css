@@ -23,8 +23,8 @@
 
 .wave.-one {
   animation: rotate 10000ms infinite linear;
-  opacity: 5%;
-  background: white;
+  opacity: 95%;
+  background: var(--2nd);
 }
 
 .wave.-two {

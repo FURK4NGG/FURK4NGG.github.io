@@ -246,10 +246,17 @@ window.addEventListener("scroll", () => {
 
 /*when the window is reloading or loading*/
 window.addEventListener('load', function() {
-  const targetElement = document.getElementById('container_1');
-  targetElement.scrollIntoView();
-  const sidebarCheckbox = document.getElementById('sidebar-active');
-  if (sidebarCheckbox.checked) {sidebarCheckbox.checked = false;}
+    requestAnimationFrame(() => {
+        const targetElement = document.getElementById('container_1');
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+
+    const sidebarCheckbox = document.getElementById('sidebar-active');
+    if (sidebarCheckbox && sidebarCheckbox.checked) {
+        sidebarCheckbox.checked = false;
+    }
 });
 
 

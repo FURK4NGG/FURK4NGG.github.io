@@ -251,10 +251,14 @@ window.addEventListener("scroll", () => {
 
 /*when the window is reloading or loading*/
 window.addEventListener('load', function() {
-  const targetElement = document.getElementById('container_1');
-  targetElement.scrollIntoView();
-  const sidebarCheckbox = document.getElementById('sidebar-active');
-  if (sidebarCheckbox.checked) {sidebarCheckbox.checked = false;}
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
+
+    const sidebarCheckbox = document.getElementById('sidebar-active');
+    if (sidebarCheckbox && sidebarCheckbox.checked) {
+        sidebarCheckbox.checked = false;
+    }
 });
 
 

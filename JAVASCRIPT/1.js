@@ -79,6 +79,11 @@ observer.observe(document.body, {
 });
 
 
+/*ONKEYDOWN*/
+function handleKey(event) {
+    if (event.key === "Enter" || event.key === " "){switchPhoto();}}
+
+
 /*SERVICES VISIBILITY*/
 const boxes = document.querySelectorAll('.services_id');
 

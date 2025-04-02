@@ -214,6 +214,33 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+/*ECHO EFFECT*/
+document.addEventListener("scroll", function () {
+            let scrollY = window.scrollY;
+            let windowHeight = window.innerHeight; // Pencere yüksekliği
+
+            // Her intro-echo öğesi için kontrol et
+            document.querySelectorAll(".intro-echo").forEach((el, index) => {
+                let depth = parseInt(el.getAttribute("data-depth"));
+                let rect = el.getBoundingClientRect(); // öğenin konumunu al
+
+                // Eğer öğe ekranın alt kısmına doğru geliyorsa
+                if (rect.bottom <= windowHeight) {
+                    let opacity = Math.max(1 - (depth * 0.110), 0);
+                    let translateY = depth * 1; // Sabit boşluk sağlama
+                    let scale = 1 - (depth * 0.05);
+                    el.style.opacity = opacity;
+                    el.style.transform = `translate(-50%, ${translateY * 9.98}px) scale(${scale})`;
+                } else {
+                    // Eğer öğe ekranın alt kısmına gelmediyse, eski haline dön
+                    el.style.opacity = 0;
+                    el.style.transform = `translate(-50%, 0) scale(1)`;
+                }
+            });
+        });
+
+
+
 /*SAVE DATA AND RUN OFFLINE*/
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

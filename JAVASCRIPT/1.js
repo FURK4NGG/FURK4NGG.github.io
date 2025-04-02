@@ -81,7 +81,7 @@ observer.observe(document.body, {
 
 /*ONKEYDOWN*/
 function handleKey(event) {
-    if (event.key === "Enter" || event.key === " "){switchPhoto();}}
+    if (event.key === "Enter" || event.key === " "){event.preventDefault();switchPhoto();}}
 
 
 /*SERVICES VISIBILITY*/

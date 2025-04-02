@@ -240,7 +240,6 @@ document.addEventListener("scroll", function () {
         });
 
 
-
 /*SAVE DATA AND RUN OFFLINE*/
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

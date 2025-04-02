@@ -226,7 +226,7 @@ document.addEventListener("scroll", function () {
 
                 // Eğer öğe ekranın alt kısmına doğru geliyorsa
                 if (rect.bottom <= windowHeight) {
-                    let opacity = Math.max(1 - (depth * 0.125), 0);
+                    let opacity = Math.max(1 - (depth * 0.110), 0);
                     let translateY = depth * 1; // Sabit boşluk sağlama
                     let scale = 1 - (depth * 0.05);
                     el.style.opacity = opacity;

@@ -380,6 +380,8 @@
     <script src="/JAVASCRIPT/darkmode-js.min.js"></script>
     <script src="/JAVASCRIPT/1.js"></script>
     <script>
+	const darkmode = new Darkmode(options);
+        darkmode.showWidget();
         function isMobileDevice() {return /Mobi|Android/i.test(navigator.userAgent);}
         window.onload = function() {
         if (isMobileDevice()) {
@@ -400,8 +402,6 @@
             }
 	}
 	};
-	const darkmode = new Darkmode(options);
-        darkmode.showWidget();
     </script>
 </body>
 </html>

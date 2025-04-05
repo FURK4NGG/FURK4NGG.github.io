@@ -382,7 +382,7 @@
     <script>
 	const darkmode = new Darkmode(options);
         darkmode.showWidget();
-        function isMobileDevice() {return /Mobi|Android/i.test(navigator.userAgent);}
+        function isMobileDevice() {return (/Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 768);}
         window.onload = function() {
         if (isMobileDevice()) {
         var circles = document.getElementsByClassName('circle');

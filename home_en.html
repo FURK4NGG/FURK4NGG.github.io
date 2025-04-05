@@ -80,6 +80,7 @@
       <a id='togallery' class="menu" href="#tranding" onclick="scrollToElement('tranding')" aria-label="Scroll to Gallery" draggable="false">Gallery</a>
       <a id='toservices' class="menu" href="#services" onclick="scrollToElement('services')" aria-label="Scroll to Services" draggable="false">Services</a>
       <a id='tocontact' class="menu" href="#contact_title" onclick="scrollToElement('contact_title')" aria-label="Scroll to Contact" draggable="false">Contact</a>
+      <a id='totr' class="menu" href="https://furk4ngg.github.io/home_tr" aria-label="To Turkish Page" draggable="false">TR</a>
     </div>
   </nav>
     </header>
@@ -380,14 +381,13 @@
     <script src="/JAVASCRIPT/darkmode-js.min.js"></script>
     <script src="/JAVASCRIPT/1.js"></script>
     <script>
-	const darkmode = new Darkmode(options);
-        darkmode.showWidget();
-        function isMobileDevice() {return (/Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 768);}
+	function isMobileDevice() {return /Mobi|Android/i.test(navigator.userAgent);}
         window.onload = function() {
         if (isMobileDevice()) {
         var circles = document.getElementsByClassName('circle');
-        for (var i = 0; i < circles.length; i++) {circles[i].style.display = 'none';}}
-	};
+        for (var i = 0; i < circles.length; i++) {circles[i].style.display = 'none';}}};
+        const darkmode = new Darkmode(options);
+        darkmode.showWidget();
     </script>
 </body>
 </html>

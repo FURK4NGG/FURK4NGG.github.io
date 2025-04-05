@@ -387,19 +387,6 @@
         if (isMobileDevice()) {
         var circles = document.getElementsByClassName('circle');
         for (var i = 0; i < circles.length; i++) {circles[i].style.display = 'none';}}
-	// Mobilde görünmesi için <a> öğesini oluştur
-            var link = document.createElement('a');
-            link.id = 'toskills';
-            link.className = 'menu';
-            link.href = `${window.location.origin}/home_tr`;
-            link.textContent = 'TR';
-            link.setAttribute('aria-label', 'To Turkish Page');
-
-            // links-container içine ekle
-            var container = document.querySelector('.links-container');
-            if (container) {
-                container.appendChild(link);
-            }
 	};
     </script>
 </body>

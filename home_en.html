@@ -391,13 +391,14 @@
             link.className = 'menu';
             link.href = `${window.location.origin}/home_tr`;
             link.textContent = 'TR';
+            link.setAttribute('aria-label', 'Türkçe sayfaya git');
 
             // links-container içine ekle
             var container = document.querySelector('.links-container');
             if (container) {
                 container.appendChild(link);
             }
-	
+	}
 	};
 	const darkmode = new Darkmode(options);
         darkmode.showWidget();

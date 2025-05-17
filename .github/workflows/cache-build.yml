@@ -14,7 +14,7 @@ jobs:
         run: |
           mkdir -p public  # public klasörünü oluşturuyoruz
           echo '{
-            "index.html": "v2",
+            "index.html": "v3",
             "home_en.html": "v12",
             "home_tr.html": "v12",
             "404.html": "v3",
